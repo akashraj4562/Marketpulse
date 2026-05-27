@@ -1234,12 +1234,12 @@ async function submitFeedback(id) {
 function generateTX(h) {
   const lines = [];
 
-  // Line 1 — what is happening (from oneliner)
+  // Line 1 — the story in one sentence
   if (h.oneliner) {
-    lines.push("🔍 <strong>What's happening:</strong> " + h.oneliner);
+    lines.push("🔍 <strong>The short version:</strong> " + h.oneliner);
   }
 
-  // Line 2 — the market call in plain English
+  // Line 2 — the bet in plain English
   const d = (h.direction || '').toLowerCase();
   const isBull = d.includes('bull');
   const isBear = d.includes('bear');
@@ -1250,22 +1250,22 @@ function generateTX(h) {
   const tf     = h.timeframe ? ' over <strong>' + h.timeframe + '</strong>' : '';
   // Shorten instrument to first meaningful segment
   const instShort = (h.instrument || '').split(/[;(—]/)[0].replace(/[,\/].+/, '').trim().slice(0, 40);
-  lines.push(arrow + ' <strong>The call:</strong> ' + (instShort || 'The instrument') + ' is ' + verb + mag + tf);
+  lines.push(arrow + ' <strong>The bet:</strong> ' + (instShort || 'The instrument') + ' is ' + verb + mag + tf);
 
-  // Line 3 — confidence in human language
+  // Line 3 — how sure are we, in plain language
   const conf = h.confidence;
   let confDesc = '';
-  if (conf >= 75) confDesc = 'The desk has <strong>high conviction</strong> here — solid evidence across multiple links.';
-  else if (conf >= 60) confDesc = '<strong>Good confidence</strong> — more likely than not, real evidence behind it.';
-  else if (conf >= 40) confDesc = '<strong>Developing signal</strong> — real but still being verified with new data.';
-  else confDesc = '<strong>Early watch</strong> — low confidence, being tracked but not acting on yet.';
-  lines.push('🎯 <strong>Confidence: ' + (conf || '?') + '%</strong> — ' + confDesc);
+  if (conf >= 75) confDesc = 'We are pretty sure — strong evidence from multiple sources points the same way.';
+  else if (conf >= 60) confDesc = 'More likely than not — there is real evidence behind this, but it could still go either way.';
+  else if (conf >= 40) confDesc = 'Still early — something is there, but we need more data before betting on it.';
+  else confDesc = 'Just watching for now — too soon to have a real view.';
+  lines.push('🎯 <strong>' + (conf || '?') + '% sure</strong> — ' + confDesc);
 
-  // Line 4 — what proves it / what kills it (first confirms item, simplified)
+  // Line 4 — the one thing that would prove it right or wrong
   const c = (h.confirms || [])[0];
   const k = (h.kills || [])[0];
-  if (c) lines.push('👀 <strong>Playing out if:</strong> ' + c.slice(0, 130));
-  else if (k) lines.push('🚫 <strong>Breaks down if:</strong> ' + k.slice(0, 130));
+  if (c) lines.push('✅ <strong>We know it is working if:</strong> ' + c.slice(0, 130));
+  else if (k) lines.push('❌ <strong>We know it is wrong if:</strong> ' + k.slice(0, 130));
 
   return lines;
 }
