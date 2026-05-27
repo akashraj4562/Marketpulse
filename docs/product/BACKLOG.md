@@ -51,6 +51,38 @@ Add this to RUNBOOK.md as the canonical "manual refresh" command with a clear he
 
 ---
 
+---
+
+### [BL-003] Portfolio-aware hypothesis prioritization
+**Priority:** P1
+**Status:** Scoped
+**Owner ask:** "I will share my current investment details. Use that to manage the priority and UI/UX. Show me what's relevant to me first. If there is an expected drop in one of my held shares which is significant (drop + exposure), then that would be high priority."
+**Interpreted intent:** The owner wants to share their portfolio (ticker + % weight or absolute amount). The system should compute a "personal impact score" for each hypothesis: **Impact Score = Confidence × |Predicted magnitude| × Exposure weight**. Hypotheses with high personal impact scores float to the top of the web view and the daily summary. A hypothesis about TCS falling 20% is more urgent if the owner holds 30% of their portfolio in TCS vs. 2%.
+
+**Assessment:** P1 — This is the highest-value UX improvement after BL-001 (web view). It personalizes the desk's output to the owner's actual stake. Without this, the desk is useful but generic. With this, every hypothesis is ranked by: "how much does this matter to you specifically?"
+
+**Recommended scope (v1):**
+1. Create `docs/portfolio/HOLDINGS.md` — owner inputs their holdings:
+   ```
+   | Ticker | NSE Code | Shares | Avg cost | Current % of portfolio |
+   | TCS    | TCS      | 50     | ₹3,600   | 28%                    |
+   ```
+2. The web view reads HOLDINGS.md and cross-references with hypotheses
+3. Any hypothesis mentioning a held stock → add a "🎯 You hold this" badge on the card
+4. Sort order: High personal impact first (confidence × magnitude × exposure weight)
+5. Personal impact score displayed on the card
+
+**Alert logic:**
+- **Red alert 🚨:** Predicted drop × exposure > threshold (e.g., >10% expected loss on >15% portfolio weight)
+- **Yellow watch ⚠️:** Either high exposure OR high predicted drop, but not both
+- **Green upside 📈:** Predicted gain on held position
+
+**Dependencies:** BL-001 web view (built). HOLDINGS.md format to be defined with owner input. Owner to share their current holdings.
+
+**What's deferred to v2:** Push notifications when a hypothesis affecting a held stock changes confidence by >15%. Price alerts if predicted price target is breached.
+
+---
+
 ## Done
 
 *(none yet)*
