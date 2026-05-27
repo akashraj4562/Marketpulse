@@ -12,8 +12,8 @@
 | **Status** | `Active` |
 | **Created** | 2026-05-27 |
 | **Created by** | hypothesis-generator |
-| **Last validated** | 2026-05-27 |
-| **Next validation due** | 2026-05-28 |
+| **Last validated** | 2026-05-28 |
+| **Next validation due** | 2026-05-29 |
 | **Priority tier** | `P1` (daily — Micron +19% yesterday, AI capex story moving fast) |
 | **Time horizon** | `MT` (1–3 quarters; AI capex translates to memory demand over 1–2 quarters) |
 
@@ -51,7 +51,7 @@ MU stock sustains momentum: +20–35% additional upside from current $100+ area 
 ## Scores
 | Metric | Score | Last updated |
 |---|---|---|
-| **Confidence** | 65% | 2026-05-27 |
+| **Confidence** | 80% | 2026-05-28 |
 | **Causality** | 82 / 100 | 2026-05-27 |
 | **Correlation** | 18 / 100 | 2026-05-27 |
 | Causality + Correlation check | 100 ✓ | — |
@@ -128,6 +128,7 @@ Micron is the most leveraged listed play on the AI capex supercycle after NVIDIA
 | Date | Instrument | Predicted | Actual (close) | Match | Override type | Explanation | Confidence delta |
 |---|---|---|---|---|---|---|---|
 | 2026-05-27 | MU | Bullish +20–35% over 2Q | May 26: +19.3% (confirmed surge). May 27 open: flat so far | Partial | — | One-day surge confirms direction; 2-quarter thesis just started | +5% |
+| 2026-05-28 | MU | +20–35% from ~$105–110 over 2Q | MU at $915; Q2 revenue +196% YoY; gross margin 74.9%; HBM sold out through 2026; HBM4 in production; FY26 guidance raised to $31.5–33.5B | Strong CONFIRM | — | Thesis playing out dramatically ahead of schedule. Stock already at ~$915 (if entry was $105–110, that's +730%+). Revenue and margin data exceed the EPS upgrade thesis. 46-analyst BUY consensus. Consider updating magnitude target. | +15% |
 
 ---
 
@@ -146,6 +147,7 @@ Micron is the most leveraged listed play on the AI capex supercycle after NVIDIA
 | Date | Confidence | Causality | Correlation | Key reason |
 |---|---|---|---|---|
 | 2026-05-27 (created) | 65% | 82 | 18 | Strong causal mechanism; partially priced but EPS upgrade cycle not complete |
+| 2026-05-28 | 80% | 85 | 15 | Q2 revenue +196% YoY, gross margin 74.9%, HBM4 in production, HBM sold out through 2026, guidance raised. All 3 CONFIRM watch-items trending toward confirmation. ⚠️ Threshold crossed — flag for full thesis workup. |
 
 ---
 

@@ -319,6 +319,34 @@ Add this to RUNBOOK.md as the canonical "manual refresh" command with a clear he
 
 ---
 
+### [BL-014] Mobile-triggered daily hypothesis cycle
+**Priority:** P2
+**Status:** Proposed
+**Theme:** ⚡ Validation Velocity
+
+**True need:** Owner wants to trigger the daily hypothesis cycle from iPhone without touching the Mac or Claude Code. Currently the cycle requires a manual Claude Code session prompt.
+
+**Designed approach (Option B — review-then-apply):**
+- **Trigger:** "▶ Run Cycle" button in web app header
+- **Flow:** Phone → POST `/api/run-cycle` → server calls claude-opus-4-7 via Anthropic API (with web_search tool) → Claude runs SKILL.md cycle instructions → server stores daily summary + proposed confidence deltas → phone shows results with "Apply updates" button → user taps Apply → files written
+- **Why Option B over full-auto:** Auto-write risks file corruption if Claude misformats structured output. Review step keeps owner in control and matches the current human-in-the-loop validation philosophy.
+
+**Key design decisions to lock before build:**
+1. Model: claude-opus-4-7 (most capable) or claude-sonnet-4-6 (cheaper, faster — ~$0.30/run vs $1–3). Recommend Sonnet with Opus fallback.
+2. Show cost estimate before run (e.g. "~$0.80 estimated"). User confirms.
+3. Streaming progress shown on mobile ("Searching for Iran signals… ✓", "Validating H-0007… ✓")
+4. Structured output schema: Claude returns JSON with `{ summary, hypotheses: [{id, newConfidence, evidenceNote}], newHypotheses: [...] }` — server parses and applies
+5. Rate limit: 1 run per 6 hours max (prevent accidental double-runs)
+
+**Dependencies:** ANTHROPIC_API_KEY (✅ set), Express server running, hypothesis files accessible
+
+**What's NOT in scope for v1:** Auto-scheduling (that's BL-004), push notifications (BL-004 extended), editing hypothesis content from mobile (separate feature)
+
+**RICE:** Reach 2 × Impact 4 × Confidence 0.7 / Effort 3 = **1.87**
+(Low reach — owner is the only user; high impact for daily workflow; medium-high effort for streaming + structured output parsing)
+
+---
+
 ## Done
 
 | ID | Feature | Shipped | Theme |

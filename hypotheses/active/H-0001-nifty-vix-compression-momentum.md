@@ -14,8 +14,8 @@
 | **Status** | `Active` |
 | **Created** | 2026-05-27 |
 | **Created by** | hypothesis-generator |
-| **Last validated** | 2026-05-27 |
-| **Next validation due** | 2026-05-28 |
+| **Last validated** | 2026-05-28 |
+| **Next validation due** | 2026-05-29 |
 | **Priority tier** | `P1` (daily) |
 | **Time horizon** | `ST` (≤4 weeks, verifiable within 2–5 trading sessions) |
 
@@ -50,7 +50,7 @@ Nifty tests 24,200–24,400 resistance zone
 ## Scores
 | Metric | Score | Last updated |
 |---|---|---|
-| **Confidence** | 68% | 2026-05-27 |
+| **Confidence** | 63% | 2026-05-28 |
 | **Causality** | 45 / 100 | 2026-05-27 |
 | **Correlation** | 55 / 100 | 2026-05-27 |
 | Causality + Correlation check | 100 ✓ | — |
@@ -134,6 +134,7 @@ Nifty 50 is in a confirmed breakout above 24,000, supported by the convergence o
 | Date | Instrument | Predicted | Actual (close) | Match | Override type | Explanation | Confidence delta |
 |---|---|---|---|---|---|---|---|
 | 2026-05-27 | NIFTY 50 | +1.5–3.5% toward 24,200 | Gap-up open near 23,943 (intraday, May 27 AM) | Too early | — | Market opened gap-up consistent with direction; resistance zone not yet tested | 0 |
+| 2026-05-28 | NIFTY 50 | Bullish continuation toward 24,200–24,400 | India VIX at 14 (-7.1%); FII MTD net selling -₹32,228Cr in May | Mixed | Type 3 (Flow reversal) | VIX at 14 confirms calm regime (bullish), but FII net selling -₹32,228Cr MTD May contradicts the "FII return" premise. DII buying ₹56,865Cr MTD is supportive floor but cannot substitute FII directional momentum. Crude at $100 (Iran strikes) is bearish overhang. | -5% |
 
 ---
 
@@ -154,6 +155,7 @@ Nifty 50 is in a confirmed breakout above 24,000, supported by the convergence o
 | Date | Confidence | Causality | Correlation | Key reason for change |
 |---|---|---|---|---|
 | 2026-05-27 (created) | 68% | 45 | 55 | Initial estimate — multi-signal confluence on first validation |
+| 2026-05-28 | 63% | 45 | 55 | VIX at 14 confirms calm; but FII net selling -₹32,228Cr MTD May reverses FII return premise. Crude $100 (Iran strikes). DII floor intact. Net: partial kill of flow thesis. |
 
 ---
 

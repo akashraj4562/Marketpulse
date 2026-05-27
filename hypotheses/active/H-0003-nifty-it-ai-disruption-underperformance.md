@@ -14,8 +14,8 @@
 | **Status** | `Active` |
 | **Created** | 2026-05-27 |
 | **Created by** | hypothesis-generator |
-| **Last validated** | 2026-05-27 |
-| **Next validation due** | 2026-05-28 |
+| **Last validated** | 2026-05-28 |
+| **Next validation due** | 2026-05-29 |
 | **Priority tier** | `P1` (daily — AI narrative moves fast; FII selling is ongoing) |
 | **Time horizon** | `MT` (2–3 quarters; but structural elements make this an LT thesis — see H-0005 for the long-term version) |
 
@@ -53,7 +53,7 @@ Nifty IT continues underperforming Nifty 50 (which benefits from other sectors: 
 ## Scores
 | Metric | Score | Last updated |
 |---|---|---|
-| **Confidence** | 72% | 2026-05-27 |
+| **Confidence** | 75% | 2026-05-28 |
 | **Causality** | 72 / 100 | 2026-05-27 |
 | **Correlation** | 28 / 100 | 2026-05-27 |
 | Causality + Correlation check | 100 ✓ | — |
@@ -143,6 +143,7 @@ India IT sector faces a structural de-rating that the market has begun but not c
 | Date | Instrument | Predicted | Actual (close) | Match | Override type | Explanation | Confidence delta |
 |---|---|---|---|---|---|---|---|
 | 2026-05-27 | Nifty IT | Relative underperformance vs Nifty 50 | Pending May 27 close | Too early | — | Nifty IT -25% YTD base confirms direction | 0 |
+| 2026-05-28 | Nifty IT / TCS / INFY | -5–10% relative underperformance vs Nifty 50 | Nifty IT -25% in 2026 (worst-performing sector); Q4FY26 preview shows muted 3–5% FY27 growth guidance; May bounces (+2% on May 15, +3.6% May 19) are tactical, not structural | CONFIRMS | — | YTD -25% is the structural thesis playing out. May bounces driven by global risk-on sentiment (not India IT fundamentals), consistent with thesis that IT underperforms even in risk-on periods. Q4 earnings preview (3–5% FY27 growth) far below PE multiples — de-rating continues. | +3% |
 
 ---
 
@@ -154,6 +155,7 @@ India IT sector faces a structural de-rating that the market has begun but not c
 | 2026-05-27 | ICICIdirect research (high credibility — broker research) | Confirms | "Indian IT Sector Analysis 2026: Valuation, Growth, AI Risks" — structured sell-side analysis | +8% | ICICIdirect is a Tier-1 Indian broker; sell-side consensus beginning to acknowledge AI risk = structural narrative shift |
 | 2026-05-27 | blog.stockedge.com (medium credibility — secondary source) | Confirms (with caveat) | Nifty IT hit 52-week low, -21% mentioned, FII selling in IT mentioned. "Claude Cowork" specific claim — treat as low confidence single source | +3% (partial) | StockEdge blog aggregates NSE data; general market facts likely accurate, specific product claims NOT verified |
 | 2026-05-27 | longyield.substack.com / nextdisruption.in (lower credibility) | Confirms (directional) | "$315B AI reckoning" narrative, revenue-employment decoupling — directionally consistent but may be sensationalist | +2% (weak) | Substack and niche blogs: low credibility; useful as sentiment signal (narrative is spreading) but not as factual source |
+| 2026-05-28 | multibagg.ai / Ventura Securities (Tier 2) | Confirms | "Nifty IT slides 25% in 2026 amid AI, tariffs"; Q4FY26 preview shows 3–5% FY27 revenue guidance — muted | +3% | Sell-side (Ventura) and aggregator consistent. 3–5% FY27 growth far below current PE multiples — structural de-rating thesis intact. |
 
 ---
 
@@ -162,6 +164,7 @@ India IT sector faces a structural de-rating that the market has begun but not c
 | Date | Confidence | Causality | Correlation | Key reason for change |
 |---|---|---|---|---|
 | 2026-05-27 (created) | 72% | 72 | 28 | Strong empirical base (employment data, FII selling, YTD performance); partial discount for possible relief bounce after 25% correction |
+| 2026-05-28 | 75% | 72 | 28 | Nifty IT -25% YTD confirmed worst-performing sector. Q4FY26 preview shows muted 3–5% FY27 growth — well below valuations. May bounces (sentiment-driven) consistent with thesis of underperformance in a risk-on world. |
 
 ---
 

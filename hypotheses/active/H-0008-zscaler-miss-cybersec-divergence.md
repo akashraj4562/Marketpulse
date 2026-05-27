@@ -12,8 +12,8 @@
 | **Status** | `Active` |
 | **Created** | 2026-05-27 |
 | **Created by** | hypothesis-generator |
-| **Last validated** | 2026-05-27 |
-| **Next validation due** | 2026-05-28 |
+| **Last validated** | 2026-05-28 |
+| **Next validation due** | 2026-05-29 |
 | **Priority tier** | `P1` (daily — ZS -29% is today's event; very short timeframe) |
 | **Time horizon** | `ST` (1–3 weeks for rotation to play out; ZS bounce or further decline) |
 
@@ -53,7 +53,7 @@ ZS itself bounces within 4 weeks
 ## Scores
 | Metric | Score | Last updated |
 |---|---|---|
-| **Confidence** | 62% | 2026-05-27 |
+| **Confidence** | 70% | 2026-05-28 |
 | **Causality** | 60 / 100 | 2026-05-27 |
 | **Correlation** | 40 / 100 | 2026-05-27 |
 | Causality + Correlation check | 100 ✓ | — |
@@ -125,6 +125,7 @@ The ZS -29% is noise in the context of the structural cybersecurity thesis, not 
 |---|---|---|---|---|---|---|---|
 | 2026-05-27 | ZS | -29% (confirmed prior session) | -29% on May 27 (the event that creates the setup) | N/A | — | This is the trigger event, not the prediction itself | 0 |
 | 2026-05-27 | CRWD, PANW | Bullish +5–10% over 2 weeks | Pending today's close | Too early | — | Rotation thesis just set up today | 0 |
+| 2026-05-28 | CRWD / PANW / ZS | CRWD +5–10%; ZS bounce +15–20% | CRWD: 8 consecutive intraday records; PANW: hitting records; CIBR ETF +25% in May; ZS bouncing but "far below old highs"; ZS acquired Symmetry Systems for $175M | Strong CONFIRMS | — | CRWD and PANW outperformance is dramatically confirmed — 8 straight records is beyond the prediction. ZS bounce happening but below old highs = rotation divergence playing out as predicted. ZS acquisition adds new catalyst for ZS recovery. | +8% |
 
 ---
 
@@ -135,6 +136,8 @@ The ZS -29% is noise in the context of the structural cybersecurity thesis, not 
 | 2026-05-27 | CNBC (Tier 1) | Confirms (trigger) | "Zscaler tanked 29% after disappointing revenue guidance" — confirmed | +10% | CNBC is primary — ZS drop is a verified fact |
 | 2026-05-27 | CNBC/TheStreet (Tier 1) | Confirms (sector intact) | Cybersecurity stocks noted as separate from ZS miss; chip sector leading rally | +5% | Sector distinction confirmed by Tier 1 media |
 | 2026-05-27 | heygotrade.com citing CRWD earnings (Tier 2) | Confirms (CRWD) | CRWD $5.25B ARR, 24% growth, FY27 $5.9B guide — strong execution | +5% | Tier 2 source; verify against CRWD IR for primary source on next validation |
+| 2026-05-28 | Yahoo Finance / Motley Fool (Tier 1) | Confirms strongly | CRWD 8 consecutive intraday records; PANW at records; CIBR +25% May; ZS bouncing but far below highs | +8% | Tier 1 confirmation. CRWD outperformance exceeds +5–10% prediction — may need to revise magnitude upward. ZS divergence exactly as predicted. |
+| 2026-05-28 | SEC filing / Zscaler IR (Tier 1) | New catalyst | ZS acquired Symmetry Systems for $175M on May 19 — AI security / data identity mapping | 0% (neutral) | Adds strategic narrative to ZS recovery thesis. May help ZS close gap with CRWD on AI security story. Watch for ZS price response. |
 
 ---
 
@@ -143,6 +146,7 @@ The ZS -29% is noise in the context of the structural cybersecurity thesis, not 
 | Date | Confidence | Causality | Correlation | Key reason |
 |---|---|---|---|---|
 | 2026-05-27 (created) | 62% | 60 | 40 | Fresh setup; ZS drop just happened; rotation thesis unproven but plausible |
+| 2026-05-28 | 70% | 65 | 35 | CRWD 8 straight records, PANW at records, CIBR +25% in May — outperformance dramatically confirmed. ZS bouncing but below old highs = divergence confirmed. ZS $175M acquisition of Symmetry Systems adds new catalyst for ZS recovery leg. |
 
 ---
 *Not investment advice. Analytical output for research and training purposes only.*

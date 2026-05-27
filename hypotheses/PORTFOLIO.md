@@ -11,17 +11,17 @@
 
 | Metric | Count |
 |---|---|
-| **Active** (confidence ≥ 60%) | 6 |
+| **Active** (confidence ≥ 60%) | 7 |
 | **Developing** (confidence < 60%) | 4 |
 | **Predicted** (unvalidated, AI-generated) | 0 |
 | **Retired** (disproven / expired) | 0 |
-| **Total live** | 10 |
-| **P1 hypotheses** (validate daily) | 5 |
+| **Total live** | 11 |
+| **P1 hypotheses** (validate daily) | 6 |
 | **P2 hypotheses** (validate every 48h) | 5 |
 | **P3 hypotheses** (validate every 72h) | 0 |
 | **Overdue for validation** | 0 |
-| *Markets covered* | 🇮🇳 India (6), 🇺🇸 US (4) |
-| *Last updated* | 2026-05-27 |
+| *Markets covered* | 🇮🇳 India (7), 🇺🇸 US (4) |
+| *Last updated* | 2026-05-28 |
 
 ---
 
@@ -30,15 +30,16 @@
 
 | Priority | ID | Slug | Confidence | Market | Last validated | Due | Reason for priority |
 |---|---|---|---|---|---|---|---|
-| P1 🔴 | H-0001 | nifty-vix-compression-momentum | 68% | 🇮🇳 India | 2026-05-27 | 2026-05-28 | ST; gap-up today; VIX/FII data changes daily |
-| P1 🔴 | H-0002 | iran-deal-crude-india-relief | 52% | 🇮🇳 India | 2026-05-27 | 2026-05-28 | Deal timeline moving fast; crude/Iran signals change daily |
-| P1 🔴 | H-0003 | nifty-it-ai-disruption-underperformance | 72% | 🇮🇳 India | 2026-05-27 | 2026-05-28 | Active selling; FII data; earnings narrative moves fast |
-| P1 🔴 | H-0007 | micron-hbm-ai-memory-supercycle | 65% | 🇺🇸 US | 2026-05-27 | 2026-05-28 | MT but fast-moving; MU +19% yesterday; UBS upgrade cycle |
-| P1 🔴 | H-0008 | zscaler-miss-cybersec-divergence | 62% | 🇺🇸 US | 2026-05-27 | 2026-05-28 | ST; ZS -29% today; rotation window is 1–5 trading sessions |
+| P1 🔴 | H-0001 | nifty-vix-compression-momentum | 63% | 🇮🇳 India | 2026-05-28 | 2026-05-29 | ST; FII still net selling MTD; VIX data changes daily |
+| P1 🔴 | H-0002 | iran-deal-crude-india-relief | 44% | 🇮🇳 India | 2026-05-28 | 2026-05-29 | ⚠️ Approaching 40% kill threshold — fresh US strikes; crude $100 |
+| P1 🔴 | H-0003 | nifty-it-ai-disruption-underperformance | 75% | 🇮🇳 India | 2026-05-28 | 2026-05-29 | Strong confirmation; monitor for tactical bounce risk |
+| P1 🔴 | H-0007 | micron-hbm-ai-memory-supercycle | 80% | 🇺🇸 US | 2026-05-28 | 2026-05-29 | ⚠️ Crossed 80% threshold — flag for full thesis workup |
+| P1 🔴 | H-0008 | zscaler-miss-cybersec-divergence | 70% | 🇺🇸 US | 2026-05-28 | 2026-05-29 | ST rotation playing out strongly; CRWD at records |
+| P1 🔴 | H-0011 | crude-100-india-fiscal-rbi-hold | 62% | 🇮🇳 India | 2026-05-28 | 2026-05-29 | New today; crude $100 + Iran escalation; fluid daily |
 | P2 🟡 | H-0004 | fmcg-rural-demand-defensive-rotation | 65% | 🇮🇳 India | 2026-05-27 | 2026-05-29 | MT thesis; quarterly data dominant |
 | P2 🟡 | H-0005 | india-it-structural-multiple-de-rating | 70% | 🇮🇳 India | 2026-05-27 | 2026-05-29 | LT thesis; earnings season is key event (July 2026) |
-| P2 🟡 | H-0006 | india-crude-dependence-inr-pressure | 58% | 🇮🇳 India | 2026-05-27 | 2026-05-29 | LT macro; tracks inversely with H-0002 |
-| P2 🟡 | H-0009 | fed-rate-hold-rate-sensitive-sectors | 58% | 🇺🇸 US | 2026-05-27 | 2026-05-29 | LT structural; next FOMC is key event |
+| P2 🟡 | H-0006 | india-crude-dependence-inr-pressure | 58% | 🇮🇳 India | 2026-05-27 | 2026-05-29 | LT macro; tracks inversely with H-0002; amplified by H-0011 |
+| P2 🟡 | H-0009 | fed-rate-hold-rate-sensitive-sectors | 58% | 🇺🇸 US | 2026-05-27 | 2026-05-29 | LT structural; next FOMC June 16-17 is key event |
 | P2 🟡 | H-0010 | bigtech-ai-capex-margin-then-revenue | 55% | 🇺🇸 US | 2026-05-27 | 2026-05-29 | MT; Q3 2026 earnings are next Phase 1 test |
 
 ---
@@ -47,12 +48,13 @@
 
 | ID | Slug | Market | Horizon | Confidence | Causality | Correlation | Instrument | Predicted direction | P-tier | Last validated |
 |---|---|---|---|---|---|---|---|---|---|---|
-| H-0001 | nifty-vix-compression-momentum | 🇮🇳 India | ST | 68% | 45 | 55 | NIFTY 50 | Bullish +1.5–3.5% | P1 | 2026-05-27 |
-| H-0003 | nifty-it-ai-disruption-underperformance | 🇮🇳 India | MT | 72% | 72 | 28 | Nifty IT / TCS / INFY | Bearish relative -5–10% vs Nifty 50 | P1 | 2026-05-27 |
+| H-0001 | nifty-vix-compression-momentum | 🇮🇳 India | ST | 63% | 45 | 55 | NIFTY 50 | Bullish +1.5–3.5% | P1 | 2026-05-28 |
+| H-0003 | nifty-it-ai-disruption-underperformance | 🇮🇳 India | MT | 75% | 72 | 28 | Nifty IT / TCS / INFY | Bearish relative -5–10% vs Nifty 50 | P1 | 2026-05-28 |
 | H-0004 | fmcg-rural-demand-defensive-rotation | 🇮🇳 India | MT | 65% | 68 | 32 | Nifty FMCG / HINDUNILVR / ITC | Bullish +5–10% vs Nifty 50 | P2 | 2026-05-27 |
 | H-0005 | india-it-structural-multiple-de-rating | 🇮🇳 India | LT | 70% | 78 | 22 | TCS / INFY / Nifty IT | Bearish PE 22–25x → 14–18x | P2 | 2026-05-27 |
-| H-0007 | micron-hbm-ai-memory-supercycle | 🇺🇸 US | MT | 65% | 82 | 18 | NASDAQ: MU / SOXX | Bullish +20–35% over 2 quarters | P1 | 2026-05-27 |
-| H-0008 | zscaler-miss-cybersec-divergence | 🇺🇸 US | ST | 62% | 60 | 40 | NASDAQ: CRWD / PANW / ZS | Bullish CRWD +5–10%; ZS bounce +15–20% | P1 | 2026-05-27 |
+| H-0007 | micron-hbm-ai-memory-supercycle | 🇺🇸 US | MT | 80% | 85 | 15 | NASDAQ: MU / SOXX | Bullish +20–35% over 2 quarters | P1 | 2026-05-28 |
+| H-0008 | zscaler-miss-cybersec-divergence | 🇺🇸 US | ST | 70% | 65 | 35 | NASDAQ: CRWD / PANW / ZS | Bullish CRWD +5–10%; ZS bounce +15–20% | P1 | 2026-05-28 |
+| H-0011 | crude-100-india-fiscal-rbi-hold | 🇮🇳 India | MT | 62% | 78 | 22 | USD/INR / Nifty Auto / Nifty Bank | INR Bearish; Auto/Bank -8–15% relative | P1 | 2026-05-28 |
 
 **Horizon key:** `ST` = Short-term (≤4 weeks) / `MT` = Medium-term (1–3 months) / `LT` = Long-term structural (3–18+ months)
 
@@ -62,7 +64,7 @@
 
 | ID | Slug | Market | Horizon | Confidence | Causality | Correlation | Instrument | Predicted direction | P-tier | Last validated |
 |---|---|---|---|---|---|---|---|---|---|---|
-| H-0002 | iran-deal-crude-india-relief | 🇮🇳 India | MT | 52% | 80 | 20 | BPCL / HPCL / IOC / NIFTY 50 | Bullish conditional +15–25% OMCs | P1 | 2026-05-27 |
+| H-0002 | iran-deal-crude-india-relief | 🇮🇳 India | MT | 44% | 80 | 20 | BPCL / HPCL / IOC / NIFTY 50 | Bullish conditional +15–25% OMCs | P1 | 2026-05-28 |
 | H-0006 | india-crude-dependence-inr-pressure | 🇮🇳 India | LT | 58% | 82 | 18 | USD/INR / Nifty Auto | INR Bearish; Auto Bearish | P2 | 2026-05-27 |
 | H-0009 | fed-rate-hold-rate-sensitive-sectors | 🇺🇸 US | LT | 58% | 78 | 22 | IYR / XLU / IWM / KRE | Bearish relative -8–15% vs SPY | P2 | 2026-05-27 |
 | H-0010 | bigtech-ai-capex-margin-then-revenue | 🇺🇸 US | MT | 55% | 72 | 28 | AAPL / GOOGL / META | Phase 1: AAPL bullish vs GOOGL/META; Phase 2 reverse | P2 | 2026-05-27 |
@@ -123,4 +125,4 @@
 ---
 
 ## Next hypothesis ID
-**H-0011** ← Use this for the next new hypothesis, then increment.
+**H-0012** ← Use this for the next new hypothesis, then increment.

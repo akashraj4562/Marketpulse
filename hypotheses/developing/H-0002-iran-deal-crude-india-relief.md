@@ -14,8 +14,8 @@
 | **Status** | `Developing` |
 | **Created** | 2026-05-27 |
 | **Created by** | hypothesis-generator |
-| **Last validated** | 2026-05-27 |
-| **Next validation due** | 2026-05-28 |
+| **Last validated** | 2026-05-28 |
+| **Next validation due** | 2026-05-29 |
 | **Priority tier** | `P1` (daily — deal timeline moves fast) |
 | **Time horizon** | `MT` (1–3 months — Hormuz traffic restores within 30 days of signing per Iran) |
 
@@ -57,7 +57,7 @@ Nifty 50 re-rates on broad macro relief; OMC sector specifically re-rates 15–2
 ## Scores
 | Metric | Score | Last updated |
 |---|---|---|
-| **Confidence** | 52% | 2026-05-27 |
+| **Confidence** | 44% | 2026-05-28 |
 | **Causality** | 80 / 100 | 2026-05-27 |
 | **Correlation** | 20 / 100 | 2026-05-27 |
 | Causality + Correlation check | 100 ✓ | — |
@@ -151,6 +151,7 @@ The Iran peace deal is the single largest unpriced macro positive for Indian equ
 |---|---|---|---|---|---|---|---|
 | 2026-05-27 | BPCL, HPCL | Bullish (trigger pending) | Pending May 27 close | Too early | — | Deal not yet signed; market pricing partial probability | 0 |
 | 2026-05-27 | Brent crude | Below $100 (post-deal) | $106.59 (pre-deal) | Too early | — | Peace hopes active but deal not finalized | 0 |
+| 2026-05-28 | Brent crude / OMCs | Deal thesis stalled | Brent $99–100; US launched fresh strikes on Iran May 26; deal "jeopardized" per Time; 14M bpd blocked per IEA | Partial KILL | Type 2 (Trigger invalidation) | Fresh US strikes directly contradict the "peace deal imminent" premise. Crude spiked to $100 before easing slightly. Iran rejected surrendering nuclear enrichment. India hiked petrol/diesel Rs 5/litre since May 15 — OMCs passing costs, not receiving relief. Deal probability declining; approaching kill zone. | -8% |
 
 ---
 
@@ -162,6 +163,9 @@ The Iran peace deal is the single largest unpriced macro positive for Indian equ
 | 2026-05-27 | Axios (credible US political source) | Confirms | "Oil prices fall after Trump indicates US-Iran deal possible" — direct Trump statement | +5% | Axios is high-quality; Trump statements on peace deals have historically been noisy but directionally meaningful |
 | 2026-05-27 | Crude price data (Goodreturns / PPAC) | Confirms | Crude fell from $115 (April) to $106.59 (May 26) — already pricing partial deal probability | +5% | PPAC is Indian government source — high credibility for India crude prices |
 | 2026-05-27 | WION News | Confirms (partial) | "Oil prices fall over 5% amid Iran-US peace hopes" — quantifies the oil price move | +2% | WION is credible for India/ME news; the 5% figure is corroborated by other sources |
+| 2026-05-28 | Time / Axios (Tier 1) | Contradicts | "Fresh US strikes on Iran cast shadow over peace deal" — Brent $100, deal jeopardized; Iran rejected surrendering nuclear enrichment | -6% | Military escalation directly contradicts deal-imminent premise. Key stumbling block: Iran's enrichment demands. |
+| 2026-05-28 | IEA (Tier 1) | Contradicts | 14M barrels/day blocked by Strait of Hormuz conflict — supply disruption deepening | -2% | IEA is gold standard for energy data. Disruption deepening, not resolving. |
+| 2026-05-28 | India PPAC / government (Tier 1) | Contradicts (OMC pain) | Petrol/diesel hiked Rs 5/litre since May 15 — OMCs passing costs to consumers | 0% | OMCs under margin pressure, not benefiting — opposite of the "relief" thesis. |
 
 ---
 
@@ -170,6 +174,7 @@ The Iran peace deal is the single largest unpriced macro positive for Indian equ
 | Date | Confidence | Causality | Correlation | Key reason for change |
 |---|---|---|---|---|
 | 2026-05-27 (created) | 52% | 80 | 20 | Initial estimate — deal is real but outcome uncertain; causal chain is strong if deal closes |
+| 2026-05-28 | 44% | 80 | 20 | Fresh US strikes on Iran May 26 directly contradict deal-imminent premise. Crude at $100. India fuel hike Rs 5/litre signals OMCs absorbing costs, not benefitting. ⚠️ Approaching 40% kill threshold — monitor tomorrow. |
 
 ---
 
