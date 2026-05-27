@@ -103,15 +103,17 @@ Score the owner's chain against the desk's on seven dimensions (1–5 each):
 | **Sector grounding** | Did they know how the relevant industry actually works? | | |
 | **Already-priced-in awareness** | Did they ask whether the market already knows this? | | |
 
-**Total: /35**
+| **Behavioral mechanism** | Did the owner identify any psychological mechanisms in the chain — panic, herding, loss aversion, mortality salience, narrative contagion, trust collapse? Did they use behavioral signals (Google Trends, sentiment) as leading indicators? Did they predict the behavioral reversal? | | |
+
+**Total: /40**
 
 Scoring guide:
-- 28–35: Consultant-grade. Minor gaps.
-- 20–27: Strong framework, specific systematic gaps.
-- 12–19: Good intuition, significant methodology gaps.
-- <12: Framework not yet internalised — focus drills here.
+- 33–40: Consultant-grade. Minor gaps.
+- 24–32: Strong framework, specific systematic gaps.
+- 14–23: Good intuition, significant methodology gaps.
+- <14: Framework not yet internalised — focus drills here.
 
-Give specific, non-generic comments on each dimension. Not "missed second-order effects." Say: "You stopped at margin compression but didn't trace what the losers do next — which is where the real second-order winner lives."
+Give specific, non-generic comments on each dimension. Not "missed second-order effects." Say: "You stopped at margin compression but didn't trace what the losers do next — which is where the real second-order winner lives." On the behavioral dimension: "You assumed consumers would respond to the supply signal rationally — but this is exactly the type of visible scarcity that triggers loss aversion and hoarding. The behavioral amplification doubles the demand spike and creates a real shortage where the fundamental data predicted only a moderate one."
 
 ---
 
@@ -127,6 +129,7 @@ Common patterns to watch for:
 - **Calibration collapse:** presents the whole chain at uniform confidence
 - **Feedback loop omission:** doesn't close the loop (corporate response → next signal)
 - **Timeframe vagueness:** doesn't distinguish what happens in 3 months vs. 3 years
+- **Rational actor assumption:** consistently models human behavior as rational when behavioral economics predicts systematic deviation — missing the amplification, the panic, the reversal
 
 Log in `docs/blind-spots/YYYY-MM-DD.md`:
 ```

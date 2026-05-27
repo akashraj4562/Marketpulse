@@ -1,6 +1,6 @@
 ---
 name: signal-to-thesis
-description: The core workup pipeline for CausalDesk. Takes one verified signal and produces a complete, falsifiable thesis — running signal-scout verification, causal chain building, sector grounding, financial translation, strategic implications, red-team attack, and research-director synthesis. Outputs a filed thesis and a LEDGER row.
+description: The core workup pipeline for Marketpulse. Takes one verified signal and produces a complete, falsifiable thesis — running signal-scout verification, causal chain building, parallel behavioral audit + sector grounding, financial translation, strategic implications, red-team attack, and research-director synthesis. Outputs a filed thesis and a LEDGER row.
 ---
 
 # Signal-to-Thesis — Full Workup Pipeline
@@ -62,7 +62,9 @@ Produce:
 
 ---
 
-## Stage 3 — Sector mechanics (sector-specialist)
+## Stage 3 — Parallel specialist passes (run simultaneously)
+
+### Stage 3a — Sector mechanics (sector-specialist)
 
 **Deliverable:** grounded industry mechanics that confirm, correct, or qualify the chain.
 
@@ -74,6 +76,45 @@ For the industry/industries the chain passes through:
 - Correct any chain links that don't match real industry dynamics
 
 Flag where the chain needs correction before Stage 4 proceeds.
+
+### Stage 3b — Behavioral audit (behavioral-psychologist)
+
+**Deliverable:** the psychological mechanisms in the chain, behavioral signals confirming or contradicting it, and behavioral adjustments to timeframe and magnitude.
+
+**Trigger:** this stage is mandatory when the signal involves a population-scale shock (epidemic, war, financial crisis, natural disaster, major regulatory shock, supply panic). It is optional but recommended for all other signals.
+
+Run the behavioral audit:
+
+1. **Psychological mechanism identification**
+   Which links in the chain pass through human psychology? Name the specific mechanism:
+   - Loss aversion / panic → hoarding → artificial demand
+   - Mortality salience (TMT) → nesting / avoidance behavior shift
+   - Social proof / herding → amplified herd move beyond fundamentals
+   - Narrative contagion → self-fulfilling expectation
+   - Trust collapse → contagion beyond fundamental damage
+   - Availability heuristic → demand persists after threat resolves
+
+2. **Behavioral signal check**
+   Are behavioral leading indicators already moving?
+   - Google Trends: search intent spikes for relevant terms?
+   - Social media sentiment: fear/panic language volume rising?
+   - Fund flows: flight-to-safety moves in gold, USD, bonds?
+   - Consumer confidence: survey data showing expectation shift?
+   - Options skew: institutional hedging behavior elevated?
+
+3. **Timeframe adjustment**
+   Behavioral effects often lead economic data by 2–8 weeks. Does the behavioral signal suggest the chain is ahead of or behind where fundamentals currently indicate?
+
+4. **Magnitude adjustment**
+   Will behavioral amplification (herding, panic) make this chain larger than the fundamental mechanism alone? Or will behavioral inertia (status quo bias, information avoidance) delay or dampen it?
+
+5. **Behavioral winners and losers**
+   Beyond the sector-specialist's structural winners/losers: which companies benefit specifically from the behavioral response (safety categories, hoarding beneficiaries, trust refugees)?
+
+6. **Behavioral reversal prediction**
+   Every behavioral overshoot contains a reversal. Identify: what does the second-order behavioral reversal look like, and what is its economic consequence?
+
+**Output:** a behavioral audit note flagging: psychological mechanisms present, behavioral signals observed (with sources), timeframe/magnitude adjustments, behavioral winners/losers, and reversal prediction.
 
 ---
 
@@ -134,7 +175,9 @@ If UNSUPPORTED: state specific reasons and what would change the verdict. Workup
 
 **Deliverable:** a complete, ready thesis or an explicit UNSUPPORTED log.
 
-Resolve tensions from the crew. Synthesize into the final thesis using the standard format from CLAUDE.md §7:
+Resolve tensions from the crew — including any conflicts between the sector-specialist's structural timeline and the behavioral-psychologist's behavioral-lead timeline. Synthesize into the final thesis using the standard format from CLAUDE.md §7:
+
+*Note: if the behavioral audit identified significant psychological mechanisms, the thesis must include a "Behavioral dimension" section stating: (a) the psychological mechanism(s) at work, (b) any observed behavioral signals, (c) the behavioral timeframe adjustment, and (d) the behavioral reversal to watch for.*
 
 ```
 # Thesis: [Short title]

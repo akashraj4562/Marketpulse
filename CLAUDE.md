@@ -70,6 +70,12 @@ Eleven specialists in `.claude/agents/`. Each has a mandate, a specific lens, de
 | **hypothesis-validator** | Scores and updates the portfolio | Daily (priority queue) |
 | **hypothesis-predictor** | Predicts unestablished cause-effect relationships | Weekly |
 
+**Cross-cutting specialist** (embedded in both systems):
+
+| Agent | Role | Embedded in |
+|---|---|---|
+| **behavioral-psychologist** | Translates human psychological states into economic and market impact. Surfaces behavioral leading indicators (Google Trends, sentiment, fund flows). Identifies where chains depend on human psychology rather than rational actor mechanics. | Thesis pipeline Stage 3b; daily behavioral signal scan; behavioral hypothesis generation; training drill scoring |
+
 **Conflict rule:** the research-director resolves disagreements and records reasoning in `docs/decisions/`. **The red-team-skeptic's "chain is unsupported" verdict cannot be overridden without an explicit, logged rationale** — and that log is visible to the owner. If the research-director overrides the red-team, the thesis ships with that disagreement prominently disclosed.
 
 ---

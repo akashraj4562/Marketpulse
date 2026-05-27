@@ -46,6 +46,19 @@ Scan for signals that are too early-stage to generate confident hypotheses but w
 
 These are the "footnotes that become headlines" hypotheses — often in domains that look economically irrelevant now.
 
+### Method 5 — Behavioral pattern prediction (with behavioral-psychologist)
+Apply canonical behavioral templates to current conditions. Human psychological responses to specific trigger types are highly predictable — the economic context changes, the psychological mechanisms do not. When a trigger condition is present, predict the behavioral chain and its economic consequences before the behavioral data has confirmed it.
+
+**Behavioral templates to apply (coordinate with behavioral-psychologist for depth):**
+
+- **Scarcity trigger active** (supply shock, rationing, shortage narrative): predict hoarding onset → artificial demand spike → real shortage creation → glut reversal 6–18 months later
+- **Mortality salience trigger** (epidemic, war, large disaster): predict nesting behavior surge → avoidance category collapse → revenge spending reversal when threat recedes
+- **Trust collapse trigger** (major institutional failure, fraud exposure): predict contagion to adjacent institutions → credit tightening → real economic contraction beyond fundamental damage
+- **Narrative inflation trigger** (vivid price spike in highly-visible category): predict expectation spread → brought-forward demand → self-fulfilling inflation pressure
+- **Herding trigger** (large directional market move by prominent actors): predict overshoot beyond fundamentals → reversion opportunity window
+
+For each active trigger: file a predicted hypothesis for the behavioral chain's predicted economic endpoint, even if no fundamental data yet supports it. The behavioral-psychologist will help calibrate the initial causality/correlation split and confidence for these predictions.
+
 ---
 
 ## Prediction quality standards

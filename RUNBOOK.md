@@ -242,9 +242,18 @@ The signal-scout can search; you can also bring signals from these domains:
 | Deepen a link | `causal-chain-analyst: re-examine the link [link] in [slug].` |
 | Quarterly calibration | `research-director: calibration review of all scored theses.` |
 
+### Behavioral psychology
+| Task | Prompt |
+|---|---|
+| Behavioral audit on a thesis | `behavioral-psychologist: run a behavioral audit on thesis [slug]. What psychological mechanisms are in this chain and what behavioral signals should we be watching?` |
+| Behavioral signals check | `behavioral-psychologist: scan current behavioral signals — Google Trends, sentiment, fund flows — for any active fear or panic patterns. What's forming?` |
+| Behavioral hypothesis | `behavioral-psychologist + hypothesis-generator: file a behavioral hypothesis for [current trigger]. Apply the [panic/mortality salience/trust collapse/narrative inflation/herding] template.` |
+| Behavioral reversal check | `behavioral-psychologist: hypothesis H-NNNN predicts a behavioral overshoot. What does the reversal look like and when?` |
+
 ### Training
 | Task | Prompt |
 |---|---|
 | Training drill | `socratic-coach: run a training drill.` |
 | Targeted drill | `socratic-coach: run a training drill on [domain].` |
+| Behavioral training drill | `socratic-coach: run a training drill with the behavioral-psychologist scoring the behavioral reasoning dimension.` |
 | Blind-spot targeting | `socratic-coach: review blind-spots and design targeted drills.` |

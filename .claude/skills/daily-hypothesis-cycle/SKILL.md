@@ -35,21 +35,36 @@ research-director: run the daily hypothesis cycle with prediction pass.
 
 ---
 
-## Phase 1 — New signal intake (hypothesis-generator)
+## Phase 1 — New signal intake (hypothesis-generator + behavioral-psychologist)
 
 **Time allocation:** approximately 20–30% of the session
 
-**Task:** Scan for new world events that imply cause-effect relationships not yet in the portfolio.
+**Task:** Scan for new world events that imply cause-effect relationships not yet in the portfolio. The behavioral-psychologist scans specifically for behavioral signals running in parallel.
 
-**Efficient scanning approach:**
-1. Run 4–6 targeted web searches across different domains (commodities, India regulation, US policy, geopolitics, climate/weather, technology)
+**Efficient scanning approach — hypothesis-generator:**
+1. Run 4–6 targeted web searches across domains (commodities, India regulation, US policy, geopolitics, climate/weather, technology)
 2. For each significant signal found: check PORTFOLIO.md for existing coverage
 3. For genuinely new relationships: generate and file a new hypothesis
 4. For events that confirm/disconfirm existing hypotheses: flag them for the validator (Phase 2) rather than creating new files
 
-**Token efficiency rule:** batch your domain searches. One search for "India import regulation 2024" may yield signals relevant to 3–5 hypotheses.
+**Behavioral signal scan — behavioral-psychologist (add 1–2 searches):**
+Run targeted behavioral scans alongside the main domain sweep:
+- Google Trends for terms related to any active fear/crisis signal (searches for "food stockpile," "gold buy," "power outage," "bank withdrawal" — whatever is contextually relevant)
+- Social media sentiment for any active shock
+- Fund flow signals (gold, USD, defensive sector ETF flows)
+- Consumer confidence data if recently released
 
-**Expected output:** 0–3 new hypothesis files per day (quality over quantity). PORTFOLIO.md updated.
+**Key behavioral signals to always check when any crisis/shock signal is active:**
+- Is there evidence of hoarding or panic-buying behavior forming?
+- Is avoidance behavior (travel, dining, public spaces) shifting?
+- Is there a trust-collapse signal for any institution or category?
+- Is a narrative spreading faster than the fundamental event justifies?
+
+If behavioral signals are found: file a behavioral hypothesis OR flag the confirming/disconfirming evidence for the validator.
+
+**Token efficiency rule:** batch your domain searches. One search for "India import regulation 2024" may yield signals relevant to 3–5 hypotheses. One behavioral scan for a crisis term can cover multiple related hypotheses.
+
+**Expected output:** 0–3 new hypothesis files per day (quality over quantity). PORTFOLIO.md updated. Behavioral signals flagged for validator.
 
 ---
 
