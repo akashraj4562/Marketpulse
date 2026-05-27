@@ -1010,7 +1010,13 @@ const HTML = `<!DOCTYPE html>
     padding: 10px 12px;
     margin-bottom: 14px;
   }
-  .tx-header { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--blue); font-weight: 700; margin-bottom: 6px; }
+  .tx-header { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--blue); font-weight: 700; margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
+  .tx-source-badge { font-size: 9px; font-weight: 600; padding: 1px 6px; border-radius: 4px; text-transform: none; letter-spacing: 0; cursor: pointer; transition: opacity 0.15s; }
+  .tx-source-badge.ai { background: rgba(99,102,241,0.15); color: var(--blue); border: 1px solid rgba(99,102,241,0.3); }
+  .tx-source-badge.static { background: rgba(148,163,184,0.15); color: var(--muted); border: 1px solid rgba(148,163,184,0.25); }
+  .tx-retry-btn { font-size: 11px; background: none; border: none; cursor: pointer; color: var(--muted); padding: 0; line-height: 1; margin-left: auto; opacity: 0.7; }
+  .tx-retry-btn:hover { opacity: 1; color: var(--blue); }
+  .tx-retry-btn.spinning { animation: spin 1s linear infinite; display: inline-block; }
   .tx-bullets { list-style: none; display: flex; flex-direction: column; gap: 5px; }
   .tx-bullets li { font-size: 12px; line-height: 1.5; color: var(--text); }
 
@@ -1456,6 +1462,82 @@ function pricedLabel(p) {
   return 'PARTIALLY PRICED';
 }
 
+// ─── TX (TL;DR) helpers ────────────────────────────────────────────────────
+
+// Stored AI lines per hypothesis (keyed by id) so toggle can switch back
+var txAiLines = {};
+
+function loadTxAI(id) {
+  var txBody = document.getElementById('tx-body-' + id);
+  var badge  = document.getElementById('tx-badge-' + id);
+  var retryBtn = document.getElementById('tx-retry-' + id);
+  if (!txBody) return;
+  fetch('/api/tx/' + id)
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      if (data.lines && data.lines.length > 0 && (data.source === 'ai' || data.source === 'cache')) {
+        txAiLines[id] = data.lines;
+        txBody.innerHTML = data.lines.map(function(l) { return '<li>' + l + '</li>'; }).join('');
+        if (badge) {
+          badge.textContent = data.source === 'cache' ? '✨ AI (cached)' : '✨ AI';
+          badge.className = 'tx-source-badge ai';
+          badge.title = 'Showing AI version — tap to switch to template';
+        }
+      }
+      // source === 'static' means no API key or fallback — badge stays as Template
+    })
+    .catch(function() {
+      // Silent fail — badge stays as Template, retry button still available
+    });
+}
+
+function onTxRetry(e, id) {
+  e.stopPropagation();
+  var retryBtn = document.getElementById('tx-retry-' + id);
+  var badge    = document.getElementById('tx-badge-' + id);
+  if (retryBtn) retryBtn.classList.add('spinning');
+  // Clear cache hint by adding ?nocache= so server re-fetches (cache still used server-side for speed)
+  fetch('/api/tx/' + id + '?t=' + Date.now())
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      if (retryBtn) retryBtn.classList.remove('spinning');
+      if (data.lines && data.lines.length > 0 && (data.source === 'ai' || data.source === 'cache')) {
+        txAiLines[id] = data.lines;
+        var txBody = document.getElementById('tx-body-' + id);
+        if (txBody) txBody.innerHTML = data.lines.map(function(l) { return '<li>' + l + '</li>'; }).join('');
+        if (badge) { badge.textContent = '✨ AI'; badge.className = 'tx-source-badge ai'; }
+      } else {
+        if (badge) { badge.textContent = '⚠️ Retry'; badge.className = 'tx-source-badge static'; }
+      }
+    })
+    .catch(function() {
+      if (retryBtn) retryBtn.classList.remove('spinning');
+      var badge = document.getElementById('tx-badge-' + id);
+      if (badge) { badge.textContent = '⚠️ Failed'; badge.className = 'tx-source-badge static'; }
+    });
+}
+
+function onTxToggle(id) {
+  var txBody = document.getElementById('tx-body-' + id);
+  var badge  = document.getElementById('tx-badge-' + id);
+  var section = document.getElementById('tx-' + id);
+  if (!txBody || !section) return;
+  var staticLines = [];
+  try { staticLines = JSON.parse(decodeURIComponent(section.dataset.static || '[]')); } catch(e) {}
+  var isShowingAI = badge && badge.classList.contains('ai');
+  if (isShowingAI && staticLines.length > 0) {
+    // Switch to template
+    txBody.innerHTML = staticLines.map(function(l) { return '<li>' + l + '</li>'; }).join('');
+    if (badge) { badge.textContent = '📝 Template'; badge.className = 'tx-source-badge static'; badge.title = 'Showing template — tap to switch to AI'; }
+  } else if (!isShowingAI && txAiLines[id] && txAiLines[id].length > 0) {
+    // Switch back to AI
+    txBody.innerHTML = txAiLines[id].map(function(l) { return '<li>' + l + '</li>'; }).join('');
+    if (badge) { badge.textContent = '✨ AI'; badge.className = 'tx-source-badge ai'; badge.title = 'Showing AI version — tap to switch to template'; }
+  }
+  // If AI not loaded yet and badge clicked, trigger load
+  if (!isShowingAI && !txAiLines[id]) loadTxAI(id);
+}
+
 function isBullish(direction) {
   return (direction || '').toLowerCase().includes('bull');
 }
@@ -1742,8 +1824,12 @@ function renderCard(h) {
   // TX section — plain English (static fallback; AI version loaded on card open)
   const txLines = generateTX(h);
   const txHtml = txLines.length > 0 ? \`
-    <div class="tx-section" id="tx-\${h.id}">
-      <div class="tx-header">🗣 TL;DR — Plain English</div>
+    <div class="tx-section" id="tx-\${h.id}" data-static="\${encodeURIComponent(JSON.stringify(txLines))}">
+      <div class="tx-header">
+        🗣 TL;DR — Plain English
+        <span class="tx-source-badge static" id="tx-badge-\${h.id}" onclick="onTxToggle('\${h.id}')" title="Tap to toggle AI / Template view">📝 Template</span>
+        <button class="tx-retry-btn" id="tx-retry-\${h.id}" onclick="onTxRetry(event,'\${h.id}')" title="Reload AI version">🔄</button>
+      </div>
       <ul class="tx-bullets" id="tx-body-\${h.id}">
         \${txLines.map(l => \`<li>\${l}</li>\`).join('')}
       </ul>
@@ -1992,14 +2078,7 @@ function renderCards() {
           }).catch(function() {});
 
           // Load AI plain-language TX (replaces static version if API key is set)
-          const txBody = document.getElementById('tx-body-' + id);
-          if (txBody) {
-            fetch('/api/tx/' + id).then(function(r) { return r.json(); }).then(function(data) {
-              if (data.lines && data.lines.length > 0 && data.source === 'ai') {
-                txBody.innerHTML = data.lines.map(function(l) { return '<li>' + l + '</li>'; }).join('');
-              }
-            }).catch(function() {});
-          }
+          loadTxAI(id);
         }
       }
     });
