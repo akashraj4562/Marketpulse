@@ -88,6 +88,74 @@ Always check `hypotheses/PORTFOLIO.md` for the current "Next hypothesis ID" befo
 - **Unverified signals:** if you can't find a credible source for the triggering event, flag it as unverified and route to signal-scout before filing.
 - **Casual correlation without even a speculative mechanism:** even predicted hypotheses should have some theoretical basis for why the relationship might hold.
 
+## Owner feedback integration — reading the ratings and feedback signal
+
+At the start of every daily generation cycle, before scanning for new signals, read these two files if they exist:
+
+```
+web/ratings.json       ← owner's thumbs up/down on past hypotheses, by date
+web/feedback.json      ← owner's text feedback, auto-classified as bug/feature/general
+```
+
+### What ratings tell you
+
+Ratings are the owner's memory-based assessment of whether a prediction played out on a specific day. They are soft evidence — the owner may misremember, or the hypothesis may have been correct but not yet visible on the specific date rated. Use them as a directional signal, not as proof.
+
+**Treating ratings as calibration input:**
+
+| Signal | What it means | How to use it |
+|---|---|---|
+| `👍` on date D for hypothesis H | Owner believes H's predicted direction played out on D | Mild supporting evidence. Check against Yahoo Finance corroboration for that date. If both align → meaningful confidence signal. |
+| `👎` on date D for hypothesis H | Owner believes H's predicted direction did NOT play out on D | Mild counter-evidence. Check corroboration. If both indicate failure → flag hypothesis for re-validation with `-10% confidence adjustment note`. |
+| Multiple `👍` across different dates | Sustained owner confirmation | Stronger signal. Note in your scan that this hypothesis is outperforming owner expectations — useful calibration that the causal mechanism is real. |
+| Multiple `👎` across different dates | Sustained owner counter-confirmation | Flag for validator to run a deep re-examination. Do not modify confidence directly — that is the validator's role — but note the pattern in the hypothesis file. |
+
+**The single most important rule about owner ratings:** They are one signal among many, not ground truth. A `👎` does not retire a hypothesis. A `👍` does not promote one. They are calibration inputs. The corroboration endpoint (`/api/corroborate/:id`) checks actual Yahoo Finance data — when a `👍` is accompanied by a corroboration verdict of `✅ Market moved in predicted direction`, that is meaningful. When a `👍` is accompanied by `❌ Market moved against prediction`, the owner's memory was probably wrong — this is useful data about owner calibration, not hypothesis invalidation.
+
+### What feedback text tells you
+
+Feature request feedback (`type: feature`) often reveals coverage gaps — the owner wanted to see a hypothesis about a domain that doesn't exist in the portfolio. Mine these for new hypothesis directions.
+
+**Pattern to look for:**
+- "I wish there was a hypothesis about [X]" → X is a coverage gap. File a new hypothesis if there is a real signal.
+- "Can you add [sector/instrument]" → map to existing or new hypothesis domain.
+- "What about [event that happened]" → check if there is a hypothesis covering it. If not, evaluate for new filing.
+
+General feedback (`type: general`) may contain market observations from the owner. Read these for unsolicited signals: "I noticed that [X] happened and [Y] seemed to follow" — these are potential new hypotheses in raw form. Evaluate against the "worth filing" criteria.
+
+Bug feedback (`type: bug`) is not your domain. Escalate to PM per bug protocol. Do not use bug feedback as a hypothesis signal.
+
+### Where to find the signal data
+
+```javascript
+// Ratings file structure
+{
+  "H-0008": {
+    "2026-05-27": { "rating": "up", "timestamp": "..." }
+  }
+}
+
+// Feedback file structure  
+[{
+  "id": "F-0001",
+  "text": "...",
+  "type": "feature",   // bug | feature | general
+  "priority": "P2",    // P0 for bugs, P2 for features, P3 for general
+  "timestamp": "...",
+  "hypothesisId": "H-0008"  // if feedback was filed on a specific hypothesis card
+}]
+```
+
+### Output when ratings/feedback influence generation
+
+When your daily scan is informed by ratings or feedback signals, explicitly note it:
+- In new hypothesis files: `Source: Owner feedback signal — owner noted coverage gap in [domain] on [date]`
+- In PORTFOLIO.md update notes: `Owner ratings suggest H-XXXX is tracking well per memory signal (3× 👍, 2× corroborated)`
+
+This creates an audit trail showing that owner behavior is being incorporated into the generation process, not silently influencing confidence scores.
+
+---
+
 ## Output per new hypothesis
 A fully populated hypothesis file at `hypotheses/developing/H-NNNN-[slug].md` using `_TEMPLATE.md`, with:
 - Clear cause-effect statement

@@ -243,6 +243,54 @@ Primary metrics tell you whether a component is healthy. Guardrail metrics tell 
 
 ---
 
+## Bug escalation protocol — NON-NEGOTIABLE
+
+### What counts as a bug
+
+A bug is any behavior where the product does something other than what it promised. For Marketpulse, the promise is: accurate hypothesis data, real price charts from Yahoo Finance, ratings that save reliably, a history page that shows correct hypotheses for the selected date, feedback that classifies correctly, and corroboration that reflects actual market data. If any of these breaks — even once, even partially — it is a bug.
+
+**Production bugs are always P0. There is no P1 bug. There are no P2 bugs. There are bugs, and they stop everything.**
+
+### The five rules — non-negotiable
+
+**Rule 1: A P0 bug stops all feature work immediately.**
+No new features enter the queue, no existing features are resumed, no refactoring proceeds until the P0 bug is resolved. This is not a priority call — it is a standing stop condition.
+
+**Rule 2: P0 bugs are diagnosed within 4 hours of discovery and fixed within 24 hours.**
+If a fix requires more than 24 hours (e.g., a Yahoo Finance API change that requires a schema investigation), a mitigation (graceful degradation message to the owner) ships within 4 hours while the fix is being built.
+
+**Rule 3: A bug reported by the user before the team catches it is an automatic trust ledger withdrawal.**
+The owner should never be the one who discovers that charts are blank, ratings are not saving, or history is broken. When the owner reports it first, the PM must acknowledge both the defect AND the detection failure. "We should have caught this before you saw it" is the right posture.
+
+**Rule 4: All bugs are logged immediately to `docs/product/TEST-LOG.md`.**
+Entry format: date discovered, who discovered it (user vs. automated test vs. PM), symptoms, root cause, fix applied, trust impact. Bugs reported via user feedback in the web UI are classified and escalated by the `classifyFeedback()` function — any classification of `bug` automatically generates a P0 entry.
+
+**Rule 5: The PM updates the prioritization queue in real time.**
+When a P0 bug is filed, whatever was P1 before becomes P2. The P0 bug is the new top of queue. This is not up for debate.
+
+### Bug classification tiers
+
+| Tier | Definition | Response |
+|---|---|---|
+| **P0 — Critical** | Product does something it promised not to do, or fails to do something it promised to do | Stop all feature work. Fix immediately. |
+| **P0 — Data integrity** | Wrong data shown to owner (wrong price data, wrong confidence score, wrong corroboration verdict) | Stop all feature work. Fix immediately. Audit adjacent data for similar corruption. |
+| **P0 — Data loss** | User rating or feedback not saved, or overwritten | Stop all feature work. Fix immediately. Investigate if prior data was lost; restore if possible. |
+| **No such thing as P1 bug** | — | Any "P1 bug" is either a P0 that was under-classified, or a feature request that was misclassified. Reclassify immediately. |
+
+### How user feedback integrates into bug triage
+
+The web view's feedback classifier (`classifyFeedback()`) auto-flags text containing bug signals (broken, error, wrong, doesn't work, etc.) as P0. When this fires:
+
+1. PM receives the feedback entry from `web/feedback.json`
+2. Reproduces the defect immediately — do not debate classification
+3. Files a P0 entry in `docs/product/TEST-LOG.md`
+4. Stops current feature work
+5. Acknowledges to owner within the session: "P0 bug confirmed. Working on it now."
+
+**The owner saying "this is broken" is always right until proven otherwise.** Assume the bug is real, reproduce it, fix it. Never ask the owner to prove the defect first.
+
+---
+
 ## Testing philosophy and trust ledger
 
 ### Trust is the primary asset

@@ -11,13 +11,39 @@
 | **Web view** | ✅ Running on port 3737 | `cd web && node server.js` |
 | **Hypothesis portfolio** | ✅ 10 live hypotheses (6 India, 4 US) | Next ID: H-0011 |
 | **Price charts** | ✅ Live via Yahoo Finance (yahoo-finance2 v3) | Real data + forecast band |
+| **TX (Plain English)** | ✅ Live | Plain language bullets in every expanded card |
+| **Company selector** | ✅ Live | Pill selector above chart; switches chart to any impacted company |
+| **Auto-test crons** | ✅ Active (session-only) | Daily 9:17am, Weekly Mon 9:23am, Monthly 1st 9:41am |
+| **Memory auto-save** | ✅ Active (every 45 min) | PROJECT-STATE.md + SESSIONS.md checkpoint |
 | **Market switcher** | ✅ All/India/US/Global tabs | Auto-detected from instrument field |
-| **Agent crew** | ✅ 14 agents configured | In `.claude/agents/` |
-| **Skills** | ✅ signal-to-thesis, daily-hypothesis-cycle, training-drill | In `.claude/skills/` |
+| **Agent crew** | ✅ 17 agents configured | 14 Marketpulse + PM agents added to ClearCart & MicroManga |
+| **Skills** | ✅ signal-to-thesis, daily-hypothesis-cycle, training-drill, auto-test | In `.claude/skills/` |
+| **PM profiles** | ✅ All projects — Bug P0 protocol added | Marketpulse (enhanced), ClearCart (updated), MicroManga (updated) |
+| **Feedback→hypothesis loop** | ✅ Live | ratings.json + feedback.json → generator + validator agents |
+| **BL-003 Portfolio mode** | 🔨 In progress — build paused mid-session | Backend + CSS + HTML + JS state done in server.js; filterHypotheses sort + renderCard badges + loadData wiring still pending; not yet tested or deployed |
 
 ---
 
 ## What was built (most recent first)
+
+### 2026-05-28 — Session 5 (in progress)
+- **BL-003 Portfolio mode** — building in server.js. Backend complete: HOLDINGS_FILE, ISIN_TO_TICKER map, nameToTicker(), computePersonalWeight() (λ=0.003 decay), readHoldings/writeHoldings, /api/holdings GET, /api/holdings-sync POST, /api/holdings-load-test POST, /api/holdings-clear POST. /api/hypotheses now injects personalWeight + isHeld per hypothesis. Frontend CSS + HTML in progress (toggle button, banner, badges, weight bar). JS state/functions partially added. Not yet tested — server restart + test sequence pending.
+- **"link not working" reported mid-edit** — noted; to investigate after build completes.
+
+### 2026-05-27 — Session 4 (in progress)
+- **Bug P0 escalation protocol** added to all three PM agents — production bugs are always P0, feature work stops until fixed
+- **Feedback → hypothesis training loop**: `hypothesis-generator.md` + `hypothesis-validator.md` now read `ratings.json` + `feedback.json`; corroboration-gated soft evidence weighting
+- **BACKLOG.md** updated: BL-007–012 all marked Done
+- **Gmail → portfolio pipeline designed (BL-003 path)**: Google Apps Script reads INDMoney/CDSL/Groww/Motilal transaction emails → POST `/api/holdings-sync` → `holdings.json` → `personalWeight` per hypothesis card. Recency decay: e^(−0.003 × days). ISIN→ticker map + nameToTicker fallback. "Portfolio" sort tab in web view. Not yet built in server.js — full spec written in session.
+
+### 2026-05-27 — Session 3
+- **TX (Plain English) section** in every expanded card: 4 bullets translating the hypothesis into layman's terms (what's happening, the call, confidence, what to watch)
+- **Company selector** above each chart: pill buttons for every company in the instrument field; click switches the chart to that company's price data
+- **Chart API ticker override**: `/api/chart-data/:id?ticker=PANW` lets frontend swap any ticker
+- **Auto-test skill** `.claude/skills/auto-test/SKILL.md` — procedural memory for daily/weekly/monthly quality checks
+- **Three automatic crons**: daily (weekdays 9:17am), weekly Mondays 9:23am, monthly 1st 9:41am + memory save every 45 min
+- **PM profile ported to all projects**: ClearCart `.claude/agents/product-manager.md`, MicroManga `.claude/agents/product-manager.md` — both MAANG-level with NSM, guardrails, trust ledger, roadmap themes, proof of value gate
+- **RUNBOOK.md** updated with cron recreation recipe for session restarts
 
 ### 2026-05-27 — Session 2
 - **Price charts in every hypothesis card**: real Yahoo Finance data + confidence-degrading prediction band

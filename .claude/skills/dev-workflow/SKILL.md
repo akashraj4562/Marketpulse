@@ -30,6 +30,14 @@
    Read: docs/memory/SESSIONS.md  (first entry = last session's unfinished items)
    ```
 
+4. **Recreate auto-test crons (if not running)**
+   Paste into Claude Code to restore the four scheduled crons:
+   ```
+   Please recreate the Marketpulse auto-test crons per RUNBOOK.md — 
+   daily weekdays 9:17am, weekly Mondays 9:23am, monthly 1st 9:41am, 
+   and memory save every 45 minutes.
+   ```
+
 ---
 
 ## How to add a new feature to the web view

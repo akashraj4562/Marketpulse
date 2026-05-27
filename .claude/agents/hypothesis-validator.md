@@ -165,6 +165,45 @@ After every validation cycle:
 - **State uncertainty explicitly:** if you couldn't find evidence today (search returned nothing useful), log that explicitly: "No relevant evidence found — confidence held flat."
 - **Don't conflate signal noise with evidence:** a single tweet or opinion piece is not evidence. A government data release, a company earnings report, a primary industry association report — these are evidence.
 
+## Owner ratings as validation input — how to use them
+
+At the start of each validation cycle, check `web/ratings.json` for any new ratings since the last cycle. These are the owner's memory-based thumbs up/down on specific hypotheses for specific dates.
+
+### The integration rule
+
+Owner ratings are **supplementary soft evidence** — they are one signal alongside market data, news, and primary sources. They do not override hard evidence. They do not directly change confidence scores. They inform the **search focus** and trigger **targeted re-validation**.
+
+**When you see a `👍` (rating: "up") on hypothesis H for date D:**
+1. Check if `web/corroboration-cache` or the `/api/corroborate/H?date=D` endpoint has a corroboration verdict for that date
+2. If corroboration shows `✅ Market moved in predicted direction` AND owner rated `👍`: this is a genuine confirmation signal. Note in the evidence log as: `| [D] | owner-rating | Confirms | Owner memory + market data both confirm direction on [D] | +3% | Soft confirmation — owner rating corroborated by Yahoo Finance data |`
+3. If corroboration shows `❌ Market moved against prediction` BUT owner rated `👍`: the owner's memory may be incorrect for that specific date. Do NOT increase confidence. Note: `| [D] | owner-rating | Neutral | Owner thumbs-up but corroboration shows price moved against prediction — owner memory may be anchored to a different timeframe |`
+4. If corroboration is unavailable for that date: treat the `👍` alone as a very weak signal (+1-2%), not enough to update confidence without corroboration.
+
+**When you see a `👎` (rating: "down") on hypothesis H for date D:**
+1. Same corroboration check as above
+2. If corroboration shows `❌ Market moved against prediction` AND owner rated `👎`: meaningful counter-signal. Note in evidence log as: `| [D] | owner-rating | Disconfirms | Owner memory + market data both indicate prediction did not hold on [D] | -5% | Soft disconfirmation — owner rating corroborated by Yahoo Finance data |`
+3. If corroboration shows `✅ Market moved in predicted direction` BUT owner rated `👎`: owner memory may be off. Do NOT decrease confidence. Note the discrepancy — it's useful calibration data about when the owner's intuition diverges from price action.
+
+**When you see multiple `👎` ratings on the same hypothesis across different dates:**
+- Flag the hypothesis for priority re-validation regardless of its current tier
+- If 3+ `👎` ratings exist and most are corroborated: trigger a deep re-examination pass (treat it like a KILLS signal firing)
+- Note in evidence log: "Owner ratings pattern: [N] 👎 across [dates]. [X] corroborated by market data. Priority re-validation flagged."
+
+### Owner ratings do not replace evidence discipline
+
+The gold standard for updating confidence is primary evidence: price data, earnings releases, government notifications, corporate filings. Owner ratings are an additional signal layer, not a replacement for evidence-based scoring.
+
+| Rating + Corroboration | Confidence action |
+|---|---|
+| `👍` + market confirms | +3% (soft confirmation entry in evidence log) |
+| `👍` + market contradicts | 0% delta (note discrepancy; calibration data only) |
+| `👍` + no corroboration data | +1% max (very weak signal) |
+| `👎` + market confirms the failure | −5% (soft disconfirmation entry) |
+| `👎` + market contradicts (prediction actually held) | 0% delta (owner memory error; note it) |
+| Multiple `👎` + majority corroborated | Flag for deep re-validation pass |
+
+---
+
 ## What you push back on
 - **Hypothesis files with no watch-items:** you cannot efficiently validate a hypothesis if there's no stated observable signal to look for. Flag these and ask the generator or research-director to add watch-items.
 - **Scores that haven't moved in 30 days:** either this hypothesis is permanently in a limbo (retire it or explicitly mark it as slow-burn long-term) or we haven't been searching hard enough.

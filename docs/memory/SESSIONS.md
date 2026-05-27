@@ -4,6 +4,105 @@
 
 ---
 
+## Session: 2026-05-28 (Session 5 — checkpoint 2)
+
+**Focus:** BL-003 Portfolio mode build — paused mid-implementation
+
+### State of server.js edits so far
+- ✅ Backend: ISIN_TO_TICKER, nameToTicker(), computePersonalWeight() (λ=0.003 decay), readHoldings/writeHoldings helpers
+- ✅ Backend: /api/holdings GET, /api/holdings-sync POST, /api/holdings-load-test POST, /api/holdings-clear POST
+- ✅ Backend: /api/hypotheses now injects personalWeight + isHeld per hypothesis
+- ✅ Frontend CSS: portfolio toggle button, banner, held-badge, history-badge, weight-bar styles
+- ✅ Frontend HTML: Portfolio toggle btn in header, portfolio-banner div below filters
+- ✅ Frontend JS: portfolioMode state (localStorage), allHoldings, loadHoldings(), togglePortfolioMode(), applyPortfolioModeUI(), personalRelevanceScore()
+- ❌ Still needed: filterHypotheses portfolio sort, renderCard badge/weight-bar HTML, loadData wiring (loadHoldings + applyPortfolioModeUI on init)
+- ❌ Not yet: server restart, test with holdings-load-test, verify weights, switch off, commit/push, README
+
+### Next actions to resume
+1. Complete remaining 3 frontend edits (filterHypotheses, renderCard, loadData)
+2. Kill + restart server
+3. `curl -X POST localhost:3737/api/holdings-load-test` → verify weight math
+4. Open browser, toggle Portfolio mode on, verify sort + badges
+5. `curl -X POST localhost:3737/api/holdings-clear` → switch off
+6. `git add -A && git commit` then push + write README
+
+---
+
+## Session: 2026-05-28 (Session 5 — checkpoint)
+
+**Focus:** BL-003 Portfolio mode — build, test, deploy, switch off
+
+### Done so far
+- Backend: all holdings endpoints added to server.js (sync, load-test, clear, GET holdings)
+- /api/hypotheses enriched with personalWeight + isHeld per hypothesis
+- Frontend CSS (toggle btn, banner, held-badge, history-badge, weight-bar) added
+- Frontend HTML (portfolio toggle in header, portfolio-banner div) added
+- Frontend JS state + functions (portfolioMode, loadHoldings, togglePortfolioMode, applyPortfolioModeUI, personalRelevanceScore) added
+- "link not working" reported mid-edit — pending investigation
+
+### In-flight
+- Still need: filterHypotheses sort, renderCard badge HTML, loadData wiring, then server restart + test sequence
+- After test: switch off (holdings-clear), commit, push to git, write README
+
+---
+
+## Session: 2026-05-27 (Session 4 — checkpoint)
+
+**Focus:** Bug P0 protocol, feedback→hypothesis loop, email→portfolio pipeline design
+
+### Accomplished so far
+- Bug P0 escalation protocol added to all 3 PM agents (Marketpulse, ClearCart, MicroManga)
+- `hypothesis-generator.md` + `hypothesis-validator.md` updated to read `ratings.json` / `feedback.json` as soft calibration signals (corroboration-gated: +3%/−5%)
+- BACKLOG.md: BL-007–012 marked Done
+- BL-003 (portfolio-aware) fully designed: Gmail Apps Script → `/api/holdings-sync` → `holdings.json` → `personalWeight` on cards; recency decay formula e^(−0.003×days); "Portfolio" sort tab; spec ready to build
+
+### In-flight / next
+- Build BL-003 in server.js (owner confirmed email sources: INDMoney, CDSL, Groww, Motilal)
+- Owner needs to tune regex on actual email samples before Apps Script goes live
+- Daily hypothesis cycle not run this session
+
+---
+
+## Session: 2026-05-27 (Session 4)
+
+### Accomplished
+
+- **Bug escalation protocol (NON-NEGOTIABLE)** added to all three PM agents:
+  - `marketpulse/.claude/agents/product-manager.md` — added before Testing Philosophy section
+  - `clearcart/.claude/agents/product-manager.md` — added before Trust Ledger section
+  - `micromanga/.claude/agents/product-manager.md` — added before Themes & Roadmap section
+  - Rule: production bugs are always P0, no P1 bugs, all feature work stops until fixed
+  - User-reported bugs always assumed real until proven otherwise
+  - ClearCart protocol includes privacy violations and page breaks as automatic P0
+  - MicroManga protocol covers content bugs: continuity errors, cross-world bleed, broken panel flow
+
+- **Owner ratings → hypothesis training signal** (both generation and validation agents updated):
+  - `hypothesis-generator.md` — reads `web/ratings.json` + `web/feedback.json` before daily scan; uses ratings to spot coverage gaps in text feedback; mines feature requests for new hypothesis domains
+  - `hypothesis-validator.md` — corroboration-gated soft evidence weighting: +3% when both owner and market confirm, −5% when both contradict; solo ratings +1% max; never overrides hard evidence
+  - Key principle: corroboration from `/api/corroborate/:id` is required before a rating changes confidence
+
+- **BACKLOG.md** updated:
+  - BL-007: Owner ratings + feedback → hypothesis training signal (Done)
+  - BL-008–012: TX, company selector, light theme, history page, feedback (Done)
+  - All session 3 work formally logged in backlog
+
+### Key decisions
+- Owner `👍`/`👎` ratings are soft evidence, not hard evidence — they need corroboration from Yahoo Finance to meaningfully shift confidence scores
+- Corroboration reveals AFTER the user rates (history page design) to preserve memory-based rating integrity
+- Bug P0 escalation is a cultural norm encoded in PM agents — no feature work until bugs fixed
+
+### What's unfinished
+- BL-003 Portfolio-aware prioritization (owner still needs to share holdings in `docs/portfolio/HOLDINGS.md`)
+- Product Staff project (standalone PM-focused workspace with Product, Data, UI/UX, DevOps, Tech agents)
+- Daily validation cycle has not been run this session (no hypothesis confidence updates today)
+
+### What to do next session
+1. If owner has holdings ready → build BL-003 portfolio-aware prioritization
+2. Run daily hypothesis cycle: `research-director: run the daily hypothesis cycle.`
+3. Product Staff workspace: create new project directory with 5 specialist agents
+
+---
+
 ## Session: 2026-05-27 (Session 2)
 
 **Duration:** ~3 hours  

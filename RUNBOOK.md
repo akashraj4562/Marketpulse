@@ -197,6 +197,32 @@ Design the next 4 training drills to target those specific patterns.
 
 ---
 
+## Automatic test schedule — cron jobs (recreate each session)
+
+These crons fire automatically within the active session. They **expire after 7 days** and are session-only. Paste these three CronCreate calls at the start of any new session to restore them.
+
+**How to recreate (paste into a Claude Code turn):**
+```
+Please recreate the three Marketpulse auto-test crons:
+1. Daily (weekdays 9:17am): run auto-test daily cycle per .claude/skills/auto-test/SKILL.md
+2. Weekly (Mondays 9:23am): run auto-test weekly cycle WT-01 through WT-05
+3. Monthly (1st of month 9:41am): run auto-test monthly cycle MT-01 through MT-05
+4. Memory save (every 45 min): update docs/memory/PROJECT-STATE.md and SESSIONS.md
+
+Working directory: /Users/priyanka/Desktop/Akash Claude/marketpulse
+```
+
+| Cron | When | What |
+|---|---|---|
+| Daily | Weekdays 9:17am | G4 staleness + G8 overconfidence + ST momentum check |
+| Weekly | Mondays 9:23am | Full WT-01–WT-05 guardrail sweep |
+| Monthly | 1st of month 9:41am | MT-01–MT-05 calibration review |
+| Memory save | Every 45 min | PROJECT-STATE.md + SESSIONS.md checkpoint |
+
+**If a breach fires:** check `docs/product/TEST-LOG.md` immediately. Fix before any new feature work.
+
+---
+
 ## Signal sources — where to hunt
 
 The signal-scout can search; you can also bring signals from these domains:

@@ -143,12 +143,93 @@ Add this to RUNBOOK.md as the canonical "manual refresh" command with a clear he
 
 ---
 
+---
+
+### [BL-007] Owner ratings + feedback → hypothesis training signal
+**Priority:** P1
+**Status:** Done (2026-05-27)
+**Theme:** 🎯 Prediction Accuracy / 🧠 Owner Intelligence
+**True need:** The owner's memory-based thumbs up/down ratings on past hypotheses — combined with market corroboration data — should feed back into how the desk generates and validates future hypotheses. Text feedback should be mined for coverage gaps and product issues.
+
+**What was built:**
+- `ratings.json` — per-hypothesis, per-date thumbs up/down, toggle-off behavior, stored persistently
+- `feedback.json` — natural language feedback auto-classified as `bug` (P0), `feature` (P2), or `general` (P3)
+- `/api/corroborate/:id?date=YYYY-MM-DD` — Yahoo Finance comparison between predicted direction and actual price movement on any historical date
+- History page (`/history`) — owner can navigate to any past date, see that day's hypotheses, rate from memory, then reveal corroboration verdict after voting (preserving memory-based integrity)
+- `hypothesis-generator.md` updated with full owner feedback integration section — reads both files before daily scan
+- `hypothesis-validator.md` updated with owner ratings integration section — corroboration-gated soft evidence weighting (+3% when both owner and market confirm, −5% when both contradict)
+
+**Key design decisions:**
+1. Corroboration reveals AFTER the rating (not before) — preserves memory-based rating integrity
+2. Owner ratings alone are +1–3% max; corroborated ratings are +3–5% or −5%; never override hard evidence
+3. Bug feedback is always P0 — stops all feature work
+
+**Extended RICE:** Reach 4 × Impact 4 × Confidence 0.9 / Effort 3 = 4.8 × Foundation ×1.5 (enables: calibration history, blind-spot auto-detection, owner learning velocity tracking, confidence accuracy by hypothesis type) × NSM ×1.25 = **Score 9.0**
+
+---
+
+---
+
+### [BL-013] Gmail holdings sync — read-only email integration
+**Priority:** P1
+**Status:** Proposed
+**Theme:** 📱 Output Clarity / 🎯 Prediction Accuracy
+**Dependency:** BL-003 (portfolio mode logic — ✅ Done). This is the data source that feeds it.
+
+**True need:** The owner's actual portfolio positions (current holdings + historical transactions) live in their Gmail inbox as emails from INDMoney, CDSL, Groww, and Motilal Oswal. Manually entering holdings into a file is friction that will never happen consistently. The sync should be automatic, read-only, and zero-privacy-risk.
+
+**Configured senders (read-only, no reply, no action):**
+| Sender | Content | What to extract |
+|---|---|---|
+| `transactions@transactions.indmoney.com` | Buy/sell confirmations | Ticker, direction (BUY/SELL), qty, date |
+| `services@cdslindia.co.in` | CDSL demat CAS + confirmations | ISIN, company name, qty held |
+| `noreply@motilaloswal.com` | Trade confirmations | Ticker, direction, qty, date |
+| `noreply@daily.digest.groww.in` | Portfolio digest | Holdings snapshot (sanity check) |
+
+**Architecture (designed in Session 4):**
+- **Google Apps Script** (runs as owner's Google account — zero OAuth complexity on server side)
+  - Searches Gmail for the 4 configured senders, 3-year lookback
+  - Parses transaction emails with regex (buy/sell/qty/ticker or ISIN)
+  - POSTs structured JSON to `POST /api/holdings-sync` on the Express server
+  - Triggered on schedule (every 6 hours) via Apps Script time trigger
+- **Server side** (already built in BL-003):
+  - `/api/holdings-sync` receives the payload, builds position ledger, writes `holdings.json`
+  - `ISIN_TO_TICKER` map (20 entries, expandable) resolves ISINs to Yahoo tickers
+  - `nameToTicker()` fuzzy-matches company names as fallback
+
+**Key design decisions:**
+1. Read-only — the script only calls `GmailApp.search()` and reads message bodies. No labels, marks, replies, or modifications.
+2. Runs as the owner's Google account inside Apps Script — no server-side OAuth tokens or credentials stored.
+3. Regex tuning required: spend ~20 min looking at real emails from each sender and adjusting patterns before enabling the trigger. The 4 senders have different formats.
+4. ISIN→ticker map grows organically — each new email that contains an ISIN that isn't in the map yet is logged and the owner adds the entry.
+5. Network: the script POSTs to `http://192.168.1.14:3737/api/holdings-sync` (local IP). For public hosting, update to the hosted URL.
+
+**What to build:**
+- [ ] Google Apps Script file (`.clause/scripts/gmail-holdings-sync.gs`) with `syncHoldings()`, `parseTransactionEmail()`, regex patterns, time trigger setup instructions
+- [ ] Regex tuning guide: how to open Gmail, find a sample email from each sender, extract the pattern
+- [ ] ISIN→ticker expansion guide: where to look up ISIN→NSE code mappings
+- [ ] Test: run Apps Script manually once, verify `holdings.json` updates, verify portfolio mode shows correct badges in web view
+
+**Extended RICE:** Reach 5 × Impact 4 × Confidence 0.8 / Effort 2 = 8.0 × Foundation ×1.0 × NSM ×1.0 = **Score 8.0**
+(Effort is low — server side is already built; only the Apps Script + regex tuning remains)
+
+**Proof of value:** Owner opens portfolio mode and sees "🎯 Held" badges on hypotheses about stocks they currently hold, without manually entering any data. Observable: holdings.json updates automatically within 6 hours of a new transaction email arriving. Assumption: INDMoney/CDSL emails are structured enough for regex extraction (reasonable — confirmed format exists; 20 min tuning is sufficient).
+
+---
+
 ## Done
 
 | ID | Feature | Shipped | Theme |
 |---|---|---|---|
 | BL-001 | Mobile web view — card layout, dark mode, responsive | 2026-05-27 | 📱 Output Clarity |
 | BL-002 | Manual refresh button (↻) in web view | 2026-05-27 | ⚡ Validation Velocity |
+| BL-003 | Portfolio mode — personalWeight, isHeld, sort, badges, weight bar | 2026-05-28 | 📱 Output Clarity |
+| BL-007 | Owner ratings + feedback → hypothesis training signal | 2026-05-27 | 🎯 Prediction Accuracy / 🧠 Owner Intelligence |
+| BL-008 | TX (Plain English) section in every card | 2026-05-27 | 📱 Output Clarity |
+| BL-009 | Company selector + company list in expanded card | 2026-05-27 | 📱 Output Clarity |
+| BL-010 | Light theme | 2026-05-27 | 📱 Output Clarity |
+| BL-011 | History page with date navigation + corroboration reveal | 2026-05-27 | 🧠 Owner Intelligence |
+| BL-012 | Natural language feedback with auto-classification (bug P0 / feature P2) | 2026-05-27 | 🎯 Prediction Accuracy |
 
 ---
 
