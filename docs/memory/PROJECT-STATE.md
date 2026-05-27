@@ -20,15 +20,28 @@
 | **Skills** | ✅ signal-to-thesis, daily-hypothesis-cycle, training-drill, auto-test | In `.claude/skills/` |
 | **PM profiles** | ✅ All projects — Bug P0 protocol added | Marketpulse (enhanced), ClearCart (updated), MicroManga (updated) |
 | **Feedback→hypothesis loop** | ✅ Live | ratings.json + feedback.json → generator + validator agents |
-| **BL-003 Portfolio mode** | 🔨 In progress — build paused mid-session | Backend + CSS + HTML + JS state done in server.js; filterHypotheses sort + renderCard badges + loadData wiring still pending; not yet tested or deployed |
+| **BL-003 Portfolio mode** | ✅ Built, tested, switched off | All 8 edits complete, verified with test data, holdings cleared; toggled off cleanly |
+| **README** | ✅ Written | Full showcase README at repo root — architecture, depth, backlog, run instructions |
+| **Git** | ✅ Clean history, push ready | 3 commits on main; sensitive files scrubbed from history; SSH auth confirmed (akashraj4562); user to create GitHub repo |
+| **Security hardening** | ✅ Done | .gitignore, history scrubbed, security-privacy-guardian agent created |
+| **Mobile fix** | ✅ Done | Chart.js defer + bare-catch fix → phone now loads instantly |
+| **BL-013 Gmail sync** | 📋 Backlog | Full spec in BACKLOG.md — Apps Script → /api/holdings-sync; server side already built |
 
 ---
 
 ## What was built (most recent first)
 
-### 2026-05-28 — Session 5 (in progress)
-- **BL-003 Portfolio mode** — building in server.js. Backend complete: HOLDINGS_FILE, ISIN_TO_TICKER map, nameToTicker(), computePersonalWeight() (λ=0.003 decay), readHoldings/writeHoldings, /api/holdings GET, /api/holdings-sync POST, /api/holdings-load-test POST, /api/holdings-clear POST. /api/hypotheses now injects personalWeight + isHeld per hypothesis. Frontend CSS + HTML in progress (toggle button, banner, badges, weight bar). JS state/functions partially added. Not yet tested — server restart + test sequence pending.
-- **"link not working" reported mid-edit** — noted; to investigate after build completes.
+### 2026-05-28 — Session 6
+- **Security hardening**: root `.gitignore` added (covers node_modules, holdings.json, feedback.json, ratings.json, .env*); git history scrubbed via `filter-branch + gc`; `security-privacy-guardian.md` agent created with 5-section pre-publication gate checklist; security gate run — CLEAR TO PUSH verdict.
+- **Mobile fix**: Chart.js CDN script was a blocking `<script>` in `<head>` — added `defer` so page renders immediately. Also fixed bare `catch{}` → `catch(err){}` for iOS compatibility (bare catch is ES2019, could fail on older Safari). Fixed `loadData` to show specific error messages.
+- **npm reinstall**: node_modules/express was missing from disk; `npm install` restored it.
+- **BL-003 Portfolio mode** fully built and tested (see Session 5 entry below)
+
+### 2026-05-28 — Session 5
+- **BL-003 Portfolio mode** fully built and tested: personalWeight decay (λ=0.003), 6 API endpoints, 🎯/📋/🕐 badges, weight bar, portfolio sort, toggle with localStorage persistence. Test verified correct weights. Holdings cleared — feature off cleanly.
+- **README** written: full showcase with architecture, formula explanations, agent crew table, PM system, roadmap themes, run instructions.
+- **BL-013 Gmail sync** specced in BACKLOG.md.
+- **PM roadmap themes** defined for all 3 projects.
 
 ### 2026-05-27 — Session 4 (in progress)
 - **Bug P0 escalation protocol** added to all three PM agents — production bugs are always P0, feature work stops until fixed
