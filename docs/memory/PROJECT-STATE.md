@@ -22,9 +22,10 @@
 | **Feedback→hypothesis loop** | ✅ Live | ratings.json + feedback.json → generator + validator agents |
 | **BL-003 Portfolio mode** | ✅ Built, tested, switched off | All 8 edits complete, verified with test data, holdings cleared; toggled off cleanly |
 | **README** | ✅ Written | Full showcase README at repo root — architecture, depth, backlog, run instructions |
-| **Git** | ✅ Clean history, push ready | 3 commits on main; sensitive files scrubbed from history; SSH auth confirmed (akashraj4562); user to create GitHub repo |
-| **Security hardening** | ✅ Done | .gitignore, history scrubbed, security-privacy-guardian agent created |
-| **Mobile fix** | ✅ Done | Chart.js defer + bare-catch fix → phone now loads instantly |
+| **Git** | ✅ Clean, push ready | 5 commits on main; history scrubbed (node_modules + JSONs); SSH auth confirmed (akashraj4562); user to create GitHub repo |
+| **Security hardening** | ✅ Done | .gitignore, history scrubbed via filter-branch+gc, security-privacy-guardian agent |
+| **Mobile fix** | ✅ Done | Chart.js `defer` + bare `catch{}` → `catch(err){}` — phone loads correctly now |
+| **Tech Backlog** | ✅ Added | TB-001–005 in BACKLOG.md; SMOKE-TEST.md written; pre-commit JS syntax hook installed |
 | **BL-013 Gmail sync** | 📋 Backlog | Full spec in BACKLOG.md — Apps Script → /api/holdings-sync; server side already built |
 
 ---

@@ -4,6 +4,23 @@
 
 ---
 
+## Session: 2026-05-28 (Session 6 — checkpoint)
+
+**Focus:** Security hardening, mobile P0 fix, Tech Backlog
+
+### Done so far
+- **Mobile P0 fixed**: Chart.js CDN was a blocking `<script>` in `<head>` — page froze on "Loading hypotheses…" on iPhone. Added `defer`. Also fixed bare `catch{}` → `catch(err){}` for iOS Safari compat. npm reinstall required (express was missing from node_modules).
+- **Security gate**: root `.gitignore` added; `web/holdings.json`, `feedback.json`, `ratings.json`, `node_modules/` removed from tracking AND scrubbed from git history via `filter-branch + gc`. `security-privacy-guardian.md` agent created with 5-section pre-publication checklist. Security gate: CLEAR TO PUSH ✅
+- **Tech Backlog created**: TB-001 (mobile smoke test, P1), TB-002 (JS linting), TB-003 (server stability), TB-004 (modularisation), TB-005 (SQLite). `docs/product/SMOKE-TEST.md` written. Pre-commit hook installed (blocks commits with JS syntax errors, warns on bare catch).
+- **5 commits on main**. Push still pending — user to create GitHub repo at github.com/new.
+
+### Next
+- User to push: `git remote add origin git@github.com:akashraj4562/marketpulse.git && git push -u origin main`
+- Implement TB-001 smoke test as part of next deployment
+- Daily hypothesis validation cycle not run this session
+
+---
+
 ## Session: 2026-05-28 (Session 5 — checkpoint 2)
 
 **Focus:** BL-003 Portfolio mode build — paused mid-implementation
