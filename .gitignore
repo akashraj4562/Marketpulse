@@ -17,6 +17,7 @@ yarn-error.log*
 web/holdings.json
 web/feedback.json
 web/ratings.json
+web/tx-cache.json
 
 # macOS
 .DS_Store

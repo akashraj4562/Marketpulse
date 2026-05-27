@@ -1,3 +1,6 @@
+// Load .env before anything reads process.env
+try { require('dotenv').config(); } catch(e) { /* dotenv optional */ }
+
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
