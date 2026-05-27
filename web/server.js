@@ -748,7 +748,7 @@ const HTML = `<!DOCTYPE html>
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>Marketpulse</title>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"><\/script>
+<script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"><\/script>
 <style>
   :root {
     --bg: #f4f5f9;
@@ -1145,7 +1145,7 @@ let portfolioMode = localStorage.getItem('mp_portfolio_mode') === '1';
 let allHoldings   = {};  // loaded from /api/holdings
 
 async function loadHoldings() {
-  try { allHoldings = await fetch('/api/holdings').then(r => r.json()); } catch { allHoldings = {}; }
+  try { allHoldings = await fetch('/api/holdings').then(function(r) { return r.json(); }); } catch(err) { allHoldings = {}; }
 }
 
 function togglePortfolioMode() {
@@ -1178,7 +1178,7 @@ function personalRelevanceScore(h) {
 // ─── Rating helpers ────────────────────────────────────────────────────────────
 
 async function loadRatings() {
-  try { allRatings = await fetch('/api/ratings').then(r => r.json()); } catch { allRatings = {}; }
+  try { allRatings = await fetch('/api/ratings').then(function(r) { return r.json(); }); } catch(err) { allRatings = {}; }
 }
 
 function getRating(id, date) {
@@ -1882,23 +1882,21 @@ function updateStats(hyps) {
 // ─── Load data ─────────────────────────────────────────────────────────────
 
 async function loadData() {
-  const btn = document.getElementById('refreshBtn');
+  var btn = document.getElementById('refreshBtn');
+  var container = document.getElementById('cardsContainer');
   btn.classList.add('spinning');
   try {
-    const [hypsRes] = await Promise.all([
-      fetch('/api/hypotheses'),
-      loadRatings(),
-      loadHoldings(),
-    ]);
+    var hypsRes = await fetch('/api/hypotheses');
+    if (!hypsRes.ok) throw new Error('HTTP ' + hypsRes.status);
     allHypotheses = await hypsRes.json();
+    await Promise.all([loadRatings(), loadHoldings()]);
     updateStats(allHypotheses);
-    applyPortfolioModeUI();   // restore toggle + banner state from localStorage
+    applyPortfolioModeUI();
     renderCards();
-    // Apply saved ratings to newly rendered cards
-    allHypotheses.forEach(h => updateRatingUI(h.id, todayStr));
+    allHypotheses.forEach(function(h) { updateRatingUI(h.id, todayStr); });
   } catch (e) {
-    document.getElementById('cardsContainer').innerHTML =
-      '<div class="empty"><div class="empty-icon">⚠️</div><div>Could not load data. Is the server running?</div></div>';
+    container.innerHTML =
+      '<div class="empty"><div class="empty-icon">⚠️</div><div>Could not load data — ' + ((e && e.message) ? e.message : 'check connection') + '</div></div>';
   } finally {
     btn.classList.remove('spinning');
   }
@@ -2117,7 +2115,7 @@ async function loadCorroboration(id) {
       el.innerHTML = '<strong>' + d.verdict + '</strong><br>'
         + '<small style="opacity:.75">' + d.ticker + ': ' + d.prevDate + ' close ' + d.prevClose + ' → ' + d.date + ' close ' + d.close + '</small>';
     }
-  } catch {
+  } catch(err) {
     el.innerHTML = '<span class="corr-nodata">Could not fetch market data</span>';
   }
 }
