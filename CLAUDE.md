@@ -8,6 +8,25 @@
 
 ---
 
+## 0. Session start protocol — READ THIS FIRST
+
+**Every session, before anything else:**
+
+1. **Read project state**: `docs/memory/PROJECT-STATE.md` — current build status, active hypotheses, in-flight work, next actions.
+2. **Check session log**: `docs/memory/SESSIONS.md` (first entry) — what was unfinished last session.
+3. **Check portfolio**: `hypotheses/PORTFOLIO.md` — current hypothesis counts and priority queue.
+
+**Procedural skills available:**
+- `dev-workflow` — how to start server, add features, commit, handle errors
+- `hypothesis-ops` — create / validate / retire / graduate hypotheses
+
+**Memory files (update at end of session):**
+- `docs/memory/PROJECT-STATE.md` — current state snapshot
+- `docs/memory/DECISIONS.md` — architectural decisions (append-only)
+- `docs/memory/SESSIONS.md` — rolling session log (prepend new entry)
+
+---
+
 ## 1. What Marketpulse is
 
 Marketpulse is a finance and investment research desk that scans cross-domain news for raw signals and traces their **causal impact-chains** down to concrete business and valuation consequences — especially for businesses in India and the US.
