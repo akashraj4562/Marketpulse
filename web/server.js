@@ -1236,7 +1236,7 @@ function generateTX(h) {
 
   // Line 1 — what is happening (from oneliner)
   if (h.oneliner) {
-    lines.push('🔍 <strong>What\'s happening:</strong> ' + h.oneliner);
+    lines.push("🔍 <strong>What's happening:</strong> " + h.oneliner);
   }
 
   // Line 2 — the market call in plain English
@@ -2202,7 +2202,7 @@ async function loadPage() {
   const opts = { weekday:'long', year:'numeric', month:'long', day:'numeric' };
   document.getElementById('dateCaption').textContent =
     (isToday ? 'Today — ' : '') + d.toLocaleDateString('en-IN', opts)
-    + (isToday ? ' · Rate today\'s predictions based on market direction' : ' · Rate predictions from your memory of this date');
+    + (isToday ? " · Rate today's predictions based on market direction" : " · Rate predictions from your memory of this date");
 
   const [hypsRes, ratingsRes] = await Promise.all([
     fetch('/api/hypotheses'),
