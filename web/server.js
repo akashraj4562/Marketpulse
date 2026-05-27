@@ -80,6 +80,21 @@ function parseHypothesisFile(filePath, status) {
     const ptier      = extractField(content, 'Priority tier');
     const slug       = extractField(content, 'Slug') || id;
 
+    // Market: read explicit field, fallback to instrument-based detection
+    const marketField = extractField(content, 'Market');
+    const instrument  = (extractField(content, 'Instrument') || '').toUpperCase();
+    let market = 'Global';
+    if (marketField) {
+      const mf = marketField.toUpperCase();
+      if (mf.includes('NSE') || mf.includes('BSE') || mf.includes('INDIA')) market = 'India';
+      else if (mf.includes('NYSE') || mf.includes('NASDAQ') || mf.includes('US')) market = 'US';
+      else market = marketField.split('/')[0].trim();
+    } else if (instrument.match(/NSE|BSE|NIFTY|SENSEX|BPCL|HPCL|HINDUNILVR|TCS\b|INFY|WIPRO|HCLTECH|DABUR|ITC\b|NESTLEIND|MARUTI|ONGC|ICICIBANK|HDFCBANK/)) {
+      market = 'India';
+    } else if (instrument.match(/NASDAQ|NYSE|S&P|DOW|MICRON|NVDA|NVIDIA|MSFT|AAPL|GOOGL|META|AMZN|CRWD|ZS\b|PANW|AMD|SPY|QQQ|IWM|XLU|IYR/)) {
+      market = 'US';
+    }
+
     // Sector from Supporting Fundamental Thesis or Sectors affected
     const sectors = extractField(content, 'Sectors affected') || extractField(content, 'Primary sector');
 
@@ -102,6 +117,7 @@ function parseHypothesisFile(filePath, status) {
       lastValidated: lastVal,
       priorityTier: ptier ? ptier.replace(/\(.*?\)/g, '').trim() : null,
       sectors,
+      market,
       instrument: cmp.instrument,
       direction: cmp.direction,
       magnitude: cmp.magnitude,
@@ -264,6 +280,22 @@ const HTML = `<!DOCTYPE html>
   .tag-predicted  { background: rgba(139,143,168,0.12); color: var(--muted); }
   .tag-p1 { background: rgba(239,68,68,0.12); color: var(--red); }
   .tag-p2 { background: rgba(234,179,8,0.12); color: var(--yellow); }
+  .tag-india { background: rgba(255,153,0,0.15); color: #ff9900; }
+  .tag-us    { background: rgba(59,130,246,0.15); color: var(--blue); }
+  .tag-global{ background: rgba(139,143,168,0.15); color: var(--muted); }
+
+  /* Market switcher strip */
+  .market-strip {
+    display: flex; gap: 0; border-bottom: 2px solid var(--border);
+    padding: 0 16px; background: var(--bg);
+  }
+  .market-btn {
+    flex: 1; text-align: center; padding: 10px 0; font-size: 13px; font-weight: 600;
+    color: var(--muted); cursor: pointer; border-bottom: 2px solid transparent;
+    margin-bottom: -2px; transition: all 0.15s; background: none; border-top: none; border-left: none; border-right: none;
+  }
+  .market-btn.active { color: var(--text); border-bottom-color: var(--blue); }
+  .market-btn .count { font-size: 11px; margin-left: 4px; opacity: 0.7; }
 
   /* Instrument row */
   .instrument-row { padding: 10px 14px; background: var(--surface2); border-top: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
@@ -327,6 +359,13 @@ const HTML = `<!DOCTYPE html>
   </div>
 </div>
 
+<div class="market-strip" id="marketStrip">
+  <button class="market-btn active" data-market="all">🌍 All<span class="count" id="countAll"></span></button>
+  <button class="market-btn" data-market="India">🇮🇳 India<span class="count" id="countIndia"></span></button>
+  <button class="market-btn" data-market="US">🇺🇸 US<span class="count" id="countUS"></span></button>
+  <button class="market-btn" data-market="Global">🌐 Global<span class="count" id="countGlobal"></span></button>
+</div>
+
 <div class="filters" id="filterBar">
   <button class="filter-btn active" data-filter="all">All</button>
   <button class="filter-btn" data-filter="Active">Active</button>
@@ -347,6 +386,7 @@ const HTML = `<!DOCTYPE html>
 <script>
 let allHypotheses = [];
 let activeFilter = 'all';
+let activeMarket = 'all';
 
 function confClass(c) {
   if (c === null || c === undefined) return 'conf-red';
@@ -411,7 +451,11 @@ function renderCard(h) {
   const sClass = statusClass(h.status);
   const tClass = tierClass(h.priorityTier);
 
+  const mktClass = h.market === 'India' ? 'tag-india' : h.market === 'US' ? 'tag-us' : 'tag-global';
+  const mktIcon  = h.market === 'India' ? '🇮🇳' : h.market === 'US' ? '🇺🇸' : '🌐';
+
   const tags = [
+    h.market   ? \`<span class="tag \${mktClass}">\${mktIcon} \${h.market}</span>\` : '',
     h.horizon ? \`<span class="tag \${hClass}">\${h.horizon?.split(' ')[0] || ''}</span>\` : '',
     h.status  ? \`<span class="tag \${sClass}">\${h.status}</span>\` : '',
     h.priorityTier ? \`<span class="tag \${tClass}">\${h.priorityTier.split(' ')[0]}</span>\` : '',
@@ -491,9 +535,25 @@ function applyFilter(filter) {
   renderCards();
 }
 
+function applyMarket(market) {
+  activeMarket = market;
+  document.querySelectorAll('.market-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.market === market);
+  });
+  // Reset filter pills back to "all" when switching market
+  activeFilter = 'all';
+  document.querySelectorAll('.filter-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.filter === 'all');
+  });
+  renderCards();
+}
+
 function filterHypotheses(hyps, filter) {
-  if (filter === 'all') return hyps;
-  return hyps.filter(h => {
+  // Apply market filter first
+  let base = activeMarket === 'all' ? hyps : hyps.filter(h => (h.market || '') === activeMarket);
+
+  if (filter === 'all') return base;
+  return base.filter(h => {
     if (filter === 'Active' || filter === 'Developing' || filter === 'Predicted') {
       return (h.status || '').toLowerCase() === filter.toLowerCase();
     }
@@ -528,6 +588,12 @@ function updateStats(hyps) {
   document.getElementById('statDev').textContent = dev;
   document.getElementById('statTotal').textContent = hyps.length;
   document.getElementById('lastUpdated').textContent = 'Updated ' + new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' });
+
+  // Update market counts
+  document.getElementById('countAll').textContent    = ' ' + hyps.length;
+  document.getElementById('countIndia').textContent  = ' ' + hyps.filter(h => h.market === 'India').length;
+  document.getElementById('countUS').textContent     = ' ' + hyps.filter(h => h.market === 'US').length;
+  document.getElementById('countGlobal').textContent = ' ' + hyps.filter(h => h.market === 'Global').length;
 }
 
 async function loadData() {
@@ -545,6 +611,12 @@ async function loadData() {
     btn.classList.remove('spinning');
   }
 }
+
+// Market switcher
+document.getElementById('marketStrip').addEventListener('click', e => {
+  const btn = e.target.closest('.market-btn');
+  if (btn) applyMarket(btn.dataset.market);
+});
 
 // Filter buttons
 document.getElementById('filterBar').addEventListener('click', e => {
