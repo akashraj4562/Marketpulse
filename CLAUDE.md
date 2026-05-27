@@ -25,6 +25,11 @@
 - `docs/memory/DECISIONS.md` — architectural decisions (append-only)
 - `docs/memory/SESSIONS.md` — rolling session log (prepend new entry)
 
+**Quality files (check weekly, update on resolution):**
+- `docs/product/TEST-LOG.md` — guardrail sweep results + weekly test outcomes
+- `docs/product/PREDICTION-LEDGER.md` — every prediction made vs. actual outcome (append-only)
+- `docs/product/PRODUCT-DECISIONS-REPOSITORY.md` — historical PM decisions for ambiguous situations
+
 ---
 
 ## 1. What Marketpulse is

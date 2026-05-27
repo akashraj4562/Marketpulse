@@ -64,14 +64,32 @@ Copy `hypotheses/_TEMPLATE.md`. Fill every section.
 3. **Compare predicted vs actual price movement**:
    - Record in Market Actuals table: `| date | instrument | predicted | actual | match | override_type | explanation | delta |`
    - If mismatch: diagnose override type (see DECISIONS.md DEC-A001)
-4. **Update scores**: revise Confidence, note any Causality/Correlation rethinks
-5. **Update validation dates**: `Last validated` and `Next validation due`
+4. **Guardrail check — MANDATORY before writing any confidence update:**
+   - G1: Does this confidence delta have a corresponding evidence entry? If not, do NOT update the score.
+   - G5: Does the Causality score stay ≥40? If new evidence weakens the mechanism, downgrade Causality first.
+   - G4: Update `Last validated` and `Next validation due` immediately.
+5. **Update scores**: revise Confidence, note any Causality/Correlation rethinks
+6. **Update validation dates**: `Last validated` and `Next validation due`
 
 ### After validation
 - Update hypothesis file (evidence log, validation history, market actuals)
 - Update PORTFOLIO.md confidence column
+- **Update PREDICTION-LEDGER.md**: if the hypothesis has now confirmed, falsified, or partially confirmed, add an outcome row immediately. Do not wait for "full resolution" — log partial outcomes as 🟡 Partial.
+- **Update TEST-LOG.md**: if any guardrail was breached during this validation, record it.
 - If confidence drops below 40%: move to `hypotheses/developing/` and set P2
 - If confidence reaches 80%+: consider triggering a full thesis workup
+- **Trust ledger principle**: if this validation reveals the prediction was wrong, add an explicit acknowledgment in the Market Actuals table with the override type and lesson. Never leave a mismatch undiagnosed.
+
+### Confidence update discipline — non-negotiable rules
+
+| Scenario | Correct response | Wrong response |
+|---|---|---|
+| New T1 evidence confirms a link | +8–12% | Do not inflate beyond what the evidence supports |
+| CONFIRMS item triggers | +10–15% | Do not compound if multiple CONFIRMS trigger in one cycle |
+| KILLS item triggers | -20–40% | Do not ignore it because you still believe the thesis |
+| Market moved against prediction | Diagnose override type, update score -5–15% | Leave confidence unchanged "because it's a timing issue" |
+| No new evidence this cycle | 0 change | Do not adjust confidence just to show the system is active |
+| Evidence is T3/T4 | 0 change; note in evidence log as "directional only" | Do not update confidence based on T3/T4 alone |
 
 ---
 

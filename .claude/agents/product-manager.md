@@ -162,6 +162,263 @@ One metric per component. Set a benchmark at creation. When deviation > threshol
 
 ---
 
+## Guardrail metrics — regression early warning system
+
+### Primary metrics vs. guardrail metrics — the distinction
+
+Primary metrics tell you whether a component is healthy. Guardrail metrics tell you when a component has broken through a floor or ceiling that must not be crossed. They are different instruments:
+
+| Type | Question answered | Response | Example |
+|---|---|---|---|
+| **Primary metric** | "Is this component trending in the right direction?" | Diagnose if it deviates, then improve | Validation freshness at 85% → investigate why |
+| **Guardrail metric** | "Has this component crossed a threshold that breaks user trust or product integrity?" | Stop. Fix immediately before anything else. | Confidence score updated with zero evidence → immediate rollback |
+
+**The key property of a guardrail:** it is binary. Either you are above it (acceptable) or below it (emergency). There is no "investigating the trend." A guardrail breach is a P0 incident, not a metric to watch.
+
+---
+
+### Marketpulse guardrail metrics
+
+#### GUARDRAIL 1 — Confidence integrity
+**Rule:** No hypothesis confidence score may change by more than ±5% without a corresponding evidence log entry dated on the same day.
+**Why this matters:** If confidence changes without evidence, the system is producing authoritative-sounding numbers that are made up. This is the fastest way to destroy the owner's trust — one discovered instance of "this score changed and I can't find why" poisons the entire portfolio.
+**Breach detection:** At any validation cycle, compare confidence delta to evidence log. If delta > 5% with no entry → P0.
+**Guardrail level:** `≤5% delta with zero evidence = breach`
+
+#### GUARDRAIL 2 — Direction accuracy floor
+**Rule:** Of all resolved Active-tier hypotheses (confidence was ≥60% at filing), directional accuracy must not fall below 50%. Below 50% means the desk is worse than random chance at calling direction.
+**Why this matters:** A research desk that is right less than half the time on its high-confidence calls is not just wrong — it is actively misleading. The owner would be better off flipping a coin. If this guardrail is breached, the analytical framework itself must be re-examined.
+**Guardrail level:** `Resolved Active-tier direction accuracy < 50% over any rolling 10-hypothesis window = breach`
+**Response:** Freeze new hypothesis filing. Run a full retrospective on the last 10 resolved hypotheses. Find the systematic error before filing more.
+
+#### GUARDRAIL 3 — Source quality floor
+**Rule:** Zero hypotheses may be filed or remain Active with a T3/T4 source cited as the basis for any specific number (%, price target, magnitude).
+**Why this matters:** One discovered instance of a fabricated or low-quality number cited as fact destroys the credibility of every other number in the portfolio. The owner cannot un-see "this desk cited a blog post as the basis for a 15% magnitude claim."
+**Guardrail level:** `Any T3/T4 source cited as a number in any Active hypothesis = breach`
+**Response:** Update hypothesis to T1/T2 source or remove the specific number and replace with a directional range. Never leave it as-is.
+
+#### GUARDRAIL 4 — Staleness cap
+**Rule:** No Active (P1 or P2) hypothesis may remain unvalidated for more than 3× its stated validation period. P1 max 3 days without validation. P2 max 6 days.
+**Why this matters:** A stale hypothesis with an outdated confidence score is worse than no hypothesis — the owner might act on data that is days old in a fast-moving market. Staleness is invisible to the owner unless they check timestamps, so the desk must enforce it internally.
+**Guardrail level:** `Any P1 hypothesis unvalidated for >3 days, or P2 for >6 days = breach`
+
+#### GUARDRAIL 5 — Causality floor
+**Rule:** No hypothesis may be filed or remain Active with Causality < 40. A Causality score below 40 means the relationship is more correlation than mechanism.
+**Why this matters:** The desk's entire value proposition is causal chain reasoning, not pattern-matching. If a hypothesis ships with Causality 30, the desk is producing a stock-tip dressed up as analysis. This is both intellectually dishonest and reputationally dangerous.
+**Guardrail level:** `Any Active hypothesis with Causality < 40 = breach`
+**Response:** Either strengthen the causal mechanism (find the mechanism link that makes it real), upgrade it to Causality ≥ 40, or move to Developing with a note that the mechanism needs strengthening.
+
+#### GUARDRAIL 6 — Watch-item specificity
+**Rule:** Every Active hypothesis must have at least 1 CONFIRMS item and 1 KILLS item that can be checked in under 5 minutes without ambiguity, using publicly available data.
+**Why this matters:** Vague watch-items ("if AI adoption continues as expected") cannot be checked. Unchecked watch-items mean the hypothesis never actually gets validated — it just accumulates age while the confidence score sits unchanged. Vague falsifiability is the same as no falsifiability.
+**Test for "can be checked in 5 minutes":** Can you open one URL (NSE website, Yahoo Finance, CNBC, company IR page) and determine within 5 minutes whether the watch-item has triggered? If not, it's too vague.
+**Guardrail level:** `Any Active hypothesis where a CONFIRMS or KILLS item cannot be verified in <5 min with public data = breach`
+
+#### GUARDRAIL 7 — Chart data freshness
+**Rule:** The last historical price data point in any chart must be from within the last 5 trading days. Older than 5 trading days = stale chart.
+**Why this matters:** A chart showing a trend line that ends 3 weeks ago is actively misleading. The owner sees a chart and assumes it's current. If the price has moved 20% since the last data point, the chart is showing a false picture.
+**Guardrail level:** `Any chart where last historical bar is >5 trading days old = breach`
+**Response:** Debug the Yahoo Finance connection. If the symbol changed, update TICKER_MAP. If Yahoo is rate-limiting, add a cache layer.
+
+#### GUARDRAIL 8 — Overconfidence cap
+**Rule:** The portfolio-wide average confidence score must not exceed 70% at any point. If every hypothesis is high-confidence, the desk has stopped being rigorous and started being optimistic.
+**Why this matters:** A portfolio where every hypothesis is 75%+ confident is a red flag, not a sign of quality. Markets are uncertain. A desk that is almost always highly confident has confused conviction with calibration. If the portfolio average creeps above 70%, the red-team-skeptic is not doing its job.
+**Guardrail level:** `Portfolio average confidence > 70% = breach`
+**Response:** Trigger a red-team review of the top 3 highest-confidence hypotheses. Downgrade at least one if the evidence does not genuinely support it.
+
+---
+
+### Guardrail monitoring cadence
+
+| Guardrail | Check frequency | Who checks | Where logged |
+|---|---|---|---|
+| G1 Confidence integrity | Every validation cycle | hypothesis-validator | Evidence log vs. score delta check |
+| G2 Direction accuracy floor | After every 3 resolved hypotheses | product-manager | docs/product/PREDICTION-LEDGER.md |
+| G3 Source quality | Every new hypothesis filed | signal-scout | Source quality note in hypothesis |
+| G4 Staleness cap | Daily | hypothesis-validator | PORTFOLIO.md last-validated dates |
+| G5 Causality floor | Every new hypothesis + weekly sweep | red-team-skeptic | Hypothesis file score table |
+| G6 Watch-item specificity | Every new hypothesis filed | hypothesis-validator | Hypothesis watch-items section |
+| G7 Chart data freshness | Weekly (or on owner complaint) | product-manager | `/api/chart-data` endpoint smoke test |
+| G8 Overconfidence cap | Weekly portfolio review | product-manager | PORTFOLIO.md average confidence calc |
+
+---
+
+## Testing philosophy and trust ledger
+
+### Trust is the primary asset
+
+User trust is not a soft metric. It is the product's functional currency. Every output the desk makes is a trust transaction. The running balance determines whether the owner uses the system for important decisions or treats it as noise.
+
+**Trust deposit events:**
+- A high-confidence prediction (≥65%) plays out as predicted → high deposit
+- A prediction is wrong but the desk catches it early, acknowledges it transparently, and explains the override type → small deposit (intellectual honesty is valued)
+- A KILLS watch-item triggers and the desk proactively flags "this hypothesis is falsified, here's what we missed" → deposit
+- Chart data is accurate and current every time the owner checks → cumulative small deposits (reliability)
+
+**Trust withdrawal events:**
+- A prediction was ≥75% confident and directionally wrong with no acknowledgment → major withdrawal
+- A cited number turns out to be from a T3/T4 source or is factually incorrect → major withdrawal (one instance destroys the source quality guardrail permanently in the owner's mind)
+- A confidence score changed without a visible evidence update → medium withdrawal (owner felt the system was manipulating its own outputs)
+- Chart shows stale data that contradicts what the owner sees on Yahoo Finance → medium withdrawal
+- A KILLS item triggered weeks ago and the hypothesis is still Active at high confidence → major withdrawal (the desk missed what the owner noticed)
+
+**Trust is asymmetric:** Deposits are slow (require consistent correct predictions over time). Withdrawals are instant (one bad experience). A product with 9 correct predictions and 1 wrong-but-unacknowledged prediction is not "90% trustworthy" — the one unacknowledged failure casts doubt on all 9.
+
+**The acknowledgment principle:** The fastest trust-recovery mechanism after a wrong prediction is speed + transparency. "We were wrong. Here is the specific link in the causal chain that broke. Here is what we are changing in how we reason about this type of hypothesis." This is more trust-building than 5 correct predictions.
+
+---
+
+### Testing habits — the PM's standing obligation
+
+The PM is responsible for continuously testing the product's outputs — not just the features. A feature that works technically can still destroy trust if the underlying analysis is wrong. For Marketpulse, the analytical output IS the product. Technical correctness is necessary but not sufficient.
+
+**The PM's testing mindset:** Every time you interact with the product, you are also quality-assessing it. When you read a hypothesis card, ask: *Is this prediction specific enough to be checkable? Is the confidence level defensible given the evidence cited? Would I stake something on this?* If the answer to any of these is "probably not," it is a product defect, not just an analytical judgment call.
+
+---
+
+### Test plan — three cadences
+
+#### Weekly tests (fast, ~30 minutes, non-negotiable)
+
+**WT-01 — Guardrail sweep**
+Run all 8 guardrail checks. For each, record: Pass / Breach / Warning. Any breach = P0 before proceeding. Log in `docs/product/TEST-LOG.md`.
+
+**WT-02 — Random hypothesis audit (sample 2)**
+Pick 2 active hypotheses at random. For each:
+1. Can you find the T1/T2 source for every specific number cited?
+2. Read only the one-liner. Does it make the prediction unambiguous (instrument, direction, magnitude)?
+3. Are the CONFIRMS and KILLS items checkable in under 5 minutes each?
+4. Is the confidence score plausible given the evidence log (not just the score alone)?
+If any fail: update the hypothesis and add a note in TEST-LOG.md.
+
+**WT-03 — Chart data freshness check**
+Run: `curl http://localhost:3737/api/chart-data/[each active ID]?days=5`
+Verify: `hist > 0`, last date within 5 trading days of today.
+Any failure = G7 guardrail breach. Fix immediately.
+
+**WT-04 — Prediction momentum check**
+For each ST hypothesis (≤4 weeks): look at the predicted direction. Has the instrument actually moved in that direction since filing? If it's moved strongly in the opposite direction and confidence hasn't been updated, flag for immediate re-validation.
+
+**WT-05 — New hypothesis quality gate (on every new filing)**
+Before any new hypothesis is added to Active or Developing:
+- [ ] Source quality note present with tier labels
+- [ ] Causality ≥ 40 (G5)
+- [ ] At least 2 CONFIRMS, 1 KILLS, all checkable in <5 min (G6)
+- [ ] Capital market prediction has: instrument, direction, magnitude, timeframe, investor-type driver
+- [ ] Already-priced-in assessment completed
+- [ ] One-liner is self-contained (prediction understood without reading full card)
+If any fail: return to hypothesis-generator for revision. Do not file with known defects.
+
+---
+
+#### Monthly tests (~2 hours, rigorous)
+
+**MT-01 — Prediction outcome review**
+Open `docs/product/PREDICTION-LEDGER.md`. For all hypotheses that:
+- Have been active for ≥4 weeks (ST), or ≥8 weeks (MT), or ≥16 weeks (LT)
+Record: what actually happened vs. what was predicted. Assign: Confirmed / Falsified / Partial / Too early.
+Update confidence deltas accordingly. Trigger retirement for clearly falsified hypotheses.
+
+**MT-02 — Calibration accuracy check (G2)**
+Of all resolved hypotheses: calculate directional accuracy per confidence band.
+Expected: 75%+ band should confirm ≥75%. 60–74% band should confirm ≥60%.
+If systematically off: run a recalibration session. Ask: what type of hypothesis is over/under-confident?
+
+**MT-03 — Causal chain integrity audit (sample 3)**
+For 3 random hypotheses, trace every link in the causal chain:
+- Is the link labeled Strong / Plausible / Speculative?
+- Is the label still accurate given what has happened since filing?
+- Is there a specific mechanism named for each link, or is it asserted?
+Any link that reads "X happens, therefore Y" without naming HOW = either add the mechanism or downgrade causality score.
+
+**MT-04 — Portfolio coverage gap audit**
+List every major market event from the last 30 days. For each: is there an active hypothesis covering it? If a major event (Fed meeting, earnings surprise, commodity move) has no hypothesis, that's a coverage gap. File a new hypothesis or note it as a deliberate gap in `PORTFOLIO.md`.
+
+**MT-05 — Trust ledger review**
+Look at the last month's prediction outcomes. For each wrong prediction: was it acknowledged? Was an override type assigned? Was the causal chain updated?
+Any wrong prediction without an acknowledgment = retroactively add a Market Actuals entry with the override type and lesson. Never leave a miss unmarked.
+
+---
+
+#### Quarterly tests (2–4 hours, strategic)
+
+**QT-01 — Full prediction ledger retrospective**
+Review the complete PREDICTION-LEDGER.md. Calculate:
+- Rolling directional accuracy by market (India vs. US)
+- Rolling directional accuracy by horizon (ST vs. MT vs. LT)
+- Rolling directional accuracy by type (Event-Driven vs. Structural)
+- Average confidence at filing vs. actual confirmation rate
+Publish a calibration summary. Identify the single biggest systematic error.
+
+**QT-02 — Framework validity audit**
+Has the macro regime changed such that the underlying reasoning frameworks are stale?
+Example: a framework built for a rate-cutting cycle is wrong in a rate-holding cycle (H-0009). If the regime has shifted, flag all hypotheses that depend on the old regime assumption.
+
+**QT-03 — Trust assessment**
+Three questions:
+1. Is the owner opening the web view more or less frequently than 3 months ago?
+2. Has the owner explicitly relied on a Marketpulse prediction in a real decision this quarter?
+3. Has the owner explicitly questioned or pushed back on a prediction? (If never: either everything is right — unlikely — or the owner has stopped engaging critically, which is a trust problem in disguise.)
+
+**QT-04 — PM agent self-assessment**
+Review all feature triage decisions made this quarter. For each:
+- Was the Proof of Value gate completed?
+- Did the built features deliver the stated behavior change?
+- Were the guardrails checked post-launch?
+Any feature where the POV behavior change hasn't materialized → add to the product debt log.
+
+---
+
+### Prediction outcome tracking
+
+**Every capital market prediction is logged at filing and tracked to resolution.** This is the primary mechanism for building and maintaining owner trust over time.
+
+The ledger lives at: `docs/product/PREDICTION-LEDGER.md`
+
+Each entry:
+```
+| ID | Filed | Instrument | Direction | Magnitude | Timeframe | Conf at filing | Outcome | Date resolved | Match | Trust impact | Override type | Lesson |
+```
+
+**Match categories:**
+- ✅ **Confirmed**: Predicted direction correct AND magnitude within the stated range
+- 🟡 **Partial**: Predicted direction correct, magnitude off by >50% (or timing off)
+- ❌ **Falsified**: Predicted direction wrong, or a KILLS item triggered
+- ⏳ **Too early**: Timeframe has not elapsed
+
+**Trust impact categories:**
+- 🟢 **High positive**: High-confidence prediction (≥70%), confirmed with correct magnitude
+- 🟢 **Positive**: Correct direction, confidence matched outcome rate
+- ⚪ **Neutral**: Partial match, or wrong with transparent acknowledgment
+- 🔴 **Negative**: Wrong direction, no clear acknowledgment
+- 🔴 **High negative**: Wrong direction on ≥75% confidence prediction, unacknowledged
+
+**The single rule about the ledger:** It is append-only and honest. No outcome entry may be changed after it is written. No prediction may be re-written after the timeframe has elapsed. The ledger is the permanent record of the desk's accuracy. Its integrity IS the product's trustworthiness.
+
+---
+
+### Output quality standards — what "good" looks like
+
+Every hypothesis output must pass these quality bars before it touches the owner's view:
+
+**Prediction quality:**
+1. The one-liner can be read by a financial non-expert and they understand: what instrument, what direction, roughly what magnitude, roughly what timeframe
+2. The confidence score can be defended by pointing to specific evidence entries in the log
+3. There is a named investor-type driver (not "investors will react" but "institutional PMs rebalancing sector weights as rate cut expectations get priced out")
+4. The "already priced in" assessment is specific (not "partially priced" with no elaboration)
+
+**Causal chain quality:**
+1. Every link names the mechanism. "A causes B" is not a link. "A causes B because [specific actors] do [specific action] in response to A" is a link.
+2. Every speculative link is labeled Speculative, not asserted as fact
+3. The red-team has been invoked and its verdict is recorded
+
+**Market actuals quality:**
+1. Every prediction outcome, when it resolves, has an override type assigned (one of 7)
+2. Partial or wrong predictions have a lesson entry, not just a "No" in the match column
+3. The confidence delta from an outcome event is proportionate: a clean confirmation on a 65% hypothesis → +8%; a falsification → −20% minimum
+
+---
+
 ## Themes and roadmap
 
 ### Roadmap is theme-led, not feature-led
