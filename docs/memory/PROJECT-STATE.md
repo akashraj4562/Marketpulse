@@ -11,8 +11,10 @@
 | **Web view** | ✅ Running on port 3737 | `cd web && node server.js` |
 | **Hypothesis portfolio** | ✅ 10 live hypotheses (6 India, 4 US) | Next ID: H-0011 |
 | **Price charts** | ✅ Live via Yahoo Finance (yahoo-finance2 v3) | Real data + forecast band |
-| **TX (Plain English)** | ✅ Live | Plain language bullets in every expanded card |
-| **Company selector** | ✅ Live | Pill selector above chart; switches chart to any impacted company |
+| **TX (Plain English)** | ✅ Live | Server-side `generateTX` + AI fallback via `/api/tx/:id` |
+| **AI TX generation** | ⚠️ Disabled | `@anthropic-ai/sdk` installed; set `ANTHROPIC_API_KEY` env var to enable |
+| **Company selector** | ✅ Live — P0 fixed | Ticker label now updates on company switch (was frozen) |
+| **HPCL chart** | ✅ Fixed | Ticker override `?ticker=HPCL.NS` now routes through TICKER_MAP → `HINDPETRO.NS` |
 | **Auto-test crons** | ✅ Active (session-only) | Daily 9:17am, Weekly Mon 9:23am, Monthly 1st 9:41am |
 | **Memory auto-save** | ✅ Active (every 45 min) | PROJECT-STATE.md + SESSIONS.md checkpoint |
 | **Market switcher** | ✅ All/India/US/Global tabs | Auto-detected from instrument field |
@@ -22,7 +24,7 @@
 | **Feedback→hypothesis loop** | ✅ Live | ratings.json + feedback.json → generator + validator agents |
 | **BL-003 Portfolio mode** | ✅ Built, tested, switched off | All 8 edits complete, verified with test data, holdings cleared; toggled off cleanly |
 | **README** | ✅ Written | Full showcase README at repo root — architecture, depth, backlog, run instructions |
-| **Git** | ✅ Clean, push ready | 5 commits on main; history scrubbed (node_modules + JSONs); SSH auth confirmed (akashraj4562); user to create GitHub repo |
+| **Git** | ⚠️ Unpushed commits | 3 new fixes this session not yet pushed — run `git push` |
 | **Security hardening** | ✅ Done | .gitignore, history scrubbed via filter-branch+gc, security-privacy-guardian agent |
 | **Mobile fix** | ✅ Done | Chart.js `defer` + bare `catch{}` → `catch(err){}` — phone loads correctly now |
 | **Tech Backlog** | ✅ Added | TB-001–005 in BACKLOG.md; SMOKE-TEST.md written; pre-commit JS syntax hook installed |
@@ -31,6 +33,13 @@
 ---
 
 ## What was built (most recent first)
+
+### 2026-05-28 — Session 7 (mid-session checkpoint)
+- **`generateTX` ReferenceError fixed**: server-side copy of `generateTX` added before `/api/tx/:id` endpoint — static fallback no longer crashes
+- **HPCL P0 fixed**: `?ticker=HPCL.NS` override now routes through TICKER_MAP → `HINDPETRO.NS`; chart loads correctly
+- **Ticker label P0 fixed**: `renderChart()` now updates the ticker label on every company switch, not just on first card open
+- **AI TX wired in**: `/api/tx/:id` endpoint live; uses `claude-haiku-4-5-20251001`; falls back to static if no API key; results cached in `tx-cache.json`
+- 3 fixes above not yet committed/pushed — pending
 
 ### 2026-05-28 — Session 6
 - **Security hardening**: root `.gitignore` added (covers node_modules, holdings.json, feedback.json, ratings.json, .env*); git history scrubbed via `filter-branch + gc`; `security-privacy-guardian.md` agent created with 5-section pre-publication gate checklist; security gate run — CLEAR TO PUSH verdict.

@@ -6,6 +6,24 @@ const os = require('os');
 const app = express();
 const PORT = process.env.PORT || 3737;
 
+// ─── Anthropic (TX generation) ────────────────────────────────────────────────
+let anthropic = null;
+try {
+  const Anthropic = require('@anthropic-ai/sdk');
+  if (process.env.ANTHROPIC_API_KEY) {
+    anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+    console.log('  AI TX generation: enabled (claude-haiku-4-5)');
+  } else {
+    console.log('  AI TX generation: disabled (set ANTHROPIC_API_KEY to enable)');
+  }
+} catch (e) {
+  console.log('  AI TX generation: disabled (@anthropic-ai/sdk not found)');
+}
+
+const TX_CACHE_FILE = path.join(__dirname, 'tx-cache.json');
+function readTxCache()  { try { return JSON.parse(fs.readFileSync(TX_CACHE_FILE, 'utf-8')); } catch { return {}; } }
+function writeTxCache(d) { try { fs.writeFileSync(TX_CACHE_FILE, JSON.stringify(d, null, 2)); } catch {} }
+
 // Resolve hypothesis directory relative to this file (../hypotheses/)
 const HYPOTHESES_DIR = path.resolve(__dirname, '..', 'hypotheses');
 
@@ -20,7 +38,7 @@ const TICKER_MAP = {
   'NIFTY BANK': '^NSEBANK', 'CNXBANK': '^NSEBANK', 'NIFTYBANK': '^NSEBANK',
   'SENSEX': '^BSESN',
   // India stocks (NSE)
-  'BPCL': 'BPCL.NS', 'HPCL': 'HPCL.NS', 'IOC': 'IOC.NS',
+  'BPCL': 'BPCL.NS', 'HPCL': 'HINDPETRO.NS', 'HINDPETRO': 'HINDPETRO.NS', 'IOC': 'IOC.NS',
   'TCS': 'TCS.NS', 'INFY': 'INFY.NS', 'WIPRO': 'WIPRO.NS',
   'HINDUNILVR': 'HINDUNILVR.NS', 'ITC': 'ITC.NS',
   'RELIANCE': 'RELIANCE.NS', 'ONGC': 'ONGC.NS',
@@ -422,8 +440,15 @@ app.get('/api/chart-data/:id', async (req, res) => {
   if (!hyp) return res.status(404).json({ error: 'Hypothesis not found' });
 
   // Allow ?ticker= override so the UI can chart any impacted company
+  // Route override through TICKER_MAP so HPCL.NS → HINDPETRO.NS, etc.
   const tickerOverride = req.query.ticker ? req.query.ticker.toUpperCase() : null;
-  const ticker = tickerOverride || getPrimaryTicker(hyp);
+  let ticker;
+  if (tickerOverride) {
+    const stripped = tickerOverride.replace(/\.(NS|BO)$/i, '');
+    ticker = TICKER_MAP[stripped] || TICKER_MAP[tickerOverride] || tickerOverride;
+  } else {
+    ticker = getPrimaryTicker(hyp);
+  }
   if (!ticker) return res.json({ error: 'No ticker mapped', noTicker: true });
 
   const historical = await fetchHistoricalPrices(ticker, histDays);
@@ -584,6 +609,7 @@ const ISIN_TO_TICKER = {
   'INE044A01036': 'SUNPHARMA.NS',  // Sun Pharma
   'INE585B01010': 'BHARTIARTL.NS', // Bharti Airtel
   'INE066A01021': 'BPCL.NS',       // BPCL
+  'INE094A01015': 'HINDPETRO.NS',  // HPCL (Yahoo ticker: HINDPETRO)
   'INE211A01028': 'WIPRO.NS',      // Wipro
   'INE256A01028': 'ITC.NS',        // ITC
   'INE118A01012': 'HINDUNILVR.NS', // HUL
@@ -716,6 +742,105 @@ app.post('/api/holdings-load-test', (req, res) => {
 app.post('/api/holdings-clear', (req, res) => {
   writeHoldings({ _clearedAt: new Date().toISOString(), _source: 'manual-clear' });
   res.json({ ok: true, message: 'Holdings cleared. Portfolio mode will show no weights.' });
+});
+
+// ─── Server-side TX generator (mirrors the client-side version in the HTML template) ──
+function generateTX(h) {
+  const lines = [];
+  if (h.oneliner) {
+    lines.push("🔍 <strong>The short version:</strong> " + h.oneliner);
+  }
+  const d = (h.direction || '').toLowerCase();
+  const isBull = d.includes('bull');
+  const isBear = d.includes('bear');
+  const arrow  = isBull ? '📈' : isBear ? '📉' : '📊';
+  const verb   = isBull ? 'expected to go <strong>UP</strong>' : isBear ? 'expected to go <strong>DOWN</strong>' : 'being watched';
+  const mag    = h.magnitude ? ' by about <strong>' + h.magnitude.replace(/^[+\-]/, '') + '</strong>' : '';
+  const tf     = h.timeframe ? ' over <strong>' + h.timeframe + '</strong>' : '';
+  const instShort = (h.instrument || '').split(/[;(—]/)[0].replace(/[,\/].+/, '').trim().slice(0, 40);
+  lines.push(arrow + ' <strong>The bet:</strong> ' + (instShort || 'The instrument') + ' is ' + verb + mag + tf);
+  const conf = h.confidence;
+  let confDesc = '';
+  if (conf >= 75) confDesc = 'We are pretty sure — strong evidence from multiple sources points the same way.';
+  else if (conf >= 60) confDesc = 'More likely than not — there is real evidence behind this, but it could still go either way.';
+  else if (conf >= 40) confDesc = 'Still early — something is there, but we need more data before betting on it.';
+  else confDesc = 'Just watching for now — too soon to have a real view.';
+  lines.push('🎯 <strong>' + (conf || '?') + '% sure</strong> — ' + confDesc);
+  const c = (h.confirms || [])[0];
+  const k = (h.kills || [])[0];
+  if (c) lines.push('✅ <strong>We know it is working if:</strong> ' + c.slice(0, 130));
+  else if (k) lines.push('❌ <strong>We know it is wrong if:</strong> ' + k.slice(0, 130));
+  return lines;
+}
+
+// ─── AI plain-language TX endpoint ────────────────────────────────────────────
+
+app.get('/api/tx/:id', async (req, res) => {
+  const id = req.params.id;
+  const hyps = loadAllHypotheses();
+  const h = hyps.find(x => x.id === id);
+  if (!h) return res.status(404).json({ error: 'Hypothesis not found' });
+
+  // Cache key: id + confidence (if confidence changes, regenerate)
+  const cacheKey = id + '_' + (h.confidence || 0);
+  const cache = readTxCache();
+  if (cache[cacheKey]) return res.json({ lines: cache[cacheKey], source: 'cache' });
+
+  // No API key or SDK — fall back to static template
+  if (!anthropic) {
+    return res.json({ lines: generateTX(h), source: 'static' });
+  }
+
+  try {
+    const d = (h.direction || '').toLowerCase();
+    const isBull = d.includes('bull');
+    const isBear = d.includes('bear');
+    const arrow  = isBull ? '📈' : isBear ? '📉' : '📊';
+    const conf   = h.confidence || 0;
+
+    const prompt = `You are explaining a financial market prediction to a curious 16-year-old who has never studied finance.
+
+Here is the prediction:
+- Title: ${h.title}
+- One-liner: ${h.oneliner || ''}
+- Instrument: ${(h.instrument || '').split(';')[0].trim()}
+- Direction: ${h.direction || ''}
+- Magnitude: ${h.magnitude || ''}
+- Timeframe: ${h.timeframe || ''}
+- Confidence: ${conf}%
+- First confirmation signal: ${(h.confirms || [])[0] || ''}
+- First kill signal: ${(h.kills || [])[0] || ''}
+
+Write exactly 4 short lines. Each line starts with an emoji and a bold label.
+Use simple everyday words. No finance jargon. No words like: bullish, bearish, instrument, conviction, thesis, signal, equity, valuation, catalyst, macro, correlation.
+Think of how you'd explain it to a friend, not a client.
+
+Line 1 — emoji 🔍, bold label "The short version:", then one plain sentence summarising what is going on in the world.
+Line 2 — emoji ${arrow}, bold label "The bet:", then say what the stock/index is expected to do, by how much, and by when. Use "go up" or "go down" not "bullish/bearish".
+Line 3 — emoji 🎯, bold label "${conf}% sure —", then in one sentence say how confident we are and why (use plain words like "pretty confident", "still early days", "just a hunch we're watching").
+Line 4 — emoji ✅ or ❌, bold label "We'll know it's ${isBull ? 'working' : isBear ? 'wrong' : 'playing out'} if:", then the single clearest thing to watch for.
+
+Format each line as HTML with <strong> tags around the label only. No bullet points, no numbering, no extra lines.`;
+
+    const message = await anthropic.messages.create({
+      model: 'claude-haiku-4-5-20251001',
+      max_tokens: 400,
+      messages: [{ role: 'user', content: prompt }],
+    });
+
+    const raw = message.content[0].text.trim();
+    // Split on newlines, filter empty lines
+    const lines = raw.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+
+    // Cache it
+    cache[cacheKey] = lines;
+    writeTxCache(cache);
+
+    res.json({ lines, source: 'ai' });
+  } catch (e) {
+    console.error('TX AI error:', e.message);
+    res.status(500).json({ error: e.message });
+  }
 });
 
 // ─── Single-page app ──────────────────────────────────────────────────────────
@@ -1369,12 +1494,18 @@ async function renderChart(id, days, hyp, ticker) {
     return;
   }
 
+  // Always update the ticker label to reflect what's actually being charted
+  var labelEl = document.getElementById('ticker-label-' + id);
+  if (labelEl && data.ticker) labelEl.textContent = data.ticker;
+
   if (data.noTicker) {
     wrap.innerHTML = '<div class="chart-no-ticker">📊 No exchange ticker mapped<br><small style="opacity:0.6">Charts available for listed instruments</small></div>';
+    if (labelEl) labelEl.textContent = '—';
     return;
   }
   if (data.error && !data.historical) {
     wrap.innerHTML = '<div class="chart-error">⚠️ ' + (data.error || 'Could not load prices') + '</div>';
+    if (labelEl) labelEl.textContent = '—';
     return;
   }
 
@@ -1605,12 +1736,12 @@ function renderCard(h) {
       <span class="priced-badge \${pricedClass(h.pricedIn)}">\${pricedLabel(h.pricedIn)}</span>
     </div>\` : '';
 
-  // TX section — plain English translation
+  // TX section — plain English (static fallback; AI version loaded on card open)
   const txLines = generateTX(h);
   const txHtml = txLines.length > 0 ? \`
-    <div class="tx-section">
+    <div class="tx-section" id="tx-\${h.id}">
       <div class="tx-header">🗣 TL;DR — Plain English</div>
-      <ul class="tx-bullets">
+      <ul class="tx-bullets" id="tx-body-\${h.id}">
         \${txLines.map(l => \`<li>\${l}</li>\`).join('')}
       </ul>
     </div>\` : '';
@@ -1843,20 +1974,29 @@ function renderCards() {
       const wasOpen = card.classList.contains('open');
       card.classList.toggle('open');
       if (!wasOpen) {
-        // First time opening: load chart with default days
+        // First time opening: load chart + AI plain-language TX
         const id = card.dataset.id;
-        const hyp = allHypotheses.find(h => h.id === id);
+        const hyp = allHypotheses.find(function(h) { return h.id === id; });
         if (hyp) {
           const defaultDays = (hyp.horizon || '').toUpperCase().startsWith('ST') ? 14 : 30;
-          // Use whichever company was last selected (or primary)
           const ticker = selectedTickers[id] || null;
           renderChart(id, defaultDays, hyp, ticker);
           // Eagerly show ticker label
           const tickerParam = ticker ? '&ticker=' + encodeURIComponent(ticker) : '';
-          fetch('/api/chart-data/' + id + '?days=1' + tickerParam).then(r => r.json()).then(d => {
+          fetch('/api/chart-data/' + id + '?days=1' + tickerParam).then(function(r) { return r.json(); }).then(function(d) {
             const el = document.getElementById('ticker-label-' + id);
             if (el && d.ticker) el.textContent = d.ticker;
-          }).catch(() => {});
+          }).catch(function() {});
+
+          // Load AI plain-language TX (replaces static version if API key is set)
+          const txBody = document.getElementById('tx-body-' + id);
+          if (txBody) {
+            fetch('/api/tx/' + id).then(function(r) { return r.json(); }).then(function(data) {
+              if (data.lines && data.lines.length > 0 && data.source === 'ai') {
+                txBody.innerHTML = data.lines.map(function(l) { return '<li>' + l + '</li>'; }).join('');
+              }
+            }).catch(function() {});
+          }
         }
       }
     });
