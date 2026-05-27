@@ -250,6 +250,23 @@ The signal-scout can search; you can also bring signals from these domains:
 | Behavioral hypothesis | `behavioral-psychologist + hypothesis-generator: file a behavioral hypothesis for [current trigger]. Apply the [panic/mortality salience/trust collapse/narrative inflation/herding] template.` |
 | Behavioral reversal check | `behavioral-psychologist: hypothesis H-NNNN predicts a behavioral overshoot. What does the reversal look like and when?` |
 
+### Market signal validation
+| Task | Prompt |
+|---|---|
+| **Daily market check** (runs automatically in daily cycle) | `market-signal-reader: run the daily market check against all live hypotheses with capital market predictions.` |
+| Check one hypothesis | `market-signal-reader: check H-NNNN. What did the market actually do vs. what we predicted?` |
+| Diagnose an override | `market-signal-reader: hypothesis H-NNNN predicted [X] but market did [Y]. Diagnose the override.` |
+| Scan for untracked signals | `market-signal-reader: scan today's price action and FII/DII flows. Is anything moving that we don't have a hypothesis for?` |
+| India market morning brief | `market-signal-reader: pull yesterday's NSE close, FII/DII net data, and India VIX. Brief me on market regime before today's open.` |
+
+### Product management
+| Task | Prompt |
+|---|---|
+| **Prioritize a feature request** | `product-manager: I want to add [feature]. Is this the right next thing to build?` |
+| Resolve an ambiguous request | `product-manager: [ambiguous ask]. What's the clearest interpretation and recommended action?` |
+| Output/UX improvement | `product-manager: the [output type] is hard to read. Suggest a format improvement.` |
+| Roadmap review | `product-manager: what's the current state of the desk? What should we build or fix next?` |
+
 ### Training
 | Task | Prompt |
 |---|---|

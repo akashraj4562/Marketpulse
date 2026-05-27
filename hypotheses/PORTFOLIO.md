@@ -35,17 +35,19 @@
 
 ## Active hypotheses (confidence ≥ 60%)
 
-| ID | Slug | Confidence | Causality | Correlation | Severity | Sectors | P-tier | Last validated |
-|---|---|---|---|---|---|---|---|---|
-| — | — | — | — | — | — | — | — | — |
+| ID | Slug | Horizon | Confidence | Causality | Correlation | Severity | Instrument | Predicted direction | Sectors | P-tier | Last validated |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| — | — | — | — | — | — | — | — | — | — | — | — |
+
+**Horizon key:** `ST` = Short-term (≤4 weeks, verifiable within days) / `MT` = Medium-term (1–3 months) / `LT` = Long-term structural (3–18+ months)
 
 ---
 
 ## Developing hypotheses (confidence < 60%)
 
-| ID | Slug | Confidence | Causality | Correlation | Severity | Sectors | P-tier | Last validated |
-|---|---|---|---|---|---|---|---|---|
-| — | — | — | — | — | — | — | — | — |
+| ID | Slug | Horizon | Confidence | Causality | Correlation | Severity | Instrument | Predicted direction | Sectors | P-tier | Last validated |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| — | — | — | — | — | — | — | — | — | — | — | — |
 
 ---
 

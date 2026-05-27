@@ -118,19 +118,35 @@ Run the behavioral audit:
 
 ---
 
-## Stage 4 — Financial impact (capital-markets-analyst)
+## Stage 4 — Capital markets translation (capital-markets-analyst)
 
-**Deliverable:** named winners and losers, P&L/valuation impact, already-priced-in assessment.
+**Primary deliverable:** a specific, testable capital market prediction. Supporting deliverable: fundamental P&L/valuation mechanics that justify the prediction.
 
 Running in parallel with or immediately after Stage 3:
+
+**Step 1 — Classify time horizon (mandatory first)**
+Is this thesis Short-term (ST: ≤4 weeks), Medium-term (MT: 1–3 months), or Structural long-term (LT: 3–18+ months)? This governs how historical data is weighted throughout the thesis.
+
+**Step 2 — Capital market prediction**
+- Name the specific instrument (ticker, index, sector ETF, bond, currency)
+- State predicted direction, magnitude range, and timeframe
+- Identify the investor-type driver: which investor type (FII / DII / retail / HNI / hedge fund) is expected to move this, and why?
+- Run the already-priced-in test: what does consensus currently believe? Where does this thesis diverge from that belief?
+
+**Step 3 — Investor sentiment landscape**
+- Pull FII/DII net data (NSE India data) for Indian instruments
+- Check India VIX level and trend
+- Check F&O open interest for directional positioning signals
+- Assess whether the predicted investor-type driver is currently positioned consistently with the prediction
+
+**Step 4 — Supporting fundamental analysis**
 - Map P&L impact: which line items change, by how much, for which company types?
 - Assess valuation/multiple effect
 - Name winners and losers specifically (business model archetypes, not just "the sector")
-- Run the already-priced-in test: what does consensus currently believe? Where does this thesis diverge?
 - Identify capital flow implication
 - Flag credit angle if relevant
 
-Output: financial impact note with explicit assumptions and confidence level.
+Output: capital market prediction note with investor sentiment landscape, plus fundamental supporting evidence. Both sections included; capital market prediction section comes first.
 
 ---
 
@@ -179,9 +195,16 @@ Resolve tensions from the crew — including any conflicts between the sector-sp
 
 *Note: if the behavioral audit identified significant psychological mechanisms, the thesis must include a "Behavioral dimension" section stating: (a) the psychological mechanism(s) at work, (b) any observed behavioral signals, (c) the behavioral timeframe adjustment, and (d) the behavioral reversal to watch for.*
 
+*Note: the Capital Market Prediction section leads the thesis — it is the primary testable claim. The fundamental analysis is supporting evidence for that claim.*
+
 ```
 # Thesis: [Short title]
-Signal / Date initiated / Status
+Signal / Date initiated / Status / Horizon: [ST / MT / LT]
+
+## Capital Market Prediction
+[Instrument | Direction | Magnitude | Timeframe | Investor-type driver]
+[Investor sentiment landscape: FII/DII/retail posture]
+[Already-priced-in assessment + market divergence statement]
 
 ## Causal Chain
 [Link by link, labeled Strong/Plausible/Speculative]
@@ -191,14 +214,19 @@ Signal / Date initiated / Status
 ## Key Assumptions
 
 ## Falsifiable Watch-Items
-- CONFIRM: [specific observable event]
-- KILL: [specific observable event that falsifies]
+- CONFIRM (market): [specific price/flow event]
+- CONFIRM (fundamental): [business-level confirmation]
+- KILL (market): [price/flow that falsifies]
+- KILL (fundamental): [business event that falsifies]
 
 ## Red-Team Notes [verdict + any override log]
 
-## Financial Impact & Winners/Losers
+## Supporting Fundamental Analysis
+[P&L/valuation mechanics — named winners and losers]
 
 ## Strategic Implications
+
+## Market Actuals Log [append-only — market-signal-reader updates]
 
 ## Outcome [blank — filled when resolved]
 

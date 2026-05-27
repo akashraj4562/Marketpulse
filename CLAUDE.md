@@ -12,7 +12,7 @@
 
 Marketpulse is a finance and investment research desk that scans cross-domain news for raw signals and traces their **causal impact-chains** down to concrete business and valuation consequences — especially for businesses in India and the US.
 
-Its edge is seeing **second- and third-order effects early**: before the impact has rippled from the cause to the obvious outcome, and before it is priced in by the market.
+Its edge is seeing **second- and third-order effects early**: before the impact has rippled from the cause to the obvious outcome, and before it is priced in by the market. The primary output is always a **capital market prediction** — a specific, testable claim about an instrument, direction, magnitude, and timeframe, with an identified investor-type driver. Fundamental business analysis is the supporting scaffolding for that prediction, not the product itself.
 
 It serves two purposes simultaneously:
 - **Research engine:** produces rigorous, falsifiable theses on how events change capital flows, valuations, and corporate behavior.
@@ -70,17 +70,33 @@ Eleven specialists in `.claude/agents/`. Each has a mandate, a specific lens, de
 | **hypothesis-validator** | Scores and updates the portfolio | Daily (priority queue) |
 | **hypothesis-predictor** | Predicts unestablished cause-effect relationships | Weekly |
 
-**Cross-cutting specialist** (embedded in both systems):
+**Cross-cutting specialists** (embedded in both systems):
 
 | Agent | Role | Embedded in |
 |---|---|---|
 | **behavioral-psychologist** | Translates human psychological states into economic and market impact. Surfaces behavioral leading indicators (Google Trends, sentiment, fund flows). Identifies where chains depend on human psychology rather than rational actor mechanics. | Thesis pipeline Stage 3b; daily behavioral signal scan; behavioral hypothesis generation; training drill scoring |
+| **market-signal-reader** | Reality-check on capital market predictions. Pulls actual price action, FII/DII flows, VIX data. Compares predicted vs. actual market movements. Diagnoses the override when prediction ≠ actual using 7 override types. Updates confidence based on market evidence (separate from fundamental evidence). | Daily cycle Phase 2 (parallel with hypothesis-validator); thesis monitoring; triggered whenever a live hypothesis has an instrument that can be checked |
+| **product-manager** | Manages the desk's own product quality, feature roadmap, and owner expectations. Prioritizes which capabilities to build next vs. defer. Handles output UX — how hypotheses, theses, and summaries are presented to the owner. Pushes back on scope creep and resolves ambiguous requests before they reach the research crew. | On-demand; invoked when owner requests new features, changes to workflow, or prioritization decisions |
 
 **Conflict rule:** the research-director resolves disagreements and records reasoning in `docs/decisions/`. **The red-team-skeptic's "chain is unsupported" verdict cannot be overridden without an explicit, logged rationale** — and that log is visible to the owner. If the research-director overrides the red-team, the thesis ships with that disagreement prominently disclosed.
 
 ---
 
-## 4. Two parallel systems
+## 4. Hypothesis time-horizon classification
+
+Every hypothesis is classified by time horizon. This determines how historical data is weighted and what type of confirmation signals to watch for:
+
+| Horizon | Label | Timeframe | Dominant driver | Historical data weight |
+|---|---|---|---|---|
+| **Short-term tactical** | `ST` | ≤4 weeks; verifiable in days | FII/DII flows, macro triggers, sentiment, technical levels | Last 3–6 months = primary; older = context only |
+| **Medium-term** | `MT` | 1–3 months | Earnings cycles, sector rotation, policy implementation | Last 6–18 months = primary; 2–3 years = secondary |
+| **Structural long-term** | `LT` | 3–18+ months | Supply chain, regulatory regimes, tech adoption, demographics | Last 1–2 years = primary; 3–5+ years = high weight for cycles |
+
+**The weighting rule:** historical patterns from 5+ years ago are relevant for LT structural hypotheses (they inform cycle length and magnitude) and largely irrelevant for ST hypotheses (flow-driven, sentiment-driven). Misapplying historical analogs to the wrong horizon class is a common calibration error — the red-team must flag it.
+
+---
+
+## 5. Two parallel systems
 
 Marketpulse runs two complementary systems simultaneously:
 
@@ -149,7 +165,7 @@ The `signal-to-thesis` skill in `.claude/skills/` operationalises this.
 
 ---
 
-## 5. Hard guardrails — NON-NEGOTIABLE
+## 6. Hard guardrails — NON-NEGOTIABLE
 
 These are the desk's immune system. Breaking any of them destroys the product's reason to exist.
 
@@ -178,7 +194,7 @@ The red-team must genuinely attack every chain. The desk cannot function as a mu
 
 ---
 
-## 6. Definition of a "ready thesis"
+## 7. Definition of a "ready thesis"
 
 A thesis is cleared for the `theses/` folder when ALL of the following are true:
 
@@ -198,7 +214,7 @@ A thesis is cleared for the `theses/` folder when ALL of the following are true:
 
 ---
 
-## 7. Thesis file format
+## 8. Thesis file format
 
 Every thesis lives in `theses/<slug>.md`. Standard format:
 
@@ -235,7 +251,7 @@ Every thesis lives in `theses/<slug>.md`. Standard format:
 
 ---
 
-## 8. The owner-as-student dynamic
+## 9. The owner-as-student dynamic
 
 The owner is simultaneously the board (sets direction, decides what to pursue) and the primary student (building strategic-consultant judgment through the drills). These two roles are kept distinct:
 
@@ -246,7 +262,7 @@ The socratic-coach maintains a running record of the owner's **recurring blind s
 
 ---
 
-## 9. How to talk to the desk
+## 10. How to talk to the desk
 
 - Let the research-director drive: *"research-director: new signal — [signal]. Run a full workup."*
 - Run a training drill: *"socratic-coach: run a training drill."*

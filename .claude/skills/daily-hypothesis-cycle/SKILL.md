@@ -68,32 +68,43 @@ If behavioral signals are found: file a behavioral hypothesis OR flag the confir
 
 ---
 
-## Phase 2 — Priority validation (hypothesis-validator)
+## Phase 2 — Priority validation (hypothesis-validator + market-signal-reader)
 
 **Time allocation:** approximately 60–70% of the session
 
-**Task:** Validate today's priority queue. Update confidence, causality, and correlation scores. Move hypotheses between folders as thresholds are crossed.
+**Task:** Validate today's priority queue. Update confidence, causality, and correlation scores. Move hypotheses between folders as thresholds are crossed. For all hypotheses with a capital market prediction, market-signal-reader runs a parallel market actuals check.
 
 **Efficient validation approach:**
 
 **Step 1 — Batch by sector/domain**
 Group today's validation queue by sector (India pharma, global commodities, US rates, etc.). Run one targeted search per domain cluster that can yield evidence for multiple hypotheses simultaneously.
 
-**Step 2 — Per-hypothesis update**
+**Step 2 — Market actuals check (market-signal-reader, runs in parallel)**
+For every hypothesis with a Capital Market Prediction section that has a named instrument:
+- Pull yesterday's closing price and % change for the instrument
+- Pull NSE FII/DII net data for India instruments
+- Check India VIX level
+- Compare predicted direction/magnitude vs. actual
+- If match: append confirming row to Market Actuals log; note +confidence
+- If no match: diagnose the override (type 1–7); append diagnosis row; adjust confidence based on override type
+- If "Too early": append a "monitoring" row with current price and no confidence change
+- Flag to research-director: any hypothesis where market moved strongly opposite = needs red-team review
+
+**Step 3 — Per-hypothesis fundamental update**
 For each validated hypothesis:
-- Append to evidence log
+- Append to evidence log (fundamental/business evidence)
 - Update validation history
 - Update scores
 - Check threshold crossings (60% up/down, retire trigger)
 - Set next validation due date
 
-**Step 3 — Folder moves**
+**Step 4 — Folder moves**
 Execute any folder moves triggered by threshold crossings. Update PORTFOLIO.md.
 
-**Step 4 — Flag emerging shifts**
-Flag any hypothesis where confidence moved ≥15% in either direction — these are significant and the research-director should be aware.
+**Step 5 — Flag emerging shifts**
+Flag any hypothesis where confidence moved ≥15% in either direction — these are significant and the research-director should be aware. Include both fundamental and market-actuals triggers.
 
-**Expected output:** Updated hypothesis files for all validated hypotheses. PORTFOLIO.md updated.
+**Expected output:** Updated hypothesis files for all validated hypotheses (both evidence log and market actuals sections updated). PORTFOLIO.md updated.
 
 ---
 
