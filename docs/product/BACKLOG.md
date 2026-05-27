@@ -1,8 +1,9 @@
 # Marketpulse Product Backlog
 
-> Maintained by product-manager. Updated as feature requests come in.
+> Maintained by product-manager + engineering. Updated as feature requests and tech debt items come in.
 > Priority tiers: **P0** (blocking — do now) / **P1** (high — next sprint) / **P2** (queue) / **P3** (later) / **Defer** / **Out of scope**
 > Status: `Proposed` → `Scoped` → `In Progress` → `Done`
+> **Two tracks: Feature Backlog (BL-) and Tech Backlog (TB-).** Same priority tiers. Tech items own engineering quality, stability, and velocity — not features. Neither track is optional.
 
 ---
 
@@ -26,9 +27,110 @@
 | 🎯 Prediction Accuracy | Source quality gate, calibration visibility | Red-team threshold automation |
 | ⚡ Validation Velocity | Scheduled cron, watch-item scanner | Push notifications |
 | 🌍 Coverage Breadth | Europe/Asia hypotheses | Commodity sector |
-| 📱 Output Clarity | Portfolio-aware sorting (BL-003) | Summary digest, share card |
+| 📱 Output Clarity | Portfolio-aware sorting (BL-003) ✅ | Summary digest, share card |
 | 🧠 Owner Intelligence | Blind-spot tracker | Calibration history |
 | 🏗️ Platform Leverage | Schema freeze | SQLite migration |
+| 🔧 Engineering Quality | **Mobile smoke test (TB-001), JS linting (TB-002)** | Server stability (TB-003), modularization (TB-004) |
+
+---
+
+## Tech Backlog
+
+> Engineering quality, reliability, and platform items. Owned by the engineering + security-privacy-guardian agents. Reviewed by product-manager for priority.
+> All TB items that affect user-visible stability are P1 or higher. A P0 on the feature side does not deprioritize P1 tech items that prevent regression.
+
+---
+
+### [TB-001] Mobile smoke test — automated regression gate
+**Priority:** P1 ← **DIRECT RESULT OF TODAY'S P0 REGRESSION**
+**Status:** Proposed
+**Root cause it prevents:** BL-003 introduced `catch {}` (ES2019 bare catch) and was shipped to production (iPhone) without any mobile browser test. It broke silently — page shows "Loading hypotheses…" indefinitely. Was only caught because the owner opened the app on their phone.
+
+**True need:** Every change to `server.js` must be smoke-tested on mobile before being considered "done." The testing gap meant a P0 regression shipped undetected.
+
+**What to build:**
+1. **`docs/product/SMOKE-TEST.md`** — a 2-minute manual smoke test checklist run after every `server.js` change:
+   - [ ] Desktop: open `localhost:3737`, cards load within 3 seconds
+   - [ ] iPhone: open `192.168.1.14:3737`, cards load within 5 seconds
+   - [ ] Expand one card — chart renders (may take a few seconds on first load)
+   - [ ] Rate a hypothesis (👍) — rating persists on refresh
+   - [ ] Open History page — renders without error
+   - [ ] Refresh button (↻) — spins and reloads cards
+2. **Pre-commit hook** (`.git/hooks/pre-commit`) that runs a Node.js syntax check on `server.js`:
+   ```bash
+   node --check web/server.js && echo "✅ Syntax OK" || exit 1
+   ```
+3. **`auto-test` skill update** — add mobile smoke test step to the daily cron (currently only tests hypothesis quality guardrails, not app health)
+
+**What this prevents:**
+- JS syntax errors shipped to production
+- ES version incompatibilities (bare catch, optional chaining, nullish coalescing) on older iOS
+- Silent fetch hangs from server restart mid-session
+
+**Extended RICE:** Reach 5 × Impact 5 × Confidence 0.95 / Effort 1 = **23.8** — highest ROI item in the backlog. Effort is 1 (30-minute write + hook setup).
+
+**Proof of value:** Zero P0 mobile regressions in the next 30 days after smoke test is in place. Observable: owner can open app on iPhone after every session without reporting a bug.
+
+---
+
+### [TB-002] JS compatibility linting — ES version guard
+**Priority:** P1
+**Status:** Proposed
+**Root cause it prevents:** Same regression as TB-001. `catch {}`, `?.`, `??` are ES2019/ES2020. Our target is iOS Safari 12+ which supports ES2019 but not always ES2020. No linter currently warns when incompatible syntax is added.
+
+**What to build:**
+- Add `eslint` to `web/package.json` with `"env": {"es2019": true}` and a rule that warns on ES2020+ features in the HTML template block (lines 741–end of server.js)
+- Or a simpler custom check: `grep -n "catch {" web/server.js | grep -v "\/\/"` catches bare catches
+
+**Effort:** 1 hour. **Impact:** Eliminates entire class of mobile JS compatibility bugs.
+
+---
+
+### [TB-003] Server stability — graceful restart + health endpoint
+**Priority:** P2
+**Status:** Proposed
+**Root cause it prevents:** During this session the server was killed and restarted 4× while the phone had the page open. Mobile Safari kept connections to dead server processes, causing fetch hangs that look like app bugs but are infrastructure issues.
+
+**What to build:**
+1. **`GET /health`** endpoint: returns `{"status":"ok","uptime":N,"pid":N}` — lets the frontend detect server restarts and auto-reload
+2. **Frontend heartbeat**: every 30s, the page fetches `/health`. If it fails 2× in a row (server restarted), silently re-run `loadData()`. If it succeeds but PID changed (new server process), show "Server updated — refreshing" toast and reload.
+3. **Process manager**: document using `npx pm2 start server.js` for persistent server across terminal sessions — eliminates the "server is down because terminal closed" failure mode
+
+**Effort:** 3 hours. **Impact:** Eliminates the "fetch hanging from dead server" class of bugs.
+
+---
+
+### [TB-004] Server.js modularization — split 2300-line file
+**Priority:** P3
+**Status:** Proposed
+**True need:** `server.js` is ~2300 lines and contains: Express server, all API routes, hypothesis parser, holdings logic, ticker resolution, and the entire frontend app (HTML + CSS + ~800 lines of JS) as a template literal. Every change to any layer touches this one file, making diffs hard to review and increasing regression risk.
+
+**Proposed split:**
+- `server.js` — Express init, middleware, route mounting (~100 lines)
+- `routes/hypotheses.js` — hypothesis loading/parsing, chart data, corroboration
+- `routes/holdings.js` — holdings sync, weights, portfolio endpoints
+- `routes/ratings.js` — ratings, feedback endpoints
+- `client/app.js` — frontend JavaScript (extracted from template literal, served as static file)
+- `client/index.html` — HTML template
+- `client/style.css` — CSS
+
+**Benefit:** Changes to frontend JS can be reviewed in isolation; no risk of touching hypothesis parser when updating CSS. Enables proper linting of client JS.
+
+**Dependency:** Not urgent while the codebase is one developer. Reassess when the file hits 3000 lines or when a second contributor joins.
+
+---
+
+### [TB-005] Data persistence — migrate runtime JSON to SQLite
+**Priority:** P3 (defer to Q4 2026)
+**Status:** Proposed
+**True need:** `holdings.json`, `ratings.json`, `feedback.json` are flat files read/written synchronously. This is fine for one user. It becomes a problem if:
+- Two requests write simultaneously (race condition)
+- File grows large (ratings for 100+ hypotheses × 365 days)
+- Server restart loses in-flight writes
+
+**Migration path:** `better-sqlite3` (synchronous, no additional process, no network). Single `marketpulse.db` file. Tables: `ratings`, `feedback`, `holdings_transactions`, `holdings_positions`.
+
+**When to do it:** When the rating history grows beyond 500 rows OR when hosting publicly.
 
 ---
 
