@@ -6,6 +6,32 @@
 
 ---
 
+## North Star Metric (NSM)
+
+**Calibrated Prediction Accuracy (CPA)** — of all resolved hypotheses in the Active tier (≥60% confidence), what % confirmed, and does that match the stated confidence band?
+
+| Band | Target | Alert |
+|---|---|---|
+| 75–100% | ≥75% confirm | <60% → over-confident |
+| 60–74% | 60–74% confirm | <45% or >90% → miscalibrated |
+
+**Leading proxy (short term):** Validation Freshness — % of due hypotheses validated on schedule.
+
+---
+
+## Roadmap themes
+
+| Theme | This quarter | Next quarter |
+|---|---|---|
+| 🎯 Prediction Accuracy | Source quality gate, calibration visibility | Red-team threshold automation |
+| ⚡ Validation Velocity | Scheduled cron, watch-item scanner | Push notifications |
+| 🌍 Coverage Breadth | Europe/Asia hypotheses | Commodity sector |
+| 📱 Output Clarity | Portfolio-aware sorting (BL-003) | Summary digest, share card |
+| 🧠 Owner Intelligence | Blind-spot tracker | Calibration history |
+| 🏗️ Platform Leverage | Schema freeze | SQLite migration |
+
+---
+
 ## Active backlog
 
 ---
@@ -83,26 +109,69 @@ Add this to RUNBOOK.md as the canonical "manual refresh" command with a clear he
 
 ---
 
+---
+
+### [BL-004] Scheduled validation cron — daily cycle automation
+**Priority:** P1
+**Status:** Proposed
+**Theme:** ⚡ Validation Velocity
+**True need:** Hypotheses should get validated even when the owner doesn't open the desk
+**Extended RICE:** Reach 5 × Impact 4 × Confidence 0.8 / Effort 3 = 5.3 × **Foundation ×1.5** (enables: push notifications, auto calibration dashboard, watch-item scanner, confidence leaderboard) × NSM ×1.25 = **Score 9.9**
+**Proof of value:** Owner will see validation timestamps stay current without manually triggering. Observable: Validation Freshness metric hits 100% P1 on days owner doesn't open Claude. Assumption: server runs continuously (reasonable — it's been up for days).
+
+---
+
+### [BL-005] Watch-item scanner — auto-flag CONFIRMS/KILLS
+**Priority:** P2
+**Status:** Proposed
+**Theme:** ⚡ Validation Velocity
+**True need:** When a CONFIRMS or KILLS event happens in the market, the owner should know same-day, not on the next manual check
+**Extended RICE:** Reach 5 × Impact 5 × Confidence 0.7 / Effort 4 = 4.4 × Foundation ×1.0 × NSM ×1.25 = **Score 5.5**
+**Dependency:** BL-004 (cron must run before scanner can be scheduled)
+**Proof of value:** Owner is notified same-day when ZS misses guidance (H-0008 KILLS trigger), without manually checking. Observable: owner acknowledges notification within 24h. Assumption: signal-scout can detect a specific named event in news (reasonable — it already does event-driven scanning).
+
+---
+
+### [BL-006] Calibration dashboard
+**Priority:** P2
+**Status:** Proposed
+**Theme:** 🎯 Prediction Accuracy
+**True need:** The owner needs to see whether their confidence scores are well-calibrated — not just individual hypothesis outcomes but the pattern across time
+**Extended RICE:** Reach 3 × Impact 5 × Confidence 0.7 / Effort 3 = 3.5 × Foundation ×1.5 (enables: recalibration prompts, blind-spot tracker, owner learning velocity reporting) × NSM ×1.25 = **Score 6.6**
+**Dependency:** ≥10 hypotheses must have resolved to have meaningful calibration data
+**Proof of value:** Owner identifies that they are systematically over-confident in MT theses. Observable: owner explicitly recalibrates a hypothesis after seeing the dashboard. Assumption: enough hypotheses resolve in the next 3 months to populate meaningful data (reasonable — 10 hypotheses, 4–12 week horizons).
+
+---
+
 ## Done
 
-*(none yet)*
+| ID | Feature | Shipped | Theme |
+|---|---|---|---|
+| BL-001 | Mobile web view — card layout, dark mode, responsive | 2026-05-27 | 📱 Output Clarity |
+| BL-002 | Manual refresh button (↻) in web view | 2026-05-27 | ⚡ Validation Velocity |
 
 ---
 
 ## Deferred / Out of scope
 
-*(none yet)*
+| ID | Feature | Reason |
+|---|---|---|
+| — | Public hosting (Vercel/ngrok) | User decision: "host on website later" |
+| — | DB migration (SQLite) | Foundation layer — after schema stabilizes, Q4 2026 |
+| — | REST API layer | Platform leverage — after DB migration |
 
 ---
 
 ## PM notes
 
 **Current product state (as of 2026-05-27):**
-Marketpulse is a markdown-file-based research system run via Claude Code. There is no web UI yet. Core capabilities: hypothesis portfolio, daily validation cycle, thesis pipeline, training drills, behavioral psychology layer, capital market predictions, market signal validation. The system is fully functional in its current form; the web UI is an enhancement layer.
+Web view live at port 3737 with real price charts. 10 active hypotheses. NSM (CPA) not yet measurable — insufficient resolved hypotheses. Leading proxy (Validation Freshness) depends on daily cycle running, which is currently manual.
 
-**What to build in what order:**
-1. First: complete the capital market prediction pivot (in progress) — this is the core product quality improvement
-2. Second: BL-002 prompt documentation (10 minutes, high leverage) — already partially done in RUNBOOK
-3. Third: BL-001 web UI (1–2 days of build) — do once the hypothesis format has stabilized through a few real hypothesis cycles
+**Immediate priority sequence:**
+1. **BL-003** — portfolio-aware prioritization (owner shares holdings; this personalizes the entire web view)
+2. **BL-004** — scheduled cron (unblocks BL-005 and long-term NSM measurement)
+3. **BL-005** — watch-item scanner (first real-time capability)
+4. **BL-006** — calibration dashboard (NSM visibility, requires resolved hypotheses first)
 
-**Quality note:** the system runs on the principle of quality over quantity for hypotheses. Any UI that makes it easier to flood the portfolio with low-quality hypotheses is a regression, not an improvement. The refresh button (BL-002) should surface the quality of the re-validation — not just the new scores, but the quality and quantity of evidence found.
+**Quality guardrail:** Any UI that makes it easier to file low-quality hypotheses is a regression. The proof-of-value gate applies to the desk's output features (hypotheses) as much as to the software features.
+
