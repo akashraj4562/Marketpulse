@@ -9,37 +9,33 @@
 | Component | Status | Notes |
 |---|---|---|
 | **Web view** | ✅ Running on port 3737 | `cd web && node server.js` |
-| **Hypothesis portfolio** | ✅ 10 live hypotheses (6 India, 4 US) | Next ID: H-0011 |
+| **Hypothesis portfolio** | ✅ 11 live hypotheses (7 India, 4 US) | Next ID: H-0012 |
 | **Price charts** | ✅ Live via Yahoo Finance (yahoo-finance2 v3) | Real data + forecast band |
-| **TX (Plain English)** | ✅ Live | Server-side `generateTX` + AI fallback via `/api/tx/:id` |
-| **AI TX generation** | ⚠️ Disabled | `@anthropic-ai/sdk` installed; set `ANTHROPIC_API_KEY` env var to enable |
-| **Company selector** | ✅ Live — P0 fixed | Ticker label now updates on company switch (was frozen) |
-| **HPCL chart** | ✅ Fixed | Ticker override `?ticker=HPCL.NS` now routes through TICKER_MAP → `HINDPETRO.NS` |
+| **TX (Plain English)** | ✅ Live — AI enabled | `web/.env` set; Haiku generates on card open; cached in `tx-cache.json` |
+| **AI TX generation** | ✅ Enabled | ANTHROPIC_API_KEY loaded via dotenv from `web/.env` |
+| **Company selector** | ✅ Live — P0 fixed | Ticker label updates on every company switch |
+| **HPCL chart** | ✅ Fixed | `?ticker=HPCL.NS` routes through TICKER_MAP → `HINDPETRO.NS` |
+| **Daily hypothesis cycle** | ✅ Run 2026-05-28 | 5 P1s validated; H-0011 filed; all pushed to GitHub |
 | **Auto-test crons** | ✅ Active (session-only) | Daily 9:17am, Weekly Mon 9:23am, Monthly 1st 9:41am |
 | **Memory auto-save** | ✅ Active (every 45 min) | PROJECT-STATE.md + SESSIONS.md checkpoint |
 | **Market switcher** | ✅ All/India/US/Global tabs | Auto-detected from instrument field |
 | **Agent crew** | ✅ 17 agents configured | 14 Marketpulse + PM agents added to ClearCart & MicroManga |
-| **Skills** | ✅ signal-to-thesis, daily-hypothesis-cycle, training-drill, auto-test | In `.claude/skills/` |
-| **PM profiles** | ✅ All projects — Bug P0 protocol added | Marketpulse (enhanced), ClearCart (updated), MicroManga (updated) |
-| **Feedback→hypothesis loop** | ✅ Live | ratings.json + feedback.json → generator + validator agents |
-| **BL-003 Portfolio mode** | ✅ Built, tested, switched off | All 8 edits complete, verified with test data, holdings cleared; toggled off cleanly |
-| **README** | ✅ Written | Full showcase README at repo root — architecture, depth, backlog, run instructions |
-| **Git** | ⚠️ Unpushed commits | 3 new fixes this session not yet pushed — run `git push` |
-| **Security hardening** | ✅ Done | .gitignore, history scrubbed via filter-branch+gc, security-privacy-guardian agent |
-| **Mobile fix** | ✅ Done | Chart.js `defer` + bare `catch{}` → `catch(err){}` — phone loads correctly now |
-| **Tech Backlog** | ✅ Added | TB-001–005 in BACKLOG.md; SMOKE-TEST.md written; pre-commit JS syntax hook installed |
-| **BL-013 Gmail sync** | 📋 Backlog | Full spec in BACKLOG.md — Apps Script → /api/holdings-sync; server side already built |
+| **Git** | ✅ Clean — pushed | Latest commit: 1c17bc2 (TX toggle + retry) |
+| **Security hardening** | ✅ Done | .gitignore, history scrubbed, security-privacy-guardian agent |
+| **Mobile fix** | ✅ Done | Chart.js `defer` + `catch(err){}` + apostrophe bug fixed |
+| **BL-013 Gmail sync** | 📋 Backlog | Full spec in BACKLOG.md; server side already built |
+| **BL-014 Mobile cycle trigger** | 📋 Backlog P2 | Designed (Option B review-then-apply); not yet built |
 
 ---
 
 ## What was built (most recent first)
 
-### 2026-05-28 — Session 7 (mid-session checkpoint)
-- **`generateTX` ReferenceError fixed**: server-side copy of `generateTX` added before `/api/tx/:id` endpoint — static fallback no longer crashes
-- **HPCL P0 fixed**: `?ticker=HPCL.NS` override now routes through TICKER_MAP → `HINDPETRO.NS`; chart loads correctly
-- **Ticker label P0 fixed**: `renderChart()` now updates the ticker label on every company switch, not just on first card open
-- **AI TX wired in**: `/api/tx/:id` endpoint live; uses `claude-haiku-4-5-20251001`; falls back to static if no API key; results cached in `tx-cache.json`
-- 3 fixes above not yet committed/pushed — pending
+### 2026-05-28 — Session 7 (checkpoint 2)
+- **Daily cycle run**: 5 P1s validated, H-0011 filed (crude $100 → India fiscal squeeze), all pushed
+- **AI TX enabled**: `web/.env` created with ANTHROPIC_API_KEY; dotenv wired into server; Haiku generating plain-English TL;DRs; tested on desktop + iPhone ✅
+- **3 P0 bugs fixed + pushed**: generateTX crash, HPCL ticker override, ticker label staleness on company switch
+- **BL-014 added to backlog**: mobile-triggered cycle (P2, full design spec captured)
+- **In-flight**: AI TX intermittent failure — P0 fix pending (manual retry toggle + static/AI switch)
 
 ### 2026-05-28 — Session 6
 - **Security hardening**: root `.gitignore` added (covers node_modules, holdings.json, feedback.json, ratings.json, .env*); git history scrubbed via `filter-branch + gc`; `security-privacy-guardian.md` agent created with 5-section pre-publication gate checklist; security gate run — CLEAR TO PUSH verdict.

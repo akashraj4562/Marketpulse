@@ -4,20 +4,18 @@
 
 ---
 
-## Session: 2026-05-28 (Session 7 — mid-session checkpoint)
+## Session: 2026-05-28 (Session 7 — checkpoint 2)
 
-**Focus:** Bug fixes — TX endpoint crash, HPCL chart, ticker label staleness
+**Focus:** P0 bug fixes, AI TX activation, daily cycle, mobile retry toggle (in-flight)
 
-### Done so far
-- **`generateTX` ReferenceError (P0)**: `/api/tx/:id` called client-side `generateTX` which isn't in Node scope. Added server-side duplicate before the endpoint. Static fallback now works.
-- **HPCL chart P0**: `?ticker=HPCL.NS` bypass TICKER_MAP entirely. Fixed chart endpoint to strip `.NS`/`.BO` suffix and look up canonical Yahoo ticker before fetching. `HINDPETRO.NS` now returns 7 pts.
-- **Ticker label staleness (P0)**: Label next to "Price chart" was only set on initial card open. Fixed `renderChart` to always write `data.ticker` to the label after every fetch (including company switch). Also clears to `—` on error.
-- **AI TX endpoint**: `/api/tx/:id` fully wired — Haiku generates 4 plain-English lines, cached in `tx-cache.json`. Set `ANTHROPIC_API_KEY` to activate.
+### Done
+- Fixed 3 P0s: `generateTX` crash, HPCL ticker override, ticker label staleness — committed + pushed
+- AI TX live: `web/.env` + dotenv, Haiku generating plain-English TL;DRs, tested on iPhone ✅
+- Daily cycle run: 5 P1s validated, H-0011 filed, PORTFOLIO.md updated, pushed to GitHub
+- BL-014 added to backlog (mobile-triggered cycle, P2)
 
-### Next
-- Commit + push 3 fixes to GitHub
-- Set `ANTHROPIC_API_KEY` to test AI TX live
-- Daily hypothesis validation cycle not run this session
+### Also done
+- TX toggle + manual retry (P0): `📝 Template` / `✨ AI` badge, 🔄 retry button, tap-to-toggle — committed + pushed (1c17bc2)
 
 ---
 
