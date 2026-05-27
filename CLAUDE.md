@@ -3,6 +3,7 @@
 > The desk constitution. Read every session. Governs **how the desk works**.
 > Working title: Marketpulse. May be renamed.
 > Active theses and their outcomes live in `theses/`. The tracking ledger is `theses/LEDGER.md`.
+> The living hypothesis portfolio lives in `hypotheses/`. The master index is `hypotheses/PORTFOLIO.md`.
 > The step-by-step for running the desk lives in `RUNBOOK.md`.
 
 ---
@@ -46,7 +47,9 @@ These chains unfold over months to years. The desk's job is to see them when the
 
 ## 3. The crew
 
-Eight specialists in `.claude/agents/`. Each has a mandate, a specific lens, decision rights, and the **duty to disagree**. Productive tension is the mechanism of quality.
+Eleven specialists in `.claude/agents/`. Each has a mandate, a specific lens, decision rights, and the **duty to disagree**. Productive tension is the mechanism of quality.
+
+**Thesis pipeline crew** (deep, point-in-time workups):
 
 | Agent | Role | Primary lens |
 |---|---|---|
@@ -59,11 +62,62 @@ Eight specialists in `.claude/agents/`. Each has a mandate, a specific lens, dec
 | **red-team-skeptic** | Falsifier and calibrator | Weakest links, base rates, already-priced-in test |
 | **socratic-coach** | Owner's trainer | Probing, scoring, blind-spot tracking |
 
+**Hypothesis engine crew** (continuous, living portfolio):
+
+| Agent | Role | Cadence |
+|---|---|---|
+| **hypothesis-generator** | Creates new hypotheses from world events | Daily |
+| **hypothesis-validator** | Scores and updates the portfolio | Daily (priority queue) |
+| **hypothesis-predictor** | Predicts unestablished cause-effect relationships | Weekly |
+
 **Conflict rule:** the research-director resolves disagreements and records reasoning in `docs/decisions/`. **The red-team-skeptic's "chain is unsupported" verdict cannot be overridden without an explicit, logged rationale** — and that log is visible to the owner. If the research-director overrides the red-team, the thesis ships with that disagreement prominently disclosed.
 
 ---
 
-## 4. The pipeline
+## 4. Two parallel systems
+
+Marketpulse runs two complementary systems simultaneously:
+
+### System A — Thesis pipeline (deep, point-in-time)
+A single signal receives a full 8-stage workup producing a rigorous, falsifiable thesis. High effort, high depth, one signal at a time. Lives in `theses/`.
+
+### System B — Hypothesis portfolio (continuous, living)
+A portfolio of hundreds of cause-effect hypotheses, each scored on three dimensions, validated on a rolling priority schedule. Updated daily. Lives in `hypotheses/`.
+
+**How they relate:**
+- A high-confidence hypothesis (≥80%) can trigger a full thesis workup for deeper treatment
+- A completed thesis seeds one or more living hypotheses in the portfolio
+- The hypothesis portfolio is the desk's "always-on" map of the world; theses are the deep dives
+
+### The hypothesis scoring system
+
+Every hypothesis carries three scores:
+
+**Confidence (0–100%):** How likely is this cause-effect relationship playing out as stated, within the timeframe? Updated on each validation based on real-world evidence.
+
+**Causality score (0–100):** What fraction of the relationship is explained by a direct mechanism — where A causes B through identifiable actions of economic actors?
+
+**Correlation score (0–100):** What fraction is explained by statistical co-movement without a clear direct mechanism (possibly a common third factor)?
+
+**The iron rule:** Causality + Correlation = 100, always.
+
+| Example | Causality | Correlation | Why |
+|---|---|---|---|
+| Low oil reserves → oil price rises | 100 | 0 | Supply/demand mechanism is complete |
+| Birth rate ↑ with oil price ↑ | 0 | 100 | No mechanism; common factor (GDP growth) |
+| Fed rate rise → EM currency falls | 75 | 25 | Clear carry mechanism + sentiment amplification |
+| Tech PE contraction when 10Y rises | 60 | 40 | DCF mechanism + sentiment correlation |
+
+### Hypothesis portfolio tiers
+
+| Tier | Confidence | Approximate count | Validation cadence |
+|---|---|---|---|
+| **Active** | ≥60% | ~100 | P1 daily, P2 every 48h |
+| **Developing** | <60% | ~1000 | P2/P3 within 72h |
+| **Predicted** | Unvalidated | Ongoing | Validator assigns initial confidence |
+| **Retired** | Falsified/expired | Archive | — |
+
+### Thesis pipeline (System A)
 
 Every signal travels through this workup before becoming a thesis:
 

@@ -4,6 +4,57 @@ You are the owner and board. The desk reasons; you direct and train. This file t
 
 ---
 
+## The two systems at a glance
+
+| | Thesis pipeline | Hypothesis portfolio |
+|---|---|---|
+| **What it is** | Deep point-in-time workup on one signal | Living portfolio of scored cause-effect claims |
+| **Cadence** | On-demand | Daily |
+| **Output** | Filed thesis in `theses/` | Updated `hypotheses/PORTFOLIO.md` |
+| **Prompt** | `research-director: new signal — [X]. Run a full workup.` | `research-director: run the daily hypothesis cycle.` |
+
+---
+
+## DAILY — The hypothesis cycle (most important habit)
+
+**Run every day with:**
+```
+research-director: run the daily hypothesis cycle.
+```
+
+**Run weekly (add on Fridays) with:**
+```
+research-director: run the daily hypothesis cycle with prediction pass.
+```
+
+**What you receive:** a daily summary with new hypotheses filed, significant confidence movements (≥15%), threshold crossings (developing → active = something is forming), and tomorrow's P1 queue.
+
+**Your decision after the summary:**
+- Any hypothesis that crossed 60% → worth monitoring closely
+- Any hypothesis where confidence moved ≥20% in a single day → consider a full thesis workup
+- Any hypothesis the validator flagged as needing red-team review → route to red-team-skeptic
+
+**Hypothesis portfolio prompts:**
+```
+# See the full portfolio
+research-director: summarise the current hypothesis portfolio by sector.
+
+# Deep-dive one hypothesis
+hypothesis-validator: run a deep validation on H-NNNN. Pull all available evidence.
+
+# Attack a high-confidence hypothesis
+red-team-skeptic: attack hypothesis H-NNNN. No politeness.
+
+# Promote a hypothesis to a full thesis
+research-director: H-NNNN has reached 75% confidence. 
+Run a full signal-to-thesis workup using this hypothesis as the signal.
+
+# Monthly health check
+research-director: run the monthly portfolio health check.
+```
+
+---
+
 ## PHASE 1 — Running a signal workup
 
 ### When to use
@@ -169,13 +220,31 @@ The signal-scout can search; you can also bring signals from these domains:
 
 ## Quick reference — all prompts
 
+### Hypothesis portfolio (daily system)
+| Task | Prompt |
+|---|---|
+| **Daily cycle** | `research-director: run the daily hypothesis cycle.` |
+| **Daily cycle + weekly predictions** | `research-director: run the daily hypothesis cycle with prediction pass.` |
+| Portfolio overview | `research-director: summarise the current hypothesis portfolio by sector.` |
+| Deep-validate one hypothesis | `hypothesis-validator: run a deep validation on H-NNNN. Pull all available evidence.` |
+| Attack a hypothesis | `red-team-skeptic: attack hypothesis H-NNNN. No politeness.` |
+| Promote to full thesis | `research-director: H-NNNN has reached [X]% confidence. Run a full signal-to-thesis workup.` |
+| Generate predictions now | `hypothesis-predictor: run a prediction pass on the current portfolio.` |
+| Monthly health check | `research-director: run the monthly portfolio health check.` |
+
+### Thesis pipeline (on-demand)
 | Task | Prompt |
 |---|---|
 | New signal workup | `research-director: new signal — [signal]. Run a full signal-to-thesis workup.` |
-| Training drill | `socratic-coach: run a training drill.` |
 | Weekly thesis review | `research-director: quick pass on live theses. Anything firing?` |
 | Score a resolved thesis | `research-director: score thesis [slug].` |
-| Attack a chain | `red-team-skeptic: attack thesis [slug]. No politeness.` |
+| Attack a thesis chain | `red-team-skeptic: attack thesis [slug]. No politeness.` |
 | Deepen a link | `causal-chain-analyst: re-examine the link [link] in [slug].` |
 | Quarterly calibration | `research-director: calibration review of all scored theses.` |
+
+### Training
+| Task | Prompt |
+|---|---|
+| Training drill | `socratic-coach: run a training drill.` |
+| Targeted drill | `socratic-coach: run a training drill on [domain].` |
 | Blind-spot targeting | `socratic-coach: review blind-spots and design targeted drills.` |
