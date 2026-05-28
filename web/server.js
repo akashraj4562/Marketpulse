@@ -881,7 +881,7 @@ Format each line as HTML with <strong> tags around the label only. No bullet poi
 
 // ─── Chat interface (BL-015) ──────────────────────────────────────────────────
 
-// Rough cost estimate for logging (claude-opus-4-7 pricing, mid-2026)
+// Rough cost estimate for logging (claude-opus-4-8 pricing, mid-2026)
 const OPUS_COST_PER_INPUT_MTOK  = 15;   // USD per million input tokens
 const OPUS_COST_PER_OUTPUT_MTOK = 75;   // USD per million output tokens
 
@@ -957,7 +957,7 @@ GUIDELINES:
     // C-TL-05: using @anthropic-ai/sdk stream() EventEmitter pattern
     // Verified against sdk version in package.json before shipping
     const stream = anthropic.messages.stream({
-      model: 'claude-opus-4-7',
+      model: 'claude-opus-4-8',
       max_tokens: 800, // C-TL-02: raised from 500; complex finance answers need room
       system: systemPrompt,
       messages: history,
