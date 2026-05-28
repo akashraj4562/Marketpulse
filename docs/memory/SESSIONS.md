@@ -4,6 +4,15 @@
 
 ---
 
+## Session: 2026-05-28 (Session 7 — checkpoint 8)
+
+**Focus:** No new work — cron checkpoint
+
+### Still open
+- G8 breach: red-team review of H-0007/H-0003/H-0005 pending before next hypothesis filings
+
+---
+
 ## Session: 2026-05-28 (Session 7 — checkpoint 7)
 
 **Focus:** Holding pattern — no new work since checkpoint 6
