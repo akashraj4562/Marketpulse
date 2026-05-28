@@ -9,18 +9,18 @@
 | Component | Status | Notes |
 |---|---|---|
 | **Web view** | ✅ Running on port 3737 | `cd web && node server.js` |
-| **Hypothesis portfolio** | ✅ 11 live hypotheses (7 India, 4 US) | Next ID: H-0012 |
+| **Hypothesis portfolio** | ✅ 11 live hypotheses (6 India, 5 US→4 US) — 5 Active, 6 Developing | Next ID: H-0012 |
 | **Price charts** | ✅ Live via Yahoo Finance (yahoo-finance2 v3) | Real data + forecast band |
 | **TX (Plain English)** | ✅ Live — AI enabled | `web/.env` set; Haiku generates on card open; cached in `tx-cache.json` |
 | **AI TX generation** | ✅ Enabled | ANTHROPIC_API_KEY loaded via dotenv from `web/.env` |
 | **Company selector** | ✅ Live — P0 fixed | Ticker label updates on every company switch |
 | **HPCL chart** | ✅ Fixed | `?ticker=HPCL.NS` routes through TICKER_MAP → `HINDPETRO.NS` |
-| **Daily hypothesis cycle** | ✅ Run 2026-05-28 | 5 P1s validated; H-0011 filed; all pushed to GitHub |
+| **Daily hypothesis cycle** | ✅ Run twice 2026-05-28 | AM + PM runs; H-0001 kill condition triggered, H-0011 → developing, H-0002 reversed up |
 | **Auto-test crons** | ✅ Active (session-only) | Daily 9:17am, Weekly Mon 9:23am, Monthly 1st 9:41am |
 | **Memory auto-save** | ✅ Active (every 45 min) | PROJECT-STATE.md + SESSIONS.md checkpoint |
 | **Market switcher** | ✅ All/India/US/Global tabs | Auto-detected from instrument field |
 | **Agent crew** | ✅ 17 agents configured | 14 Marketpulse + PM agents added to ClearCart & MicroManga |
-| **Git** | ✅ Clean — pushed | Latest commit: 1c17bc2 (TX toggle + retry) |
+| **Git** | ✅ Clean — pushed | Latest commit: 0ac602e (PM cycle: H-0001 kill, H-0002 reversal) |
 | **Security hardening** | ✅ Done | .gitignore, history scrubbed, security-privacy-guardian agent |
 | **Mobile fix** | ✅ Done | Chart.js `defer` + `catch(err){}` + apostrophe bug fixed |
 | **BL-013 Gmail sync** | 📋 Backlog | Full spec in BACKLOG.md; server side already built |
@@ -30,12 +30,10 @@
 
 ## What was built (most recent first)
 
-### 2026-05-28 — Session 7 (checkpoint 2)
-- **Daily cycle run**: 5 P1s validated, H-0011 filed (crude $100 → India fiscal squeeze), all pushed
-- **AI TX enabled**: `web/.env` created with ANTHROPIC_API_KEY; dotenv wired into server; Haiku generating plain-English TL;DRs; tested on desktop + iPhone ✅
-- **3 P0 bugs fixed + pushed**: generateTX crash, HPCL ticker override, ticker label staleness on company switch
-- **BL-014 added to backlog**: mobile-triggered cycle (P2, full design spec captured)
-- **In-flight**: AI TX intermittent failure — P0 fix pending (manual retry toggle + static/AI switch)
+### 2026-05-28 — Session 7 (checkpoint 3)
+- **PM cycle run**: Nifty 23,649 < 23,800 kill level → H-0001 → developing (42%); H-0002 reversed to 52% (WTI below $90, deal progressing); H-0007 → 82% (MU $928, SK Hynix $1T); H-0011 → developing (56%). Portfolio: 5 Active, 6 Developing. Pushed 0ac602e.
+- **TX toggle + retry shipped**: 📝/✨ badge, 🔄 retry button, tap-to-toggle. Committed 1c17bc2.
+- **AM cycle**: 5 P1s validated, H-0011 filed, AI TX + dotenv enabled. 3 P0 bugs fixed. BL-014 added to backlog.
 
 ### 2026-05-28 — Session 6
 - **Security hardening**: root `.gitignore` added (covers node_modules, holdings.json, feedback.json, ratings.json, .env*); git history scrubbed via `filter-branch + gc`; `security-privacy-guardian.md` agent created with 5-section pre-publication gate checklist; security gate run — CLEAR TO PUSH verdict.

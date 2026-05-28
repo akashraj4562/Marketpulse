@@ -4,6 +4,17 @@
 
 ---
 
+## Session: 2026-05-28 (Session 7 — checkpoint 3)
+
+**Focus:** PM hypothesis cycle, portfolio moves, memory save
+
+### Done
+- PM cycle run: H-0001 kill condition (Nifty 23,649 < 23,800) → developing (42%); H-0002 reversed up to 52% on Iran deal progress; H-0007 → 82%; H-0011 → developing (56%)
+- 2 folder moves: H-0001 + H-0011 active → developing; PORTFOLIO.md updated (5 Active, 6 Developing)
+- Key watch tomorrow: Iran deal closure → H-0002 back to active or H-0002 retires
+
+---
+
 ## Session: 2026-05-28 (Session 7 — checkpoint 2)
 
 **Focus:** P0 bug fixes, AI TX activation, daily cycle, mobile retry toggle (in-flight)
