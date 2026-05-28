@@ -4,6 +4,17 @@
 
 ---
 
+## Session: 2026-05-28 (Session 7 — checkpoint 5)
+
+**Focus:** Product Staff project created; news integration backlog item added
+
+### Done
+- Product Staff project built at `/Users/priyanka/Desktop/Akash Claude/product-staff/` — 6 agents (PM, Data, UX, Tech, DevOps, Market Researcher), CLAUDE.md, RUNBOOK.md, 16-section PRD template, decisions repository (DEC-PS-001–008). First commit d4ad5b7.
+- BL-017 (news source integration — NewsAPI + ET RSS, P2) added to Marketpulse backlog; RICE 15.0 — foundation layer for BL-004/005
+- De-risk philosophy (Step 11, Principle 11, DEC-PS-008) added to Marketpulse PM profile; committed ab4e230
+
+---
+
 ## Session: 2026-05-28 (Session 7 — checkpoint 4)
 
 **Focus:** De-risk philosophy added to PM profile; BL-015/016 reframed as probe → bet sequence

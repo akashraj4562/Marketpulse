@@ -20,7 +20,7 @@
 | **Memory auto-save** | ✅ Active (every 45 min) | PROJECT-STATE.md + SESSIONS.md checkpoint |
 | **Market switcher** | ✅ All/India/US/Global tabs | Auto-detected from instrument field |
 | **Agent crew** | ✅ 17 agents configured | 14 Marketpulse + PM agents added to ClearCart & MicroManga |
-| **Git** | ✅ Clean — pushed | Latest commit: 6741800 (BL-015 + BL-016 backlog spec; PM de-risk philosophy) |
+| **Git** | ✅ Clean — pushed | Latest commit: ab4e230 (PM profile de-risk philosophy, BL-015/016/017 backlog) |
 | **Security hardening** | ✅ Done | .gitignore, history scrubbed, security-privacy-guardian agent |
 | **Mobile fix** | ✅ Done | Chart.js `defer` + `catch(err){}` + apostrophe bug fixed |
 | **BL-013 Gmail sync** | 📋 Backlog | Full spec in BACKLOG.md; server side already built |
@@ -29,6 +29,10 @@
 ---
 
 ## What was built (most recent first)
+
+### 2026-05-28 — Session 7 (checkpoint 5)
+- **Product Staff project created**: `/Users/priyanka/Desktop/Akash Claude/product-staff/` — 6 agents (PM, Data, UX, Tech, DevOps, Market Researcher), CLAUDE.md, RUNBOOK.md, PRD template, cross-product decisions repository (DEC-PS-001–008). Commit d4ad5b7.
+- **BL-017 added**: news source integration (NewsAPI + ET RSS, P2); RICE 15.0; foundation layer for future BL-004/005 real-time alerts.
 
 ### 2026-05-28 — Session 7 (checkpoint 4)
 - **PM profile**: Step 11 (staged probes before full commitment), Principle #11 (build to learn before building to ship), and DEC-PS-008 (Amazon threshold test analog) added.
