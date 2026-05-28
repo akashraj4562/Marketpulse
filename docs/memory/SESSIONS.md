@@ -4,6 +4,15 @@
 
 ---
 
+### Daily auto-test — 2026-05-28
+
+- **D-01 G4 staleness:** ✅ PASS — all 11 hypotheses within cadence (P1: 0 days, P2: 1 day)
+- **D-02 G8 overconfidence:** ❌ **BREACH** — Active-tier avg = 72.4% (cap: 70%). Top 3: H-0007 82%, H-0003 75%, H-0005/H-0008 70%. Red-team review of these 3 required before new hypothesis filings.
+- **D-03 ST momentum:** ✅ PASS — H-0001 + H-0008 both validated today; no stale momentum
+- **Actions taken:** TEST-LOG.md updated (G8 dashboard + DT entry). PushNotification triggered. BL-015 model updated to Opus 4.7.
+
+---
+
 ## Session: 2026-05-28 (Session 7 — checkpoint 5)
 
 **Focus:** Product Staff project created; news integration backlog item added

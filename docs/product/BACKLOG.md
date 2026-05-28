@@ -426,12 +426,12 @@ BL-015's `chat-log.json` answers that assumption cheaply, before BL-016 is built
   - Confirms + kills watch-items
   - Latest market actuals row
   - Current TX (TL;DR) lines
-- **API:** New `POST /api/chat/:id` endpoint — receives `{ message, history[] }`, calls claude-sonnet-4-6 (fast, smart enough for conversational Q&A) with hypothesis context as system prompt, returns streaming response
+- **API:** New `POST /api/chat/:id` endpoint — receives `{ message, history[] }`, calls **claude-opus-4-7** (owner-specified; deeper reasoning on complex finance questions) with hypothesis context as system prompt, returns streaming response
 - **Conversation memory:** Chat history stored in-memory per card per session (JS array). Not persisted — each new card open starts fresh. Acceptable for v1.
 - **Insight capture:** Every chat session is appended to `web/chat-log.json` (keyed by hypothesis ID + timestamp). Reviewed by product-manager agent to surface new backlog items, recurring user questions, and feature signals.
 
 **Key design decisions to lock before build:**
-1. Model: claude-sonnet-4-6 (recommended — fast, cheap ~$0.15/run, conversational) vs Haiku (cheaper but shallower reasoning on complex finance questions)
+1. Model: **claude-opus-4-7** (owner decision — deeper reasoning on complex finance questions; ~$0.80–1.50/session vs Sonnet's ~$0.15; justified by the decision-quality requirement)
 2. Streaming vs single response — streaming strongly recommended for perceived speed on mobile
 3. Max context per message: cap evidence log at last 5 entries to keep token cost low (~600 input tokens per turn)
 4. Chat log privacy: `chat-log.json` added to `.gitignore` (may contain owner's questions about positions)

@@ -14,11 +14,43 @@
 | **G1** Confidence integrity | 2026-05-27 | ✅ PASS | No confidence changes yet — portfolio just filed |
 | **G2** Direction accuracy floor | 2026-05-27 | ✅ PASS | No resolved hypotheses yet (floor not yet testable) |
 | **G3** Source quality | 2026-05-27 | ✅ PASS | All 10 hypotheses include source quality notes; all numbers from T1/T2 |
-| **G4** Staleness cap | 2026-05-27 | ✅ PASS | All validated 2026-05-27 (day of filing) |
+| **G4** Staleness cap | 2026-05-28 | ✅ PASS | All 11 hypotheses validated within cadence (P1: 0 days, P2: 1 day) |
 | **G5** Causality floor | 2026-05-27 | ✅ PASS | Lowest Causality in portfolio: 45 (H-0001). All ≥45. |
 | **G6** Watch-item specificity | 2026-05-27 | ✅ PASS | Spot-checked H-0007, H-0008, H-0003. Watch items are event-specific and checkable. |
 | **G7** Chart data freshness | 2026-05-27 | ✅ PASS | All 10 hypotheses returning real data. Last bar 2026-05-27 (today). |
-| **G8** Overconfidence cap | 2026-05-27 | ✅ PASS | Portfolio average: 62%. Cap is 70%. |
+| **G8** Overconfidence cap | 2026-05-28 | ❌ **BREACH** | Active-tier avg = **72.4%** (cap: 70%). Top 3: H-0007 82%, H-0003 75%, H-0005/H-0008 70%. Red-team review required. |
+
+---
+
+## Daily test cycle log
+
+### DT — 2026-05-28
+
+**D-01 G4 Staleness:** ✅ PASS — All 11 hypotheses within cadence.
+| ID | Tier | Last validated | Days ago | Limit | Result |
+|---|---|---|---|---|---|
+| H-0003 | P1 | 2026-05-28 | 0 | 3d | ✅ |
+| H-0007 | P1 | 2026-05-28 | 0 | 3d | ✅ |
+| H-0008 | P1 | 2026-05-28 | 0 | 3d | ✅ |
+| H-0001 | P1 | 2026-05-28 | 0 | 3d | ✅ |
+| H-0002 | P1 | 2026-05-28 | 0 | 3d | ✅ |
+| H-0011 | P1 | 2026-05-28 | 0 | 3d | ✅ |
+| H-0004 | P2 | 2026-05-27 | 1 | 6d | ✅ |
+| H-0005 | P2 | 2026-05-27 | 1 | 6d | ✅ |
+| H-0006 | P2 | 2026-05-27 | 1 | 6d | ✅ |
+| H-0009 | P2 | 2026-05-27 | 1 | 6d | ✅ |
+| H-0010 | P2 | 2026-05-27 | 1 | 6d | ✅ |
+
+**D-02 G8 Overconfidence:** ❌ **BREACH** — Active-tier average = **72.4%** (cap: 70%).
+- H-0007: 82% · H-0003: 75% · H-0005: 70% · H-0008: 70% · H-0004: 65%
+- Average: (82+75+70+70+65) / 5 = **72.4%**
+- For reference — all-hypotheses average (Active + Developing): (82+75+70+70+65+58+58+56+55+52+42) / 11 = 62.1% ✅
+- **Required action:** Red-team review of top 3 by confidence — H-0007 (82%), H-0003 (75%), H-0005 (70%). Downgrade at least one if evidence does not support current score. Freeze new hypothesis filings until review complete.
+- **Context note:** H-0007 at 82% is supported by MU Q2 revenue +196% YoY, HBM sold out through 2026, guidance raised — score appears individually defensible. H-0003 at 75% confirmed by ongoing FII selling + AI disruption narrative. H-0005 at 70% is a LT structural thesis still early-stage. Red-team to decide if any should be trimmed.
+
+**D-03 ST Momentum:** ✅ PASS — 2 ST hypotheses checked (H-0001, H-0008), both validated today (0 days). Confidence already updated this cycle. No stale momentum flags.
+
+**Overall:** ❌ **1 BREACH — G8.** No G4 breach. No ST staleness. PushNotification sent.
 
 ---
 
