@@ -347,6 +347,57 @@ Add this to RUNBOOK.md as the canonical "manual refresh" command with a clear he
 
 ---
 
+### [BL-016] Portfolio-aware decision support — "what does this mean for my position?"
+**Priority:** P1
+**Status:** Proposed
+**Theme:** 🧠 Owner Intelligence / 🎯 Prediction Accuracy
+
+**The insight that motivated this item:**
+Owner is looking at H-0003 (India IT underperformance thesis). The card tells them the sector will continue underperforming until new revenue reports land. They want to ask: *"When is the Infosys earnings report?"* — and based on that answer, decide whether to hold or trim their current INFY exposure. That question requires three things the system already has but doesn't combine: (1) the hypothesis, (2) the owner's holdings, (3) upcoming real-world catalysts. No current UI surface brings all three together into a decision.
+
+**This is different from BL-015 (general chatbot):** BL-015 answers questions *about* the hypothesis. BL-016 answers questions *about what to do given the hypothesis and your position*. The output is action-oriented, not just informational. The distinction: "what's the bear case?" (BL-015) vs "I hold 200 shares of INFY — should I hold through earnings?" (BL-016).
+
+**The three inputs that power it:**
+| Input | Source | Status |
+|---|---|---|
+| Hypothesis thesis, confidence, kills/confirms | Hypothesis `.md` file | ✅ Available |
+| Owner's current holdings + exposure | `holdings.json` (BL-003) | ✅ Built, off by default |
+| Upcoming catalysts (earnings dates, policy dates, events) | Real-time lookup via web search or earnings calendar API | ❌ Not built |
+
+**The missing piece is catalyst awareness.** The chatbot in BL-015 can already answer "what's the bear case?" but can't answer "when is the Infosys earnings report?" without a live lookup. This item adds that lookup layer and combines it with holdings context.
+
+**What to build:**
+
+*Phase 1 — Catalyst-aware card (standalone, no chatbot required):*
+- Add an "Upcoming catalysts" section to each expanded card
+- Auto-populated by querying a free earnings calendar API (e.g. Yahoo Finance earnings, or a web search for "[company] earnings date Q1 FY27")
+- Shows: company name, event type (earnings / policy meeting / index rebalance), date, expected impact on hypothesis confidence
+- Example: on H-0003 → "📅 TCS Q1FY27 earnings: July 10, 2026 · Infosys Q1FY27: July 17, 2026 · Could update confidence ±10%"
+
+*Phase 2 — Holdings-aware decision framing (requires BL-003 active + BL-015 chatbot):*
+- When portfolio mode is on and the card involves a held stock, the chatbot (BL-015) gets a holdings context block injected:
+  - "Owner holds 200 INFY. Average cost: ₹1,340. Current exposure: ₹2.68L."
+- System prompt shifts to decision-support framing: "Given the owner's position and this hypothesis, help them think through the hold/trim/add decision."
+- Chatbot answers questions like:
+  - "When is the Infosys earnings report?" → looks up + answers
+  - "Should I hold through earnings?" → reasons from hypothesis confidence + upcoming catalyst + position size
+  - "What would make you change the thesis?" → answers from kills watch-items
+
+*Phase 3 — Insight capture (same as BL-015):*
+- Decision questions logged to `chat-log.json` with holdings context stripped
+- PM agent reviews weekly: recurring decision questions → new card sections or automated alerts
+
+**Guardrail:** This is not investment advice. The chatbot frames outputs as "here's how to think about it" not "here's what to do." The disclaimer in every response: *Analytical output for training purposes. Not investment advice.*
+
+**Dependencies:** BL-003 (✅ built), BL-015 (proposed — Phase 2 needs the chatbot modal), earnings calendar data source (to be selected at build time)
+
+**RICE:** Reach 2 × Impact 5 × Confidence 0.75 / Effort 4 = **1.88**
+(Single user but extremely high decision-making impact; effort is higher than BL-015 due to catalyst lookup + holdings integration)
+
+**Proof of value:** Owner opens H-0003, sees "📅 Infosys earnings: July 17" in the card, asks "I hold INFY — is it worth holding through this?" and gets a structured answer grounded in the thesis confidence, the kill conditions, and their position size. They make a more informed hold/trim decision in under 60 seconds without leaving the app.
+
+---
+
 ### [BL-015] Per-card chatbot — natural language Q&A with hypothesis context
 **Priority:** P1
 **Status:** Proposed
