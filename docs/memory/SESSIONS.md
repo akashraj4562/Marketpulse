@@ -4,6 +4,21 @@
 
 ---
 
+## Session: 2026-05-28 (Session 7 — checkpoint 6)
+
+**Focus:** Daily auto-test cycle; G8 breach detected
+
+### Done
+- Daily test run: D-01 G4 ✅ PASS, D-02 G8 ❌ BREACH (Active avg 72.4% > 70% cap), D-03 ST ✅ PASS
+- TEST-LOG.md updated: G8 dashboard → BREACH; DT-2026-05-28 entry added with full staleness table
+- BL-015 chatbot model set to claude-opus-4-7 (owner decision)
+- Committed 89d0c11
+
+### Required next action
+- Red-team review of H-0007 (82%), H-0003 (75%), H-0005 (70%) — downgrade at least one if evidence doesn't support current score. No new hypothesis filings until complete.
+
+---
+
 ### Daily auto-test — 2026-05-28
 
 - **D-01 G4 staleness:** ✅ PASS — all 11 hypotheses within cadence (P1: 0 days, P2: 1 day)

@@ -20,7 +20,7 @@
 | **Memory auto-save** | ✅ Active (every 45 min) | PROJECT-STATE.md + SESSIONS.md checkpoint |
 | **Market switcher** | ✅ All/India/US/Global tabs | Auto-detected from instrument field |
 | **Agent crew** | ✅ 17 agents configured | 14 Marketpulse + PM agents added to ClearCart & MicroManga |
-| **Git** | ✅ Clean — pushed | Latest commit: ab4e230 (PM profile de-risk philosophy, BL-015/016/017 backlog) |
+| **Git** | ✅ Clean — pushed | Latest commit: 89d0c11 (daily auto-test: G8 BREACH logged; BL-015 → Opus 4.7) |
 | **Security hardening** | ✅ Done | .gitignore, history scrubbed, security-privacy-guardian agent |
 | **Mobile fix** | ✅ Done | Chart.js `defer` + `catch(err){}` + apostrophe bug fixed |
 | **BL-013 Gmail sync** | 📋 Backlog | Full spec in BACKLOG.md; server side already built |
@@ -29,6 +29,11 @@
 ---
 
 ## What was built (most recent first)
+
+### 2026-05-28 — Session 7 (checkpoint 6)
+- **Daily auto-test**: G4 ✅ PASS (all 11 in cadence), G8 ❌ BREACH (Active avg 72.4%), ST ✅ PASS. TEST-LOG.md updated. PushNotification sent.
+- **G8 required action**: Red-team review of H-0007/H-0003/H-0005 before any new filings.
+- **BL-015**: chatbot model → claude-opus-4-7.
 
 ### 2026-05-28 — Session 7 (checkpoint 5)
 - **Product Staff project created**: `/Users/priyanka/Desktop/Akash Claude/product-staff/` — 6 agents (PM, Data, UX, Tech, DevOps, Market Researcher), CLAUDE.md, RUNBOOK.md, PRD template, cross-product decisions repository (DEC-PS-001–008). Commit d4ad5b7.
