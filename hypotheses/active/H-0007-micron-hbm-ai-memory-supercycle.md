@@ -128,7 +128,8 @@ Micron is the most leveraged listed play on the AI capex supercycle after NVIDIA
 | Date | Instrument | Predicted | Actual (close) | Match | Override type | Explanation | Confidence delta |
 |---|---|---|---|---|---|---|---|
 | 2026-05-27 | MU | Bullish +20–35% over 2Q | May 26: +19.3% (confirmed surge). May 27 open: flat so far | Partial | — | One-day surge confirms direction; 2-quarter thesis just started | +5% |
-| 2026-05-28 | MU | +20–35% from ~$105–110 over 2Q | MU at $915; Q2 revenue +196% YoY; gross margin 74.9%; HBM sold out through 2026; HBM4 in production; FY26 guidance raised to $31.5–33.5B | Strong CONFIRM | — | Thesis playing out dramatically ahead of schedule. Stock already at ~$915 (if entry was $105–110, that's +730%+). Revenue and margin data exceed the EPS upgrade thesis. 46-analyst BUY consensus. Consider updating magnitude target. | +15% |
+| 2026-05-28 AM | MU | +20–35% from ~$105–110 over 2Q | MU at $915; Q2 revenue +196% YoY; gross margin 74.9%; HBM sold out through 2026; HBM4 in production; FY26 guidance raised to $31.5–33.5B | Strong CONFIRM | — | Thesis playing out dramatically ahead of schedule. 46-analyst BUY consensus. Consider updating magnitude target. | +15% |
+| 2026-05-28 PM | MU | Continued momentum | MU closed $928.41 (+3.63% on May 27); Motley Fool analyst: "MU worth at least $1,500 in 1 year"; SK Hynix hit $1T market cap (confirms Asia semicon leadership) | Strong CONFIRM | — | +3.63% day on May 27 after the +19% surge. Analyst $1,500 target = +62% from current. SK Hynix $1T validates the broader HBM sector thesis. | +2% |
 
 ---
 
@@ -147,7 +148,8 @@ Micron is the most leveraged listed play on the AI capex supercycle after NVIDIA
 | Date | Confidence | Causality | Correlation | Key reason |
 |---|---|---|---|---|
 | 2026-05-27 (created) | 65% | 82 | 18 | Strong causal mechanism; partially priced but EPS upgrade cycle not complete |
-| 2026-05-28 | 80% | 85 | 15 | Q2 revenue +196% YoY, gross margin 74.9%, HBM4 in production, HBM sold out through 2026, guidance raised. All 3 CONFIRM watch-items trending toward confirmation. ⚠️ Threshold crossed — flag for full thesis workup. |
+| 2026-05-28 AM | 80% | 85 | 15 | Q2 revenue +196% YoY, gross margin 74.9%, HBM4 in production, HBM sold out through 2026, guidance raised. Threshold crossed — flag for full thesis workup. |
+| 2026-05-28 PM | 82% | 85 | 15 | MU $928.41; Motley Fool $1,500 target; SK Hynix $1T market cap confirming sector thesis. Momentum sustained. |
 
 ---
 

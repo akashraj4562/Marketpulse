@@ -1,6 +1,6 @@
 # Hypothesis: Nifty momentum continuation as VIX compresses and FII returns
 
-> Active — confidence ≥ 60%. Validate daily (P1).
+> Developing — kill condition triggered (Nifty closed 23,649 < 23,800 kill level). Confidence 42%. Moved from active 2026-05-28.
 
 ---
 
@@ -11,7 +11,7 @@
 | **Slug** | nifty-vix-compression-momentum |
 | **Type** | `Mixed` (Causal-Chain + Sentiment) |
 | **Origin** | `Event-Driven` |
-| **Status** | `Active` |
+| **Status** | `Developing` |
 | **Created** | 2026-05-27 |
 | **Created by** | hypothesis-generator |
 | **Last validated** | 2026-05-28 |
@@ -50,7 +50,7 @@ Nifty tests 24,200–24,400 resistance zone
 ## Scores
 | Metric | Score | Last updated |
 |---|---|---|
-| **Confidence** | 63% | 2026-05-28 |
+| **Confidence** | 42% | 2026-05-28 (PM) |
 | **Causality** | 45 / 100 | 2026-05-27 |
 | **Correlation** | 55 / 100 | 2026-05-27 |
 | Causality + Correlation check | 100 ✓ | — |
@@ -134,7 +134,8 @@ Nifty 50 is in a confirmed breakout above 24,000, supported by the convergence o
 | Date | Instrument | Predicted | Actual (close) | Match | Override type | Explanation | Confidence delta |
 |---|---|---|---|---|---|---|---|
 | 2026-05-27 | NIFTY 50 | +1.5–3.5% toward 24,200 | Gap-up open near 23,943 (intraday, May 27 AM) | Too early | — | Market opened gap-up consistent with direction; resistance zone not yet tested | 0 |
-| 2026-05-28 | NIFTY 50 | Bullish continuation toward 24,200–24,400 | India VIX at 14 (-7.1%); FII MTD net selling -₹32,228Cr in May | Mixed | Type 3 (Flow reversal) | VIX at 14 confirms calm regime (bullish), but FII net selling -₹32,228Cr MTD May contradicts the "FII return" premise. DII buying ₹56,865Cr MTD is supportive floor but cannot substitute FII directional momentum. Crude at $100 (Iran strikes) is bearish overhang. | -5% |
+| 2026-05-28 AM | NIFTY 50 | Bullish continuation toward 24,200–24,400 | India VIX at 14 (-7.1%); FII MTD net selling -₹32,228Cr in May | Mixed | Type 3 (Flow reversal) | VIX at 14 confirms calm regime (bullish), but FII net selling -₹32,228Cr MTD May contradicts the "FII return" premise. DII buying ₹56,865Cr MTD is supportive floor but cannot substitute FII directional momentum. Crude at $100 (Iran strikes) is bearish overhang. | -5% |
+| 2026-05-28 PM | NIFTY 50 | Break above 23,800 with close toward 24,200 | Closed 23,649.95 (+0.03%) — below 23,800 kill level; below 20-DEMA, 50-EMA, 200-DEMA | KILL | — | Kill condition triggered: "Nifty closes below 23,800 → breakout failure." At 23,649, market is in deteriorating trend structure per technical analysis. IT stocks outperformed (+4.85% TECHM) but metals/PSU banks sold off. No breakout. Moving to Developing. | -21% |
 
 ---
 
@@ -155,7 +156,8 @@ Nifty 50 is in a confirmed breakout above 24,000, supported by the convergence o
 | Date | Confidence | Causality | Correlation | Key reason for change |
 |---|---|---|---|---|
 | 2026-05-27 (created) | 68% | 45 | 55 | Initial estimate — multi-signal confluence on first validation |
-| 2026-05-28 | 63% | 45 | 55 | VIX at 14 confirms calm; but FII net selling -₹32,228Cr MTD May reverses FII return premise. Crude $100 (Iran strikes). DII floor intact. Net: partial kill of flow thesis. |
+| 2026-05-28 AM | 63% | 45 | 55 | VIX at 14 confirms calm; but FII net selling -₹32,228Cr MTD May reverses FII return premise. Crude $100 (Iran strikes). DII floor intact. Net: partial kill of flow thesis. |
+| 2026-05-28 PM | 42% | 45 | 55 | Kill condition triggered: Nifty closed 23,649 < 23,800 threshold. Below all key moving averages. Breakout failed. Moved to Developing tier. |
 
 ---
 

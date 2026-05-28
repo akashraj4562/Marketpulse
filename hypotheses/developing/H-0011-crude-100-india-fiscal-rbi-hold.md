@@ -1,6 +1,6 @@
 # Hypothesis: Crude at $100+ forces India into fiscal squeeze and RBI rate hold
 
-> Active — confidence 62%. Validate P1 (crude-driven; changes daily with Iran situation).
+> Developing — confidence 56%. Iran deal progress reduces near-term crude catalyst. Moved from active 2026-05-28 PM.
 
 ---
 
@@ -11,7 +11,7 @@
 | **Slug** | crude-100-india-fiscal-rbi-hold |
 | **Type** | `Causal-Chain` |
 | **Origin** | `Event-Driven` |
-| **Status** | `Active` |
+| **Status** | `Developing` |
 | **Created** | 2026-05-28 |
 | **Created by** | hypothesis-generator |
 | **Last validated** | 2026-05-28 |
@@ -50,7 +50,7 @@ India rate-sensitive sectors underperform broad Nifty 50 by 8–15% over MT hori
 ## Scores
 | Metric | Score | Last updated |
 |---|---|---|
-| **Confidence** | 62% | 2026-05-28 |
+| **Confidence** | 56% | 2026-05-28 (PM) |
 | **Causality** | 78 / 100 | 2026-05-28 |
 | **Correlation** | 22 / 100 | 2026-05-28 |
 | Causality + Correlation check | 100 ✓ | — |
@@ -99,7 +99,8 @@ India rate-sensitive sectors underperform broad Nifty 50 by 8–15% over MT hori
 
 | Date | Instrument | Predicted | Actual (close) | Match | Override type | Explanation | Confidence delta |
 |---|---|---|---|---|---|---|---|
-| 2026-05-28 | USD/INR | Bearish INR (rising) | Pending | Too early | — | Thesis filed today; INR direction not yet tracked | 0 |
+| 2026-05-28 AM | USD/INR | Bearish INR (rising) | Pending | Too early | — | Thesis filed today; INR direction not yet tracked | 0 |
+| 2026-05-28 PM | Brent crude | $95–105 sustained range | WTI briefly below $90; Brent $97.94 — falling on Iran deal progress | Partial KILL | — | Primary catalyst weakening — crude falling as deal appears closer. If deal closes, thesis loses its near-term driver. Existing India inflation still real (fuel hike Rs 5/litre), but RBI rate-hold becomes less certain. Moving to Developing. | -6% |
 
 ---
 
@@ -117,7 +118,8 @@ India rate-sensitive sectors underperform broad Nifty 50 by 8–15% over MT hori
 
 | Date | Confidence | Causality | Correlation | Key reason |
 |---|---|---|---|---|
-| 2026-05-28 (created) | 62% | 78 | 22 | New hypothesis — activated by crude $100 + Iran escalation. Strong causal chain; uncertainty on resolution timeline. |
+| 2026-05-28 AM (created) | 62% | 78 | 22 | New hypothesis — activated by crude $100 + Iran escalation. Strong causal chain; uncertainty on resolution timeline. |
+| 2026-05-28 PM | 56% | 78 | 22 | Iran deal progressing (Trump "orderly and constructive") — WTI briefly below $90, Brent $97.94. Primary catalyst (crude $100+) weakening. Existing India inflation still real but thesis loses urgency. Moved to Developing. |
 
 ---
 *Not investment advice. Analytical output for research and training purposes only.*
