@@ -4,6 +4,15 @@
 
 ---
 
+## Session: 2026-05-28 (Session 7 — checkpoint 7)
+
+**Focus:** Holding pattern — no new work since checkpoint 6
+
+### Open action
+- G8 breach: red-team review of H-0007 (82%), H-0003 (75%), H-0005 (70%) pending. No new hypothesis filings until complete.
+
+---
+
 ## Session: 2026-05-28 (Session 7 — checkpoint 6)
 
 **Focus:** Daily auto-test cycle; G8 breach detected

@@ -20,7 +20,7 @@
 | **Memory auto-save** | ✅ Active (every 45 min) | PROJECT-STATE.md + SESSIONS.md checkpoint |
 | **Market switcher** | ✅ All/India/US/Global tabs | Auto-detected from instrument field |
 | **Agent crew** | ✅ 17 agents configured | 14 Marketpulse + PM agents added to ClearCart & MicroManga |
-| **Git** | ✅ Clean — pushed | Latest commit: 89d0c11 (daily auto-test: G8 BREACH logged; BL-015 → Opus 4.7) |
+| **Git** | ✅ Clean — pushed | Latest commit: 6c04b6c (memory checkpoint 6) |
 | **Security hardening** | ✅ Done | .gitignore, history scrubbed, security-privacy-guardian agent |
 | **Mobile fix** | ✅ Done | Chart.js `defer` + `catch(err){}` + apostrophe bug fixed |
 | **BL-013 Gmail sync** | 📋 Backlog | Full spec in BACKLOG.md; server side already built |
