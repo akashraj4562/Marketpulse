@@ -4,6 +4,18 @@
 
 ---
 
+## Session: 2026-05-28 (Session 7 — checkpoint 4)
+
+**Focus:** De-risk philosophy added to PM profile; BL-015/016 reframed as probe → bet sequence
+
+### Done
+- PM profile: Step 11 (staged probes before full commitment) + Principle #11 (build to learn) + DEC-PS-008 (Amazon threshold test analog) added
+- BL-015: "strategic de-risking role" section added — chatbot is the probe, not a lesser version of BL-016
+- BL-016: explicit strategic dependency on BL-015 logs before scope lock added
+- Key principle encoded: high-level vision and strategy = fine to define; steps toward it must be small, calculative, precise; roadmap is the de-risk instrument
+
+---
+
 ## Session: 2026-05-28 (Session 7 — checkpoint 3)
 
 **Focus:** PM hypothesis cycle, portfolio moves, memory save

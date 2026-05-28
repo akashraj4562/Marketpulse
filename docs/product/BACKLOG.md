@@ -25,7 +25,7 @@
 | Theme | This quarter | Next quarter |
 |---|---|---|
 | 🎯 Prediction Accuracy | Source quality gate, calibration visibility | Red-team threshold automation |
-| ⚡ Validation Velocity | Scheduled cron, watch-item scanner | Push notifications |
+| ⚡ Validation Velocity | Scheduled cron, watch-item scanner | News feed integration (BL-017), push notifications |
 | 🌍 Coverage Breadth | Europe/Asia hypotheses | Commodity sector |
 | 📱 Output Clarity | Portfolio-aware sorting (BL-003) ✅ | Summary digest, share card |
 | 🧠 Owner Intelligence | Blind-spot tracker | Calibration history |
@@ -389,7 +389,10 @@ Owner is looking at H-0003 (India IT underperformance thesis). The card tells th
 
 **Guardrail:** This is not investment advice. The chatbot frames outputs as "here's how to think about it" not "here's what to do." The disclaimer in every response: *Analytical output for training purposes. Not investment advice.*
 
-**Dependencies:** BL-003 (✅ built), BL-015 (proposed — Phase 2 needs the chatbot modal), earnings calendar data source (to be selected at build time)
+**Strategic dependency on BL-015 — epistemic, not just technical:**
+Phase 2 requires BL-015 technically (chatbot modal). The more important dependency is epistemic: BL-015's chat logs must show the owner asking decision-support questions before Phase 2's scope is locked. Building Phase 2 without that evidence is a large bet on an unvalidated behavioral assumption. The logs are the validation gate. If they show informational questions only, Phase 2 should be redesigned before any build work starts.
+
+**Dependencies:** BL-003 (✅ built), BL-015 chat logs (4-week validation gate), BL-015 modal (Phase 2 technical dependency), earnings calendar data source (to be selected at build time)
 
 **RICE:** Reach 2 × Impact 5 × Confidence 0.75 / Effort 4 = **1.88**
 (Single user but extremely high decision-making impact; effort is higher than BL-015 due to catalyst lookup + holdings integration)
@@ -402,6 +405,13 @@ Owner is looking at H-0003 (India IT underperformance thesis). The card tells th
 **Priority:** P1
 **Status:** Proposed
 **Theme:** 🧠 Owner Intelligence / 📱 Output Clarity
+
+**Strategic role — de-risking probe for BL-016:**
+BL-015 is not just a simpler feature that precedes BL-016. It is the experiment that validates whether BL-016 is worth building at all. BL-016 (decision support) rests on a behavioral assumption: the owner will ask decision-making questions ("should I hold INFY through earnings?") rather than pure informational ones ("why is this bearish?"). If that assumption is wrong, the full BL-016 system — catalyst lookup + holdings integration + decision-framing prompts — is solving the wrong problem.
+
+BL-015's `chat-log.json` answers that assumption cheaply, before BL-016 is built. The chat logs are not a side benefit — they are the primary validation gate.
+
+**Validation gate:** After 4 weeks of BL-015 live, review `chat-log.json`. If >30% of questions are decision-oriented (position sizing, hold/trim reasoning, catalyst timing), proceed with BL-016 Phase 2 as designed. If not, revisit BL-016's premise before building — do not build a decision-support system for an owner who hasn't asked decision questions.
 
 **True need:** The owner wants to interrogate a hypothesis in real time — ask "why is this bearish?", "what would change your mind?", "how does this relate to what I read about the Fed today?" — without having to context-switch to a separate tool. The card already contains all the data; the chatbot just needs to know it.
 
@@ -441,6 +451,49 @@ The chat logs are the most valuable output — they reveal what the owner actual
 (Low reach — single user; very high impact — transforms passive reading into active interrogation; medium effort — streaming endpoint + modal UI)
 
 **Proof of value:** Owner opens H-0007 (Micron HBM) and asks "what's the bear case here?" — gets a direct answer grounded in the hypothesis's red-team notes and kill conditions, not a generic AI response. Observable: chat-log.json shows 5+ questions per week that weren't answerable from the card UI alone → each one is a backlog signal.
+
+---
+
+---
+
+### [BL-017] News source integration — live signal feed from financial media
+**Priority:** P2
+**Status:** Proposed
+**Theme:** 🎯 Prediction Accuracy / ⚡ Validation Velocity
+
+**True need:** The desk's signal-scout currently relies on web search (via Claude's tool use) to find evidence for hypothesis validation. This means signal quality depends on what surfaces in a generic search — not what the best financial media has published. Integrating directly with structured news feeds (ET Markets, Financial Times, NY Times, Bloomberg wire) gives the desk access to higher-quality, more timely signals without needing to run a full Claude search session.
+
+**Use cases this unlocks:**
+1. **Automatic signal detection**: when ET Markets publishes a story mentioning "Infosys" or "crude oil", the desk can flag it against active hypotheses as a potential CONFIRMS/KILLS event — even without running the daily cycle
+2. **Real-time validation triggers**: a Fed statement or Iran deal update surfaces in FT within minutes; without an integration the desk only picks this up at the next manual cycle
+3. **Source quality tier enforcement**: T1 sources (FT, NYT, Bloomberg) can be distinguished from T3 (blogs) automatically if the feed has known source metadata
+
+**Candidate integrations (in order of quality/cost):**
+| Source | API / Access method | Cost | Coverage |
+|---|---|---|---|
+| **Financial Times** | FT Developer API (paid, ~$500/mo for commercial) | High | Excellent — global macro, EM, India |
+| **NY Times** | Developer API (free for non-commercial, 500 req/day) | Free | Good — macro, Fed, US market |
+| **ET Money / Economic Times** | No official API; scraping or RSS | Free / fragile | Best India coverage |
+| **NewsAPI.org** | Aggregator — indexes 150+ sources incl. FT, Reuters | Free tier: 100 req/day; paid: $449/mo | Good breadth, variable depth |
+| **RSS feeds** | FT free RSS, ET Markets RSS, Bloomberg free tier | Free | Limited articles; no paywall content |
+
+**Recommended v1 approach (lowest effort, usable signal quality):**
+- **NewsAPI.org free tier** for US sources (FT headlines, Reuters, Bloomberg wire summaries)
+- **ET Markets RSS** for India (free, reliable, covers all major Nifty sectors)
+- Parse feeds every 4 hours; store last 24h of headlines in memory; during validation cycle, filter by ticker or hypothesis keywords before passing to signal-scout
+- No paywall bypass — headline + lede only (sufficient to flag "this is relevant, investigate further")
+
+**What this does NOT do (v1):**
+- No full article extraction (paywall constraint)
+- No real-time push (polling every 4h is sufficient for non-ST hypotheses)
+- No automatic confidence updates from headlines (headline is a flag, not evidence — still requires signal-scout to verify)
+
+**Extended RICE:** Reach 5 × Impact 4 × Confidence 0.8 / Effort 2 = **8.0** × Foundation ×1.5 (enables: automatic CONFIRMS/KILLS trigger detection, BL-005 watch-item scanner, BL-004 richer daily cycle) × NSM ×1.25 = **Score 15.0**
+(Foundation bonus because this becomes the data layer for BL-004, BL-005, and future real-time alert features)
+
+**Proof of value:** The next time a major India market story breaks (RBI rate decision, budget announcement, earnings surprise), the desk surfaces it as a signal against the relevant hypothesis within 4 hours — without the owner needing to prompt Claude Code. Observable: signal-scout cites a news feed URL (not just a Yahoo Finance price) in at least 2 validation runs per week within 30 days of launch.
+
+**Dependency:** None blocking. ANTHROPIC_API_KEY (✅ set) needed if signals are processed by Claude. RSS/NewsAPI access is server-side.
 
 ---
 

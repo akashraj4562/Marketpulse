@@ -106,6 +106,27 @@ Every new feature should have a clear success metric that reflects the actual pr
 
 ### Step 10 — Guardrails: what breaks if this works too well?
 
+### Step 11 — De-risk through staged probes before full commitment
+
+A PM's job is not just to sequence features — it is to sequence *learning*. Before committing full effort to a complex feature, build the smallest possible probe that tests whether the core mechanic is wanted and used. The probe is not a watered-down version of the feature — it is the risk-reduction instrument that determines whether the full feature deserves to be built at all.
+
+**The pattern:**
+1. Define the full vision clearly (it is always fine to have a clear end-state and strategy)
+2. Identify the biggest unknown: is the mechanic right? Is the use case real? Is the behavioral assumption valid?
+3. Design the smallest probe that answers that specific unknown — not the cheapest feature to ship, but the experiment that resolves the risk
+4. Ship the probe. Observe real behavior. Let evidence steer the full feature design.
+
+**Why this matters for Marketpulse:**
+BL-016 (portfolio-aware decision support) makes a behavioral assumption: the owner will ask decision-making questions ("should I hold through earnings?"), not just informational ones ("what's the bear case?"). If that assumption is wrong, the full system — catalyst lookup + holdings integration + decision framing — is solving the wrong problem. BL-015 (the chatbot alone) answers that assumption at a fraction of the cost. If its chat logs show decision-support questions appearing organically, BL-016 is validated. If they don't, BL-016's scope should be redesigned before a line of code is written for it.
+
+**The rule for all roadmap planning:** High-level vision and strategy are always fine to define early. The steps toward that vision must be small, calculative, and precise. Large steps create large retraction costs — you build the wrong thing, realize it too late, and have to unwind. Small steps create cheap pivots. A roadmap is not a delivery schedule; it is a de-risking instrument.
+
+**The validation gate pattern:**
+- Ship the probe
+- Define what evidence you need to see in N weeks to proceed with the full feature
+- If evidence appears → invest in the full feature with confidence
+- If evidence does not appear → redesign the feature's premise before building, not after
+
 Every feature has second-order effects:
 - If the manual refresh is too easy → owner refreshes constantly without reviewing evidence quality → confidence numbers fluctuate without real evidence basis → trust in the system drops.
 - If portfolio-aware sorting floats up everything the owner holds → owner gets confirmation bias (only sees hypotheses about their portfolio) → misses important macro signals not in their holdings.
@@ -701,6 +722,24 @@ Situation → Known facts → Unknowns → Problem → Decision → Outcome → 
 
 ---
 
+### DEC-PS-008: Amazon validates Prime's behavioral assumption before building it (2002–2005) [PROBE-FIRST PATTERN]
+
+**Situation:** Amazon wanted to build a loyalty subscription (Prime). The bet: customers who paid upfront would order more frequently to justify their spend. But would customers actually change purchasing behavior for a shipping incentive?
+
+**Known facts:** Heavy users ordered far more frequently than average users. Shipping cost was the top cart-abandonment reason. A flat annual fee for unlimited shipping had never been tried at scale.
+
+**Unknowns:** Would customers change order behavior to justify the annual fee? Were customers price-sensitive to individual shipments or only to annual spend? Would the behavioral commitment mechanism actually work?
+
+**The probe:** Before Prime, Amazon launched the $25 free-shipping threshold (2002). This is the probe — it cost almost nothing to test, and it answered the biggest unknown: *do customers change purchasing behavior to cross a shipping threshold?* Customers stuffed orders, combined purchases, waited to bundle items. The answer was a clear yes.
+
+**Decision (based on probe evidence):** Build Prime (2005). Bezos was confident the annual commitment would drive even stronger behavior change than the $25 threshold, because the commitment was larger and more psychological. The probe's evidence made Prime not a leap of faith — it was a large bet placed after the core mechanic was validated at low cost.
+
+**Outcome:** Prime became the most powerful subscription moat in commerce history. $139/year, 200M+ subscribers, average Prime member spends 2× non-Prime.
+
+**Lesson for Marketpulse:** BL-016 (decision support) rests on a behavioral assumption — that the owner asks decision questions, not just informational ones. BL-015 (chatbot, no decision framing) is the probe. If chat logs show "should I hold through earnings?" appearing organically, BL-016's core mechanic is validated. If they show only "what's the bear case?" type questions, BL-016's premise needs redesign. The probe is never the lesser version of the feature — it is the risk-reduction instrument that earns the right to build the full feature.
+
+---
+
 ## Proof of value gate
 
 **Nothing gets built without a proof of value statement.**
@@ -765,6 +804,7 @@ In 5 seconds, what is the most likely intent? State it. Proceed on that basis. F
 8. **NSM over proxy metrics** — if a feature cannot be connected to Calibrated Prediction Accuracy (or its validated proxies), it does not belong in the priority queue
 9. **Act on limited data; use the repository for judgment** — PMs do not wait for complete data before deciding. They use product sense — pattern recognition from similar situations — to take a position. When facing a fork without clear data, consult the historical decisions repository first. The repository exists precisely for this. Taking the wrong call with good reasoning and a documented assumption is recoverable. Paralysis is not.
 10. **Proof of value before build, always** — no feature ships without a stated behavior change, an observable signal, and a reasonable (not hopeful) assumption. Reasonable assumptions are allowed; vague value claims are not.
+11. **Build to learn before you build to ship** — for any feature with an unvalidated behavioral assumption, the probe comes before the product. The chatbot that logs what the owner actually asks is the probe for the decision-support system. The logs are the product output; the chatbot is the instrument. A failed large bet is worse than a deferred good idea. Small steps, precise sequencing, cheap pivots.
 
 ---
 

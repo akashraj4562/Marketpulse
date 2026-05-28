@@ -20,7 +20,7 @@
 | **Memory auto-save** | ✅ Active (every 45 min) | PROJECT-STATE.md + SESSIONS.md checkpoint |
 | **Market switcher** | ✅ All/India/US/Global tabs | Auto-detected from instrument field |
 | **Agent crew** | ✅ 17 agents configured | 14 Marketpulse + PM agents added to ClearCart & MicroManga |
-| **Git** | ✅ Clean — pushed | Latest commit: 0ac602e (PM cycle: H-0001 kill, H-0002 reversal) |
+| **Git** | ✅ Clean — pushed | Latest commit: 6741800 (BL-015 + BL-016 backlog spec; PM de-risk philosophy) |
 | **Security hardening** | ✅ Done | .gitignore, history scrubbed, security-privacy-guardian agent |
 | **Mobile fix** | ✅ Done | Chart.js `defer` + `catch(err){}` + apostrophe bug fixed |
 | **BL-013 Gmail sync** | 📋 Backlog | Full spec in BACKLOG.md; server side already built |
@@ -29,6 +29,11 @@
 ---
 
 ## What was built (most recent first)
+
+### 2026-05-28 — Session 7 (checkpoint 4)
+- **PM profile**: Step 11 (staged probes before full commitment), Principle #11 (build to learn before building to ship), and DEC-PS-008 (Amazon threshold test analog) added.
+- **BL-015 reframed**: chatbot explicitly positioned as de-risking probe for BL-016 — chat logs validate behavioral assumption before decision-support system is built.
+- **BL-016**: strategic dependency on BL-015 chat logs before scope lock added. Phase 2 build gated on log evidence.
 
 ### 2026-05-28 — Session 7 (checkpoint 3)
 - **PM cycle run**: Nifty 23,649 < 23,800 kill level → H-0001 → developing (42%); H-0002 reversed to 52% (WTI below $90, deal progressing); H-0007 → 82% (MU $928, SK Hynix $1T); H-0011 → developing (56%). Portfolio: 5 Active, 6 Developing. Pushed 0ac602e.
