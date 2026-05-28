@@ -14,8 +14,8 @@
 | **Status** | `Active` |
 | **Created** | 2026-05-27 |
 | **Created by** | hypothesis-generator |
-| **Last validated** | 2026-05-28 |
-| **Next validation due** | 2026-05-29 |
+| **Last validated** | 2026-05-29 |
+| **Next validation due** | 2026-05-30 |
 | **Priority tier** | `P1` (daily — AI narrative moves fast; FII selling is ongoing) |
 | **Time horizon** | `MT` (2–3 quarters; but structural elements make this an LT thesis — see H-0005 for the long-term version) |
 
@@ -165,6 +165,7 @@ India IT sector faces a structural de-rating that the market has begun but not c
 |---|---|---|---|---|
 | 2026-05-27 (created) | 72% | 72 | 28 | Strong empirical base (employment data, FII selling, YTD performance); partial discount for possible relief bounce after 25% correction |
 | 2026-05-28 | 75% | 72 | 28 | Nifty IT -25% YTD confirmed worst-performing sector. Q4FY26 preview shows muted 3–5% FY27 growth — well below valuations. May bounces (sentiment-driven) consistent with thesis of underperformance in a risk-on world. |
+| 2026-05-29 pre-open | 75% | 72 | 28 | FII May 26: −₹2,407Cr net outflows (continuing selling). No fresh Nifty IT level for May 29. No contradicting evidence. Nifty 50 opened flat at 23,902 — no broad rally that could trigger a relief bounce. Thesis intact, no change. |
 
 ---
 

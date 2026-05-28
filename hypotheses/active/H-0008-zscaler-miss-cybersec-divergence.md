@@ -12,8 +12,8 @@
 | **Status** | `Active` |
 | **Created** | 2026-05-27 |
 | **Created by** | hypothesis-generator |
-| **Last validated** | 2026-05-28 |
-| **Next validation due** | 2026-05-29 |
+| **Last validated** | 2026-05-29 |
+| **Next validation due** | 2026-05-30 |
 | **Priority tier** | `P1` (daily — ZS -29% is today's event; very short timeframe) |
 | **Time horizon** | `ST` (1–3 weeks for rotation to play out; ZS bounce or further decline) |
 
@@ -126,6 +126,7 @@ The ZS -29% is noise in the context of the structural cybersecurity thesis, not 
 | 2026-05-27 | ZS | -29% (confirmed prior session) | -29% on May 27 (the event that creates the setup) | N/A | — | This is the trigger event, not the prediction itself | 0 |
 | 2026-05-27 | CRWD, PANW | Bullish +5–10% over 2 weeks | Pending today's close | Too early | — | Rotation thesis just set up today | 0 |
 | 2026-05-28 | CRWD / PANW / ZS | CRWD +5–10%; ZS bounce +15–20% | CRWD: 8 consecutive intraday records; PANW: hitting records; CIBR ETF +25% in May; ZS bouncing but "far below old highs"; ZS acquired Symmetry Systems for $175M | Strong CONFIRMS | — | CRWD and PANW outperformance is dramatically confirmed — 8 straight records is beyond the prediction. ZS bounce happening but below old highs = rotation divergence playing out as predicted. ZS acquisition adds new catalyst for ZS recovery. | +8% |
+| 2026-05-29 pre-mkt | CRWD / ZS | CRWD continues outperformance; ZS bounce leg | CRWD at $642.70 (near 52-week high $671.55, up 41.7% YTD); ZS Q3 FY26: revenue +25% to $850.5M, EPS beat 7%, BUT FY27 guidance cut to 16–17% | Mixed | — | CRWD leg: strongly CONFIRMED. ZS leg: guidance cut to 16–17% materially weakens the "ZS structural intact" argument. If FY27 organic growth decelerates to 16–17% (from ~21–25%), the ZS bounce is a tactical oversold trade only, not a fundamental recovery. Primary thesis (CRWD rotation) confirmed; ZS bounce thesis downgraded. Net: no change to overall confidence — positive and negative legs roughly offset. | 0% |
 
 ---
 
@@ -147,6 +148,7 @@ The ZS -29% is noise in the context of the structural cybersecurity thesis, not 
 |---|---|---|---|---|
 | 2026-05-27 (created) | 62% | 60 | 40 | Fresh setup; ZS drop just happened; rotation thesis unproven but plausible |
 | 2026-05-28 | 70% | 65 | 35 | CRWD 8 straight records, PANW at records, CIBR +25% in May — outperformance dramatically confirmed. ZS bouncing but below old highs = divergence confirmed. ZS $175M acquisition of Symmetry Systems adds new catalyst for ZS recovery leg. |
+| 2026-05-29 pre-mkt | 70% | 65 | 35 | CRWD at $642.70 near 52-week high — rotation confirmed. ZS FY27 guidance cut 16–17% weakens the ZS bounce leg (structural story worse than expected). Primary thesis intact; no net change. |
 
 ---
 *Not investment advice. Analytical output for research and training purposes only.*

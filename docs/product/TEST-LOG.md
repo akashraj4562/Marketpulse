@@ -24,6 +24,31 @@
 
 ## Daily test cycle log
 
+### DT — 2026-05-29 (pre-US-open cycle)
+
+**D-01 G4 Staleness:** ✅ PASS — All 11 hypotheses updated today.
+All P1 (H-0001/0002/0003/0007/0008/0011): last validated 2026-05-29. P2 (H-0004/0005/0006/0009/0010): last validated 2026-05-29.
+
+**D-02 G8 Overconfidence:** ❌ **BREACH CONTINUES** — Active-tier avg recalculated.
+- Active hypotheses: H-0007 (82%), H-0003 (75%), H-0005 (70%), H-0008 (70%), H-0004 (65%)
+- Average: (82+75+70+70+65) / 5 = **72.4%** — unchanged, no upward movements applied
+- Note: H-0007 evidence strongly positive (UBS PT $1,625; MU pre-mkt $961.92) but confidence held at 82% per G8 guardrail. Red-team review still required before any upward revision on any Active hypothesis.
+- H-0002 moved 52% → 55% (Developing — no impact on G8 Active avg)
+- H-0011 moved 56% → 53% (Developing — no impact on G8 Active avg)
+
+**D-03 ST Momentum:** ✅ PASS — H-0001 (42%, kill triggered) and H-0008 (70%) both updated today.
+
+**Confidence changes this cycle:**
+| ID | Previous | New | Change | Reason |
+|---|---|---|---|---|
+| H-0002 | 52% | 55% | +3% | Brent sub-$100 for 3+ days; Trump "largely negotiated" |
+| H-0011 | 56% | 53% | -3% | Crude continuing to fall toward kill zone; primary catalyst eroding |
+| All others | — | unchanged | 0% | No new evidence or G8 guardrail held |
+
+**Overall:** ❌ G8 breach continues. Red-team review of H-0007/H-0003/H-0005 still required.
+
+---
+
 ### DT — 2026-05-28
 
 **D-01 G4 Staleness:** ✅ PASS — All 11 hypotheses within cadence.

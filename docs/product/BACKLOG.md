@@ -403,7 +403,8 @@ Phase 2 requires BL-015 technically (chatbot modal). The more important dependen
 
 ### [BL-015] Per-card chatbot — natural language Q&A with hypothesis context
 **Priority:** P1
-**Status:** Proposed
+**Status:** ⚠️ Shipped without SOP — retroactive gates open
+**Note:** Implemented 2026-05-28 before the Implementation Gate SOP existed. Feature is live and working. Retroactive obligations outstanding: Gate 2 (PRD review by Product Staff), Gate 3 (full test plan — 8 items unchecked), Gate 5 (tech proposal review). PRD at `product-staff/prds/marketpulse/BL-015-chat-interface.md`.
 **Theme:** 🧠 Owner Intelligence / 📱 Output Clarity
 
 **Strategic role — de-risking probe for BL-016:**
@@ -520,6 +521,19 @@ The chat logs are the most valuable output — they reveal what the owner actual
 | — | Public hosting (Vercel/ngrok) | User decision: "host on website later" |
 | — | DB migration (SQLite) | Foundation layer — after schema stabilizes, Q4 2026 |
 | — | REST API layer | Platform leverage — after DB migration |
+
+---
+
+## Product Staff cross-project review — 2026-05-28
+
+**Verdict: PASS — backlog is comprehensive and well-structured.**
+
+The review found the Marketpulse backlog to be the most mature across all three projects. The theme framework (🎯 Prediction Accuracy, ⚡ Validation Velocity, 🌍 Coverage Breadth, 📱 Output Clarity, 🧠 Owner Intelligence, 🏗️ Platform Leverage, 🔧 Engineering Quality) is well-designed and complete.
+
+**One open action requiring immediate attention:**
+- **G8 breach** (Active-tier average confidence = 72.4%, cap = 70%) — red-team-skeptic must challenge H-0007 (82%), H-0003 (75%), H-0005 (70%). No new hypothesis filings until at least one is downgraded or the scores are defended with evidence. Logged in TEST-LOG.md.
+
+**Structural observation:** BL-015 chatbot (Opus 4.7) → BL-016 decision support de-risk chain is correctly modelled. The probe-first pattern is working as designed. No changes recommended.
 
 ---
 

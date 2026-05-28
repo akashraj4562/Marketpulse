@@ -27,6 +27,39 @@ const TX_CACHE_FILE = path.join(__dirname, 'tx-cache.json');
 function readTxCache()  { try { return JSON.parse(fs.readFileSync(TX_CACHE_FILE, 'utf-8')); } catch { return {}; } }
 function writeTxCache(d) { try { fs.writeFileSync(TX_CACHE_FILE, JSON.stringify(d, null, 2)); } catch {} }
 
+const CHAT_LOG_FILE = path.join(__dirname, 'chat-log.json');
+function readChatLog()  { try { return JSON.parse(fs.readFileSync(CHAT_LOG_FILE, 'utf-8')); } catch { return []; } }
+function appendChatLog(entry) {
+  const log = readChatLog();
+  log.push(entry);
+  try { fs.writeFileSync(CHAT_LOG_FILE, JSON.stringify(log, null, 2)); } catch(err) {}
+}
+
+// In-memory chat history per hypothesis ID (keyed by id, resets on server restart)
+const chatSessions = {};
+
+function extractEvidenceLog(content) {
+  // C-TL-01: warn when extraction fails so silent context loss is visible in server logs
+  const tableMatch = content.match(/## Evidence log[\s\S]*?\n\|[^\n]+\|\n\|[-| ]+\|\n([\s\S]*?)(?=\n##|$)/i);
+  if (!tableMatch) { console.warn('[chat] extractEvidenceLog: section not found'); return []; }
+  const rows = tableMatch[1].split('\n').filter(r => r.trim().startsWith('|') && !r.includes('---'));
+  if (!rows.length) { console.warn('[chat] extractEvidenceLog: table is empty'); return []; }
+  return rows.slice(-3).map(row => {
+    const cols = row.split('|').map(c => c.trim()).filter(Boolean);
+    return cols.length >= 4 ? `${cols[0]} — ${cols[2]}: ${cols[3]}` : row.trim();
+  }).filter(Boolean);
+}
+
+function extractLatestMarketActual(content) {
+  // C-TL-01: warn when extraction fails
+  const tableMatch = content.match(/## Market Actuals[\s\S]*?\n\|[^\n]+\|\n\|[-| ]+\|\n([\s\S]*?)(?=\n##|$)/i);
+  if (!tableMatch) { console.warn('[chat] extractLatestMarketActual: section not found'); return null; }
+  const rows = tableMatch[1].split('\n').filter(r => r.trim().startsWith('|') && !r.includes('---'));
+  if (!rows.length) { console.warn('[chat] extractLatestMarketActual: table is empty'); return null; }
+  const cols = rows[rows.length - 1].split('|').map(c => c.trim()).filter(Boolean);
+  return cols.length >= 5 ? `${cols[0]} — Predicted: ${cols[2]}, Actual: ${cols[3]}, Match: ${cols[4]}` : rows[rows.length - 1].trim();
+}
+
 // Resolve hypothesis directory relative to this file (../hypotheses/)
 const HYPOTHESES_DIR = path.resolve(__dirname, '..', 'hypotheses');
 
@@ -846,6 +879,131 @@ Format each line as HTML with <strong> tags around the label only. No bullet poi
   }
 });
 
+// ─── Chat interface (BL-015) ──────────────────────────────────────────────────
+
+// Rough cost estimate for logging (claude-opus-4-7 pricing, mid-2026)
+const OPUS_COST_PER_INPUT_MTOK  = 15;   // USD per million input tokens
+const OPUS_COST_PER_OUTPUT_MTOK = 75;   // USD per million output tokens
+
+app.post('/api/chat/:id', async (req, res) => {
+  if (!anthropic) return res.status(503).json({ error: 'AI not configured — set ANTHROPIC_API_KEY' });
+
+  const id         = req.params.id.toUpperCase();
+  const message    = (req.body.message || '').trim();
+  // C-DA-01: sessionId + turnNumber sent from client for log grouping
+  const sessionId  = req.body.sessionId  || 'unknown';
+  const turnNumber = req.body.turnNumber || 1;
+  if (!message) return res.status(400).json({ error: 'message required' });
+
+  const hyps = loadAllHypotheses();
+  const h = hyps.find(x => x.id === id);
+  if (!h) return res.status(404).json({ error: 'Hypothesis not found' });
+
+  // Read raw file for richer context (evidence log + market actuals)
+  let evidenceEntries = [], latestActual = null;
+  if (h.filePath) {
+    try {
+      const raw = fs.readFileSync(h.filePath, 'utf-8');
+      evidenceEntries = extractEvidenceLog(raw);
+      latestActual    = extractLatestMarketActual(raw);
+    } catch(err) {}
+  }
+
+  // C-TL-01: explicit fallback text in prompt when context extraction is empty
+  const evidenceBlock  = evidenceEntries.length
+    ? '\nRECENT EVIDENCE (last 3):\n' + evidenceEntries.map((e,i) => `${i+1}. ${e}`).join('\n')
+    : '\nRECENT EVIDENCE: [none available — evidence log empty or not yet populated]';
+  const actualsBlock   = latestActual
+    ? '\nLATEST MARKET ACTUAL:\n' + latestActual
+    : '\nLATEST MARKET ACTUAL: [none available — not yet validated against market data]';
+
+  const systemPrompt = `You are a capital markets analyst assistant for the Marketpulse research desk. You are answering questions about a specific market hypothesis.
+
+HYPOTHESIS:
+- ID: ${h.id} | Status: ${h.status} | Market: ${h.market} | Horizon: ${h.horizon}
+- Title: ${h.title}
+- One-liner: ${h.oneliner || '—'}
+- Instrument: ${h.instrument || '—'}
+- Predicted direction: ${h.direction || '—'}
+- Magnitude: ${h.magnitude || '—'}
+- Timeframe: ${h.timeframe || '—'}
+- Confidence: ${h.confidence}%
+- Last validated: ${h.lastValidated || '—'}
+${h.confirms?.length ? '\nCONFIRMS SIGNALS:\n' + h.confirms.map((c,i) => `${i+1}. ${c}`).join('\n') : ''}
+${h.kills?.length    ? '\nKILLS SIGNALS:\n'    + h.kills.map((c,i) => `${i+1}. ${c}`).join('\n') : ''}
+${evidenceBlock}
+${actualsBlock}
+
+GUIDELINES:
+- Be concise and analytical. Reference specific data points when relevant.
+- If evidence or market actuals show as "none available", acknowledge the gap honestly — do not invent data.
+- Decline investment advice questions — this is research output only, not financial advice.
+- Keep responses under 300 words unless depth is specifically needed.
+- If a question is outside this hypothesis scope, say so briefly.`;
+
+  // Maintain per-card history (server-side, resets on restart)
+  if (!chatSessions[id]) chatSessions[id] = [];
+  chatSessions[id].push({ role: 'user', content: message });
+  const history = chatSessions[id].slice(-20); // last 20 turns max
+
+  // SSE headers
+  res.setHeader('Content-Type', 'text/event-stream');
+  res.setHeader('Cache-Control', 'no-cache');
+  res.setHeader('Connection', 'keep-alive');
+  res.flushHeaders();
+
+  let fullResponse = '';
+  try {
+    // C-TL-05: using @anthropic-ai/sdk stream() EventEmitter pattern
+    // Verified against sdk version in package.json before shipping
+    const stream = anthropic.messages.stream({
+      model: 'claude-opus-4-7',
+      max_tokens: 800, // C-TL-02: raised from 500; complex finance answers need room
+      system: systemPrompt,
+      messages: history,
+    });
+
+    stream.on('text', (text) => {
+      fullResponse += text;
+      res.write(`data: ${JSON.stringify({ chunk: text })}\n\n`);
+    });
+
+    // C-DA-03: capture token usage for cost visibility
+    const finalMsg = await stream.finalMessage();
+    const usage = finalMsg.usage || {};
+    const inputTok  = usage.input_tokens  || 0;
+    const outputTok = usage.output_tokens || 0;
+    const costUSD   = ((inputTok / 1e6) * OPUS_COST_PER_INPUT_MTOK) +
+                      ((outputTok / 1e6) * OPUS_COST_PER_OUTPUT_MTOK);
+    console.log(`[chat] ${id} | session=${sessionId} turn=${turnNumber} | in=${inputTok} out=${outputTok} | ~$${costUSD.toFixed(4)}`);
+
+    // Store assistant reply in session
+    chatSessions[id].push({ role: 'assistant', content: fullResponse });
+
+    // C-DA-01: persist with sessionId + turnNumber for conversation depth analysis
+    appendChatLog({
+      ts: new Date().toISOString(),
+      date: new Date().toISOString().slice(0, 10),
+      sessionId,
+      turnNumber,
+      hypothesisId: id,
+      title: h.title,
+      confidence: h.confidence,
+      userMessage: message,
+      assistantResponse: fullResponse,
+      tokens: { input: inputTok, output: outputTok },
+      costUSD: parseFloat(costUSD.toFixed(5)),
+    });
+
+    res.write(`data: ${JSON.stringify({ done: true })}\n\n`);
+    res.end();
+  } catch (err) {
+    console.error('[chat] Error:', err.message);
+    res.write(`data: ${JSON.stringify({ error: err.message })}\n\n`);
+    res.end();
+  }
+});
+
 // ─── Single-page app ──────────────────────────────────────────────────────────
 
 app.get('/', (req, res) => res.send(HTML));
@@ -1206,9 +1364,93 @@ const HTML = `<!DOCTYPE html>
   }
   .refresh-btn:active { transform: scale(0.92); }
   .refresh-btn.spinning { animation: spin 0.8s linear infinite; }
+
+  /* ── Chat button ───────────────────────────────────────────── */
+  .chat-btn {
+    background: var(--surface2); border: 1px solid var(--border); border-radius: 8px;
+    padding: 4px 10px; font-size: 14px; cursor: pointer; transition: all .15s; color: var(--muted);
+    margin-left: auto;
+  }
+  .chat-btn:hover { border-color: var(--blue); color: var(--blue); }
+  .chat-btn:active { transform: scale(0.92); }
+
+  /* ── Chat modal ────────────────────────────────────────────── */
+  #chatModal {
+    display: none; position: fixed; inset: 0; z-index: 1000;
+    background: rgba(0,0,0,.5); align-items: flex-end; justify-content: center;
+  }
+  #chatModal.open { display: flex; }
+  .chat-sheet {
+    background: var(--surface); border-radius: 20px 20px 0 0;
+    width: 100%; max-width: 640px; max-height: 82vh;
+    display: flex; flex-direction: column;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    animation: slideUp .22s ease;
+  }
+  @keyframes slideUp { from { transform: translateY(100%); opacity:.3; } to { transform: translateY(0); opacity:1; } }
+  .chat-header {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    padding: 16px 18px 12px; border-bottom: 1px solid var(--border); flex-shrink: 0;
+  }
+  .chat-hyp-id { font-size: 11px; font-weight: 700; color: var(--blue); letter-spacing: .5px; font-family: 'SF Mono', monospace; }
+  .chat-hyp-title { font-size: 13px; font-weight: 600; margin-top: 3px; color: var(--text); max-width: 260px; line-height: 1.3; }
+  .chat-close-btn {
+    background: var(--surface2); border: 1px solid var(--border); border-radius: 50%;
+    width: 30px; height: 30px; font-size: 15px; cursor: pointer; color: var(--muted);
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px;
+  }
+  .chat-messages {
+    flex: 1; overflow-y: auto; padding: 14px 16px; display: flex; flex-direction: column; gap: 10px;
+    min-height: 120px;
+  }
+  .chat-msg {
+    max-width: 88%; font-size: 13px; line-height: 1.55; padding: 9px 12px; border-radius: 12px;
+    word-break: break-word; white-space: pre-wrap;
+  }
+  .chat-msg.user      { background: var(--blue); color: #fff; align-self: flex-end; border-radius: 12px 12px 2px 12px; }
+  .chat-msg.assistant { background: var(--surface2); color: var(--text); align-self: flex-start; border-radius: 12px 12px 12px 2px; border: 1px solid var(--border); }
+  .chat-msg.streaming { border-style: dashed; opacity: .85; }
+  .chat-empty { color: var(--muted); font-size: 13px; text-align: center; padding: 24px 8px; line-height: 1.5; }
+  .chat-input-row {
+    display: flex; align-items: flex-end; gap: 8px;
+    padding: 10px 14px 14px; border-top: 1px solid var(--border); flex-shrink: 0;
+  }
+  .chat-input {
+    flex: 1; background: var(--surface2); border: 1px solid var(--border); border-radius: 10px;
+    padding: 9px 12px; font-size: 14px; color: var(--text); font-family: inherit;
+    resize: none; outline: none; max-height: 100px; min-height: 40px; line-height: 1.4;
+  }
+  .chat-input:focus { border-color: var(--blue); }
+  .chat-send-btn {
+    background: var(--blue); color: #fff; border: none; border-radius: 10px;
+    width: 40px; height: 40px; font-size: 18px; cursor: pointer; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center; transition: opacity .15s;
+  }
+  .chat-send-btn:disabled { opacity: .35; cursor: not-allowed; }
 </style>
 </head>
 <body>
+
+<!-- ── Chat modal ─────────────────────────────────────────────── -->
+<div id="chatModal" role="dialog" aria-modal="true">
+  <div class="chat-sheet">
+    <div class="chat-header">
+      <div style="min-width:0">
+        <div class="chat-hyp-id" id="chatHypId"></div>
+        <div class="chat-hyp-title" id="chatHypTitle"></div>
+      </div>
+      <button class="chat-close-btn" onclick="closeChat()" aria-label="Close chat">✕</button>
+    </div>
+    <div class="chat-messages" id="chatMessages">
+      <div class="chat-empty" id="chatEmpty">Ask me anything about this hypothesis — evidence, signals, confidence, what to watch for…</div>
+    </div>
+    <div class="chat-input-row">
+      <textarea class="chat-input" id="chatInput" placeholder="Ask about this hypothesis…" rows="1"
+        onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendChat();}"></textarea>
+      <button class="chat-send-btn" id="chatSendBtn" onclick="sendChat()" aria-label="Send">↑</button>
+    </div>
+  </div>
+</div>
 
 <div class="header">
   <div class="header-row">
@@ -1923,6 +2165,7 @@ function renderCard(h) {
       <button class="rating-btn rating-btn-up"   data-id="\${h.id}" onclick="rate(event,'\${h.id}','up')"   title="This played out — prediction was correct">👍</button>
       <button class="rating-btn rating-btn-down" data-id="\${h.id}" onclick="rate(event,'\${h.id}','down')" title="This did NOT play out — prediction was wrong">👎</button>
       <span class="rating-label">Did this play out?</span>
+      <button class="chat-btn" onclick="openChat(event,'\${h.id}')" title="Ask AI about this hypothesis">💬 Ask</button>
     </div>\`;
 
   // Feedback section (in expanded view)
@@ -2134,6 +2377,191 @@ document.getElementById('filterBar').addEventListener('click', e => {
   if (e.target.classList.contains('filter-btn')) applyFilter(e.target.dataset.filter);
 });
 document.getElementById('refreshBtn').addEventListener('click', loadData);
+
+// ─── Chat interface (BL-015) ──────────────────────────────────
+
+var chatCurrentId    = null;
+var chatStreaming     = false;
+var chatMsgHistory   = {}; // keyed by id: [{role,text}]
+var chatSessionIds   = {}; // C-DA-01: per-card UUID session IDs
+var chatTurnNumbers  = {}; // C-DA-01: per-card turn counters
+var chatServerEpoch  = null; // C-UX-02: detect server restarts
+
+// Generate a simple UUID v4
+function uuid4() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    var r = Math.random() * 16 | 0;
+    return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+  });
+}
+
+// C-UX-02: fetch server epoch on page load; detect restart when modal opens
+async function fetchServerEpoch() {
+  try {
+    var r = await fetch('/api/hypotheses?_epoch=1');
+    if (r.ok) chatServerEpoch = r.headers.get('x-server-started') || 'unknown';
+  } catch(e) {}
+}
+fetchServerEpoch();
+
+function openChat(e, id) {
+  e.stopPropagation();
+  chatCurrentId = id;
+  var hyp = allHypotheses.find(function(h) { return h.id === id; });
+  document.getElementById('chatHypId').textContent    = id;
+  document.getElementById('chatHypTitle').textContent = hyp ? hyp.title : id;
+
+  // C-DA-01: init session tracking for this card
+  if (!chatSessionIds[id]) {
+    chatSessionIds[id]  = uuid4();
+    chatTurnNumbers[id] = 0;
+  }
+
+  // Restore rendered history for this card or show empty hint
+  var msgs = document.getElementById('chatMessages');
+  if (chatMsgHistory[id] && chatMsgHistory[id].length > 0) {
+    msgs.innerHTML = '';
+    chatMsgHistory[id].forEach(function(m) {
+      var el = document.createElement('div');
+      el.className = 'chat-msg ' + m.role;
+      el.textContent = m.text;
+      msgs.appendChild(el);
+    });
+  } else {
+    msgs.innerHTML = '<div class="chat-empty" id="chatEmpty">Ask me anything about this hypothesis — evidence, signals, confidence, what to watch for…</div>';
+  }
+
+  document.getElementById('chatModal').classList.add('open');
+  setTimeout(function() { document.getElementById('chatInput').focus(); }, 100);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function closeChat() {
+  document.getElementById('chatModal').classList.remove('open');
+  chatCurrentId = null;
+}
+
+// Close on backdrop click
+document.getElementById('chatModal').addEventListener('click', function(e) {
+  if (e.target === this) closeChat();
+});
+
+// C-UX-03: focus trap — Tab/Shift+Tab stay inside modal
+document.getElementById('chatModal').addEventListener('keydown', function(e) {
+  if (!document.getElementById('chatModal').classList.contains('open')) return;
+  if (e.key !== 'Tab') return;
+  var focusable = document.getElementById('chatModal').querySelectorAll(
+    'button:not([disabled]), textarea:not([disabled])');
+  if (!focusable.length) return;
+  var first = focusable[0], last = focusable[focusable.length - 1];
+  if (e.shiftKey) {
+    if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+  } else {
+    if (document.activeElement === last)  { e.preventDefault(); first.focus(); }
+  }
+});
+
+async function sendChat() {
+  if (chatStreaming || !chatCurrentId) return;
+  var input = document.getElementById('chatInput');
+  var msg   = input.value.trim();
+  if (!msg) return;
+
+  input.value = '';
+  input.style.height = 'auto';
+
+  var id   = chatCurrentId;
+  var msgs = document.getElementById('chatMessages');
+
+  // Remove empty hint
+  var empty = document.getElementById('chatEmpty');
+  if (empty) empty.remove();
+
+  // User bubble
+  var userBubble = document.createElement('div');
+  userBubble.className = 'chat-msg user';
+  userBubble.textContent = msg;
+  msgs.appendChild(userBubble);
+  if (!chatMsgHistory[id]) chatMsgHistory[id] = [];
+  chatMsgHistory[id].push({ role: 'user', text: msg });
+
+  // C-DA-01: increment turn number
+  chatTurnNumbers[id] = (chatTurnNumbers[id] || 0) + 1;
+  var currentTurn = chatTurnNumbers[id];
+
+  // Assistant streaming bubble — C-UX-04: "Thinking…" not "…"
+  var asstBubble = document.createElement('div');
+  asstBubble.className = 'chat-msg assistant streaming';
+  asstBubble.textContent = 'Thinking…';
+  msgs.appendChild(asstBubble);
+  msgs.scrollTop = msgs.scrollHeight;
+
+  var sendBtn = document.getElementById('chatSendBtn');
+  sendBtn.disabled = true;
+  chatStreaming = true;
+
+  try {
+    var resp = await fetch('/api/chat/' + id, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      // C-DA-01: send sessionId + turnNumber for log grouping
+      body: JSON.stringify({
+        message: msg,
+        sessionId:  chatSessionIds[id] || 'unknown',
+        turnNumber: currentTurn,
+      }),
+    });
+
+    if (!resp.ok) {
+      var errData = await resp.json().catch(function() { return { error: 'HTTP ' + resp.status }; });
+      asstBubble.textContent = '⚠️ ' + (errData.error || 'Error ' + resp.status);
+      asstBubble.classList.remove('streaming');
+      return;
+    }
+
+    var reader  = resp.body.getReader();
+    var decoder = new TextDecoder();
+    var fullText = '';
+    var buffer   = '';
+    asstBubble.textContent = '';
+
+    while (true) {
+      var result = await reader.read();
+      if (result.done) break;
+      buffer += decoder.decode(result.value, { stream: true });
+      var lines = buffer.split('\\n');
+      buffer = lines.pop(); // keep incomplete last line
+      for (var i = 0; i < lines.length; i++) {
+        var line = lines[i];
+        if (!line.startsWith('data: ')) continue;
+        try {
+          var parsed = JSON.parse(line.slice(6));
+          if (parsed.chunk !== undefined) {
+            fullText += parsed.chunk;
+            asstBubble.textContent = fullText;
+            msgs.scrollTop = msgs.scrollHeight;
+          } else if (parsed.done) {
+            asstBubble.classList.remove('streaming');
+          } else if (parsed.error) {
+            asstBubble.textContent = '⚠️ ' + parsed.error;
+            asstBubble.classList.remove('streaming');
+          }
+        } catch(err) {}
+      }
+    }
+
+    asstBubble.classList.remove('streaming');
+    if (fullText) chatMsgHistory[id].push({ role: 'assistant', text: fullText });
+
+  } catch(err) {
+    asstBubble.textContent = '⚠️ Connection error — ' + err.message;
+    asstBubble.classList.remove('streaming');
+  } finally {
+    sendBtn.disabled = false;
+    chatStreaming = false;
+    msgs.scrollTop = msgs.scrollHeight;
+  }
+}
 
 loadData();
 <\/script>

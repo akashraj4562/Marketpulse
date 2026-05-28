@@ -14,8 +14,8 @@
 | **Status** | `Active` |
 | **Created** | 2026-05-27 |
 | **Created by** | hypothesis-generator |
-| **Last validated** | 2026-05-27 |
-| **Next validation due** | 2026-05-29 |
+| **Last validated** | 2026-05-29 |
+| **Next validation due** | 2026-05-31 |
 | **Priority tier** | `P2` (every 48h) |
 | **Time horizon** | `MT` (2–4 quarters of relative outperformance thesis) |
 

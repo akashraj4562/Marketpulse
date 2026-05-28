@@ -12,8 +12,8 @@
 | **Status** | `Developing` |
 | **Created** | 2026-05-27 |
 | **Created by** | hypothesis-generator |
-| **Last validated** | 2026-05-27 |
-| **Next validation due** | 2026-05-29 |
+| **Last validated** | 2026-05-29 |
+| **Next validation due** | 2026-05-31 |
 | **Priority tier** | `P2` (every 48h — quarterly earnings events are key; next major Big Tech earnings Q3 2026) |
 | **Time horizon** | `MT` (2–4 quarters for the margin→revenue arc to play out) |
 

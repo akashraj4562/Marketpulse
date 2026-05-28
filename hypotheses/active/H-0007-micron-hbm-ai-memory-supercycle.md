@@ -12,8 +12,8 @@
 | **Status** | `Active` |
 | **Created** | 2026-05-27 |
 | **Created by** | hypothesis-generator |
-| **Last validated** | 2026-05-28 |
-| **Next validation due** | 2026-05-29 |
+| **Last validated** | 2026-05-29 |
+| **Next validation due** | 2026-05-30 |
 | **Priority tier** | `P1` (daily — Micron +19% yesterday, AI capex story moving fast) |
 | **Time horizon** | `MT` (1–3 quarters; AI capex translates to memory demand over 1–2 quarters) |
 
@@ -130,6 +130,7 @@ Micron is the most leveraged listed play on the AI capex supercycle after NVIDIA
 | 2026-05-27 | MU | Bullish +20–35% over 2Q | May 26: +19.3% (confirmed surge). May 27 open: flat so far | Partial | — | One-day surge confirms direction; 2-quarter thesis just started | +5% |
 | 2026-05-28 AM | MU | +20–35% from ~$105–110 over 2Q | MU at $915; Q2 revenue +196% YoY; gross margin 74.9%; HBM sold out through 2026; HBM4 in production; FY26 guidance raised to $31.5–33.5B | Strong CONFIRM | — | Thesis playing out dramatically ahead of schedule. 46-analyst BUY consensus. Consider updating magnitude target. | +15% |
 | 2026-05-28 PM | MU | Continued momentum | MU closed $928.41 (+3.63% on May 27); Motley Fool analyst: "MU worth at least $1,500 in 1 year"; SK Hynix hit $1T market cap (confirms Asia semicon leadership) | Strong CONFIRM | — | +3.63% day on May 27 after the +19% surge. Analyst $1,500 target = +62% from current. SK Hynix $1T validates the broader HBM sector thesis. | +2% |
+| 2026-05-29 pre-market | MU | Continued upward momentum | MU pre-market $961.92 (+3.6% from $928 close); UBS raised price target to $1,625 from $535 (previously issued first upgrade); pre-market volume 8.85M shares | Strong CONFIRM | — | ⚠️ G8 GUARDRAIL: Confidence is at 82% (Active avg 72.4% already breaching 70% cap). Upgrade evidence is strong — UBS $1,625 target is +75% from current, massive revision. However red-team review is required before any further confidence increase. Logging evidence only; confidence held at 82% pending G8 red-team. | 0% (guardrail) |
 
 ---
 
@@ -150,6 +151,7 @@ Micron is the most leveraged listed play on the AI capex supercycle after NVIDIA
 | 2026-05-27 (created) | 65% | 82 | 18 | Strong causal mechanism; partially priced but EPS upgrade cycle not complete |
 | 2026-05-28 AM | 80% | 85 | 15 | Q2 revenue +196% YoY, gross margin 74.9%, HBM4 in production, HBM sold out through 2026, guidance raised. Threshold crossed — flag for full thesis workup. |
 | 2026-05-28 PM | 82% | 85 | 15 | MU $928.41; Motley Fool $1,500 target; SK Hynix $1T market cap confirming sector thesis. Momentum sustained. |
+| 2026-05-29 pre-mkt | 82% | 85 | 15 | MU pre-market $961.92; UBS raises PT to $1,625 from $535. Evidence extremely strong but G8 guardrail holds — no upward revision until red-team completes. |
 
 ---
 

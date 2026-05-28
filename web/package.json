@@ -5,7 +5,9 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "node server.js"
+    "dev": "node server.js",
+    "test": "python3 tests/check-inline-js.py",
+    "test:syntax": "node --check server.js && python3 tests/check-inline-js.py"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.99.0",

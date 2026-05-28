@@ -8,8 +8,9 @@
 
 | Component | Status | Notes |
 |---|---|---|
-| **Web view** | ✅ Running on port 3737 | `cd web && node server.js` |
-| **Hypothesis portfolio** | ✅ 11 live hypotheses (6 India, 5 US→4 US) — 5 Active, 6 Developing | Next ID: H-0012 |
+| **Web view** | ⚠️ Needs restart | Fix applied to disk; run `node server.js` from `web/` |
+| **Chat interface (BL-015)** | ✅ Fixed (pending restart) | Syntax bug resolved; `POST /api/chat/:id` SSE intact |
+| **Hypothesis portfolio** | ✅ 20 live hypotheses — 6 Active, 14 Developing | India (11), US (7), Global (2). Next ID: H-0021 |
 | **Price charts** | ✅ Live via Yahoo Finance (yahoo-finance2 v3) | Real data + forecast band |
 | **TX (Plain English)** | ✅ Live — AI enabled | `web/.env` set; Haiku generates on card open; cached in `tx-cache.json` |
 | **AI TX generation** | ✅ Enabled | ANTHROPIC_API_KEY loaded via dotenv from `web/.env` |
@@ -29,6 +30,54 @@
 ---
 
 ## What was built (most recent first)
+
+### 2026-05-28 — Session 9 (checkpoint 21)
+- **BL-015 syntax bug fixed**: `buffer.split('\\n')` inside template literal was rendering as a literal newline → browser SyntaxError → "Loading hypotheses..." indefinitely. Fixed by escaping to `buffer.split('\\\\n')` in source so the template outputs a valid `\n` escape.
+- **TB-001 regression test built**: `npm test` / `python3 tests/check-inline-js.py`. Uses a Node.js vm extractor (`tests/extract-html.js`) to render the HTML template the same way the browser sees it, extracts all `<script>` blocks, and runs `node --check` on each. Confirmed: catches the bug (FAIL), passes the fix (PASS).
+- **SOP gates established** (previous session, documented here): 7-gate PRD→review→test plan→tech proposal→review→implement→tests sequence wired into all CLAUDE.md files. Retroactive BL-015 PRD at `product-staff/prds/marketpulse/BL-015-chat-interface.md`. Gate 7 still open (8 of 11 tests).
+- **Server not yet restarted** — fix is on disk; needs `node server.js` to go live.
+
+### 2026-05-28 — Session 8 (checkpoint 20)
+- **BL-015 Chat Interface shipped**: `POST /api/chat/:id` SSE endpoint (claude-opus-4-7). Full hypothesis context injected as system prompt. In-memory session history. Bottom-sheet chat modal with streaming bubbles. 💬 Ask button on every card. `chat-log.json` persists all turns. Tested live on H-0007 + H-0001.
+- server.js: +~150 lines. `.gitignore`: chat-log.json added.
+
+### 2026-05-29 — Pre-US-open cycle (checkpoint 19)
+- **Pre-open hypothesis cycle run**: all 11 hypotheses updated. H-0002 52→55% (+3%, Brent sub-$100/deal "largely negotiated"). H-0011 56→53% (-3%, crude eroding toward kill zone).
+- **G8 breach continues**: 72.4% Active avg. H-0007 held at 82% (guardrail blocked UBS $1,625 PT / MU pre-mkt $961.92). Red-team review still required.
+- PORTFOLIO.md, TEST-LOG.md, all 11 hypothesis files updated. SESSIONS.md updated.
+
+### 2026-05-28 — Session 7 (checkpoint 18)
+- No new work. State unchanged.
+
+### 2026-05-28 — Session 7 (checkpoint 17)
+- No new work since checkpoint 16. State unchanged.
+
+### 2026-05-28 — Session 7 (checkpoint 16)
+- No new work since checkpoint 15. State unchanged.
+
+### 2026-05-28 — Session 7 (checkpoint 15)
+- No new work since checkpoint 14. State unchanged.
+
+### 2026-05-28 — Session 7 (checkpoint 14)
+- No new work since checkpoint 13. State unchanged.
+
+### 2026-05-28 — Session 7 (checkpoint 13)
+- No new work since checkpoint 12. State unchanged.
+
+### 2026-05-28 — Session 7 (checkpoint 12)
+- No new work since checkpoint 11. State unchanged.
+
+### 2026-05-28 — Session 7 (checkpoint 11)
+- No new work since checkpoint 10. State unchanged.
+
+### 2026-05-28 — Session 7 (checkpoint 10)
+- No new work since checkpoint 9. State unchanged.
+
+### 2026-05-28 — Session 7 (checkpoint 9 — context continuation)
+- **Cross-project Product & Tech review completed**: ClearCart `docs/BACKLOG.md` created (13 items, P0: release gate + icons; P1: 6 orchestration/storage test gaps). MicroManga `docs/BACKLOG.md` created (11 items, P0: Instagram setup + signal collection). Marketpulse review: PASS — backlog comprehensive, G8 breach open action noted.
+- **Systems Thinking Framework**: `/Users/priyanka/Desktop/Akash Claude/SYSTEMS-THINKING.md` created — reinforcing loops per project, cross-project learning matrix, self-healing protocol, loop inventory.
+- **CRON-REGISTRY.md**: created in `product-staff/docs/` — all 5 active cron jobs documented with job IDs, expiry dates (~2026-06-04), and self-contained recreation prompts. Master recreation prompt added to product-staff RUNBOOK.md.
+- **Memory**: All 4 project memory files created/updated (marketpulse, clearcart, micromanga, product_staff, systems_thinking_framework).
 
 ### 2026-05-28 — Session 7 (checkpoint 6)
 - **Daily auto-test**: G4 ✅ PASS (all 11 in cadence), G8 ❌ BREACH (Active avg 72.4%), ST ✅ PASS. TEST-LOG.md updated. PushNotification sent.

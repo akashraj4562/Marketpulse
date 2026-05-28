@@ -12,8 +12,8 @@
 | **Status** | `Developing` |
 | **Created** | 2026-05-27 |
 | **Created by** | hypothesis-generator |
-| **Last validated** | 2026-05-27 |
-| **Next validation due** | 2026-05-29 |
+| **Last validated** | 2026-05-29 |
+| **Next validation due** | 2026-05-31 |
 | **Priority tier** | `P2` (every 48h — structural; next FOMC meeting is key event) |
 | **Time horizon** | `LT` (6–18 months; rate-hold thesis plays out through 2027) |
 

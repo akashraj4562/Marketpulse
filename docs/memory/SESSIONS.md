@@ -4,6 +4,165 @@
 
 ---
 
+## Session: 2026-05-28 — Checkpoint 21 (BL-015 syntax bug + TB-001 regression test)
+
+**Focus:** Fix "Loading hypotheses..." regression introduced by BL-015; add regression test
+
+### Done
+- **Root cause identified**: `buffer.split('\n')` in `sendChat()` was inside the HTML template literal — JS processed `\n` as a newline escape, producing an unterminated string literal in the browser. `node --check server.js` passed silently because it only validates the Node.js layer, not template literal content.
+- **Fix applied** (`web/server.js` line 2532): changed `'\n'` → `'\\n'` so template outputs a proper escape to the browser.
+- **TB-001 built** (`web/tests/check-inline-js.py` + `web/tests/extract-html.js`): uses Node.js `vm` to render the HTML as the browser sees it, extracts `<script>` blocks, runs `node --check` on each. Confirmed detects the bug (FAIL) and passes the fix (PASS). Wired into `npm test`.
+- **PRD + tech proposal reviewed**: BL-015 retroactive PRD and all 21 review comments walked through on request. Gate 7 still has 8 open tests.
+
+### Still open
+- Start server: `~/node-v24.16.0-darwin-arm64/bin/node server.js` from `web/`
+- Gate 7 BL-015: T-04 through T-11 (8 remaining)
+- G8 red-team: H-0007 (82%), H-0003 (75%), H-0005 (70%)
+
+---
+
+## Session: 2026-05-28 — Checkpoint 20 (BL-015 chat interface built)
+
+**Focus:** BL-015 — per-card AI chat interface
+
+### Done
+- **`POST /api/chat/:id`** streaming SSE endpoint — claude-opus-4-7, full hypothesis context injected (title, oneliner, direction, magnitude, timeframe, confidence, confirms/kills, last 3 evidence entries, latest market actual). In-memory session history per card.
+- **Chat modal** — bottom-sheet slide-up, streaming bubbles (user right/blue, assistant left/gray), backdrop-close, restore history on reopen.
+- **💬 Ask button** — added to every card's rating row alongside 👍 👎.
+- **`chat-log.json`** — every turn persisted; added to `.gitignore`.
+- Tested live: H-0007 + H-0001 both streaming correctly. `done` event fires. Log writing confirmed (2 entries).
+
+### Still open
+- G8 red-team: H-0007 (82%), H-0003 (75%), H-0005 (70%)
+- Crons expire ~2026-06-04
+
+---
+
+## Session: 2026-05-29 — Checkpoint 19
+
+**Focus:** Memory checkpoint post-hypothesis cycle
+
+No new work since pre-open cycle. State as of cycle: H-0002 55%, H-0011 53%, all others unchanged. G8 breach open.
+
+---
+
+## Session: 2026-05-29 — Pre-US-open hypothesis cycle
+
+**Focus:** Full P1+P2 validation cycle ahead of US market open
+
+### Done
+- **P1 updated (6 hypotheses):** H-0001, H-0002, H-0003, H-0007, H-0008, H-0011
+- **P2 date-stamped (5 hypotheses):** H-0004, H-0005, H-0006, H-0009, H-0010
+- **Confidence changes:** H-0002 +3% (52→55%); H-0011 -3% (56→53%). All others unchanged.
+- **G8 breach:** Continues at 72.4% Active avg. H-0007 evidence extremely positive (UBS PT $1,625, MU pre-mkt $961.92) — confidence held at 82% per guardrail. **Red-team review still required.**
+- Key market signals: Brent $94–96 (Iran deal "largely negotiated"); Nifty 50 opened 23,902 (flat); CRWD near 52-week high; ZS FY27 guidance cut to 16–17%.
+
+### Still open
+- G8 red-team: H-0007 (82%), H-0003 (75%), H-0005 (70%)
+- Crons expire ~2026-06-04
+
+---
+
+## Session: 2026-05-28 (Session 7 — checkpoint 18)
+No new work. G8 breach + cron expiry (~Jun 4) still open.
+
+---
+
+## Session: 2026-05-28 (Session 7 — checkpoint 17)
+
+**Focus:** No new work since checkpoint 16. State unchanged.
+
+### Still open
+- G8 breach: red-team H-0007/H-0003/H-0005 pending
+- Crons expire ~2026-06-04
+
+---
+
+## Session: 2026-05-28 (Session 7 — checkpoint 16)
+
+**Focus:** No new work since checkpoint 15. State unchanged.
+
+### Still open
+- G8 breach: red-team H-0007/H-0003/H-0005 pending
+- Crons expire ~2026-06-04
+
+---
+
+## Session: 2026-05-28 (Session 7 — checkpoint 15)
+
+**Focus:** No new work since checkpoint 14. State unchanged.
+
+### Still open
+- G8 breach: red-team H-0007/H-0003/H-0005 pending
+- Crons expire ~2026-06-04
+
+---
+
+## Session: 2026-05-28 (Session 7 — checkpoint 14)
+
+**Focus:** No new work since checkpoint 13. State unchanged.
+
+### Still open
+- G8 breach: red-team H-0007/H-0003/H-0005 pending
+- Crons expire ~2026-06-04
+
+---
+
+## Session: 2026-05-28 (Session 7 — checkpoint 13)
+
+**Focus:** No new work since checkpoint 12. State unchanged.
+
+### Still open
+- G8 breach: red-team H-0007/H-0003/H-0005 pending
+- Crons expire ~2026-06-04
+
+---
+
+## Session: 2026-05-28 (Session 7 — checkpoint 12)
+
+**Focus:** No new work since checkpoint 11. State unchanged.
+
+### Still open
+- G8 breach: red-team H-0007/H-0003/H-0005 pending
+- Crons expire ~2026-06-04
+
+---
+
+## Session: 2026-05-28 (Session 7 — checkpoint 11)
+
+**Focus:** No new work since checkpoint 10
+
+### Still open
+- G8 breach: red-team review of H-0007/H-0003/H-0005 pending
+- Cron jobs expire ~2026-06-04
+
+---
+
+## Session: 2026-05-28 (Session 7 — checkpoint 10)
+
+**Focus:** No new work since checkpoint 9
+
+### Still open
+- G8 breach: red-team review of H-0007/H-0003/H-0005 pending. No new filings until resolved.
+- Cron jobs expire ~2026-06-04 — recreation prompts in `product-staff/docs/CRON-REGISTRY.md`
+
+---
+
+## Session: 2026-05-28 (Session 7 — checkpoint 9, context continuation)
+
+**Focus:** Cross-project review + systems thinking infrastructure
+
+### Done
+- Product Staff cross-project review completed: backlogs written for ClearCart (13 items) and MicroManga (11 items); Marketpulse review PASS
+- Systems Thinking Framework created (`/Users/priyanka/Desktop/Akash Claude/SYSTEMS-THINKING.md`) — reinforcing loops, cross-project learning matrix, self-healing protocol
+- CRON-REGISTRY.md created in product-staff/docs — all 5 jobs documented, expire ~2026-06-04
+- All project memory files updated; MEMORY.md index complete
+
+### Still open
+- G8 breach: red-team review of H-0007/H-0003/H-0005 pending before next hypothesis filings
+
+---
+
 ## Session: 2026-05-28 (Session 7 — checkpoint 8)
 
 **Focus:** No new work — cron checkpoint

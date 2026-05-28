@@ -14,8 +14,8 @@
 | **Status** | `Active` |
 | **Created** | 2026-05-27 |
 | **Created by** | hypothesis-generator |
-| **Last validated** | 2026-05-27 |
-| **Next validation due** | 2026-05-29 |
+| **Last validated** | 2026-05-29 |
+| **Next validation due** | 2026-05-31 |
 | **Priority tier** | `P2` (every 48h — structural; earnings quarterly key event) |
 | **Time horizon** | `LT` (12–18 months for PE multiple to find new equilibrium) |
 

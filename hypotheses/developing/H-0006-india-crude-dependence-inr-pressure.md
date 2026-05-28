@@ -14,8 +14,8 @@
 | **Status** | `Developing` |
 | **Created** | 2026-05-27 |
 | **Created by** | hypothesis-generator |
-| **Last validated** | 2026-05-27 |
-| **Next validation due** | 2026-05-29 |
+| **Last validated** | 2026-05-29 |
+| **Next validation due** | 2026-05-31 |
 | **Priority tier** | `P2` (every 48h — tracks inversely with H-0002; if H-0002 fails, H-0006 activates) |
 | **Time horizon** | `LT` (3–18 months — structural constraint on Indian macro) |
 

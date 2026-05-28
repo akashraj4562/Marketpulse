@@ -18,6 +18,7 @@ web/holdings.json
 web/feedback.json
 web/ratings.json
 web/tx-cache.json
+web/chat-log.json
 
 # macOS
 .DS_Store

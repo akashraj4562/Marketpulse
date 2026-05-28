@@ -14,8 +14,8 @@
 | **Status** | `Developing` |
 | **Created** | 2026-05-28 |
 | **Created by** | hypothesis-generator |
-| **Last validated** | 2026-05-28 |
-| **Next validation due** | 2026-05-29 |
+| **Last validated** | 2026-05-29 |
+| **Next validation due** | 2026-05-30 |
 | **Priority tier** | `P1` (daily — crude moves daily; Iran situation fluid) |
 | **Time horizon** | `MT` (1–3 months; plays out through Q2 earnings and next RBI meeting) |
 
@@ -50,7 +50,7 @@ India rate-sensitive sectors underperform broad Nifty 50 by 8–15% over MT hori
 ## Scores
 | Metric | Score | Last updated |
 |---|---|---|
-| **Confidence** | 56% | 2026-05-28 (PM) |
+| **Confidence** | 53% | 2026-05-29 (pre-open) |
 | **Causality** | 78 / 100 | 2026-05-28 |
 | **Correlation** | 22 / 100 | 2026-05-28 |
 | Causality + Correlation check | 100 ✓ | — |
@@ -101,6 +101,7 @@ India rate-sensitive sectors underperform broad Nifty 50 by 8–15% over MT hori
 |---|---|---|---|---|---|---|---|
 | 2026-05-28 AM | USD/INR | Bearish INR (rising) | Pending | Too early | — | Thesis filed today; INR direction not yet tracked | 0 |
 | 2026-05-28 PM | Brent crude | $95–105 sustained range | WTI briefly below $90; Brent $97.94 — falling on Iran deal progress | Partial KILL | — | Primary catalyst weakening — crude falling as deal appears closer. If deal closes, thesis loses its near-term driver. Existing India inflation still real (fuel hike Rs 5/litre), but RBI rate-hold becomes less certain. Moving to Developing. | -6% |
+| 2026-05-29 pre-open | Brent crude | Sustained $95–105 range | Brent ~$94–96; oil down 16%+ in May; Trump: deal "largely negotiated, to be announced soon." India INR: data not yet pulled. | Weakening KILL approach | — | Crude continuing to fall toward the $85 kill zone. The primary catalyst ($100+ crude) has not been sustained — crude is now $94–96 and falling. If deal is announced imminently (Trump: "soon"), thesis KILLS. India inflation/RBI hold secondary argument remains real but insufficient alone to sustain confidence at 56%. -3%. | -3% |
 
 ---
 
@@ -120,6 +121,7 @@ India rate-sensitive sectors underperform broad Nifty 50 by 8–15% over MT hori
 |---|---|---|---|---|
 | 2026-05-28 AM (created) | 62% | 78 | 22 | New hypothesis — activated by crude $100 + Iran escalation. Strong causal chain; uncertainty on resolution timeline. |
 | 2026-05-28 PM | 56% | 78 | 22 | Iran deal progressing (Trump "orderly and constructive") — WTI briefly below $90, Brent $97.94. Primary catalyst (crude $100+) weakening. Existing India inflation still real but thesis loses urgency. Moved to Developing. |
+| 2026-05-29 pre-open | 53% | 78 | 22 | Crude $94–96 and falling. Trump "largely negotiated, to be announced soon." Primary catalyst eroding further. Approaching kill zone ($85). -3%. |
 
 ---
 *Not investment advice. Analytical output for research and training purposes only.*

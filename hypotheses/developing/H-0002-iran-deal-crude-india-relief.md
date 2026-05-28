@@ -14,8 +14,8 @@
 | **Status** | `Developing` |
 | **Created** | 2026-05-27 |
 | **Created by** | hypothesis-generator |
-| **Last validated** | 2026-05-28 |
-| **Next validation due** | 2026-05-29 |
+| **Last validated** | 2026-05-29 |
+| **Next validation due** | 2026-05-30 |
 | **Priority tier** | `P1` (daily — deal timeline moves fast) |
 | **Time horizon** | `MT` (1–3 months — Hormuz traffic restores within 30 days of signing per Iran) |
 
@@ -153,6 +153,7 @@ The Iran peace deal is the single largest unpriced macro positive for Indian equ
 | 2026-05-27 | Brent crude | Below $100 (post-deal) | $106.59 (pre-deal) | Too early | — | Peace hopes active but deal not finalized | 0 |
 | 2026-05-28 AM | Brent crude / OMCs | Deal thesis stalled | Brent $99–100; US launched fresh strikes on Iran May 26; deal "jeopardized" per Time; 14M bpd blocked per IEA | Partial KILL | Type 2 (Trigger invalidation) | Fresh US strikes directly contradict the "peace deal imminent" premise. Crude spiked to $100 before easing slightly. Iran rejected surrendering nuclear enrichment. India hiked petrol/diesel Rs 5/litre since May 15 — OMCs passing costs, not receiving relief. Deal probability declining; approaching kill zone. | -8% |
 | 2026-05-28 PM | Brent crude | Below $100 progressing toward deal | WTI briefly below $90; Brent $97.94 (-9% from month ago); Trump: talks "orderly and constructive"; market pricing 100M bbl release when deal closes | Partial CONFIRMS | — | Significant reversal from morning. Crude falling as deal appears closer. Trump's Sunday statement is constructive — different tone from the strikes narrative. Deal is not dead; progressing. OMC relief thesis re-activating. | +8% |
+| 2026-05-29 pre-open | Brent crude / OMCs | Below $100 for 3 consecutive days → CONFIRMS trigger | Brent ~$94–96/bbl; oil down >16% in May; Trump: deal "largely negotiated, will be announced soon" (May 23); sticking points remain (nuclear enrichment, Hormuz language) | Partial CONFIRMS | — | CONFIRMS item "Brent below $100 for 3 consecutive days" likely triggering — Brent has been sub-$100 since at least May 27 and is now $94–96. Deal "largely negotiated" is the strongest language yet from Trump. Sticking points on nuclear enrichment and Hormuz text still unresolved. Crude direction confirms the thesis even as the deal is not yet signed. +3% on sustained sub-$100 crude. | +3% |
 
 ---
 
@@ -178,6 +179,7 @@ The Iran peace deal is the single largest unpriced macro positive for Indian equ
 | 2026-05-27 (created) | 52% | 80 | 20 | Initial estimate — deal is real but outcome uncertain; causal chain is strong if deal closes |
 | 2026-05-28 AM | 44% | 80 | 20 | Fresh US strikes on Iran May 26 directly contradict deal-imminent premise. Crude at $100. India fuel hike Rs 5/litre signals OMCs absorbing costs, not benefitting. |
 | 2026-05-28 PM | 52% | 80 | 20 | Sharp reversal: WTI below $90, Brent $97.94. Trump "orderly and constructive." Market pricing 100M bbl stranded supply release on deal close. Deal probability recovering. Back to initial confidence level. |
+| 2026-05-29 pre-open | 55% | 80 | 20 | Brent $94–96; oil down 16%+ in May; Trump "largely negotiated, will be announced soon." CONFIRMS trigger (sub-$100 for 3+ days) likely activated. Sticking points remain but directional thesis strongly playing out. |
 
 ---
 

@@ -16,6 +16,14 @@
 2. **Check session log**: `docs/memory/SESSIONS.md` (first entry) — what was unfinished last session.
 3. **Check portfolio**: `hypotheses/PORTFOLIO.md` — current hypothesis counts and priority queue.
 
+### ⛔ Feature implementation gate — P0 blocking rule
+
+**No feature or non-trivial change ships without clearing all 7 gates in `/Users/priyanka/Desktop/Akash Claude/product-staff/docs/SOP-IMPLEMENTATION-GATE.md`.**
+
+Gates: PRD → Product Staff PRD review (all feedback resolved) → Test plan → Tech proposal → Product Staff tech review (all feedback resolved) → Implementation → Tests run.
+
+When the owner says "let's build X" — the correct first response is always **"I'll draft the PRD"**, not writing code. No exceptions except documented 1-line fast-tracks.
+
 **Procedural skills available:**
 - `dev-workflow` — how to start server, add features, commit, handle errors
 - `hypothesis-ops` — create / validate / retire / graduate hypotheses
