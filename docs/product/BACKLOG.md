@@ -347,6 +347,52 @@ Add this to RUNBOOK.md as the canonical "manual refresh" command with a clear he
 
 ---
 
+### [BL-015] Per-card chatbot — natural language Q&A with hypothesis context
+**Priority:** P1
+**Status:** Proposed
+**Theme:** 🧠 Owner Intelligence / 📱 Output Clarity
+
+**True need:** The owner wants to interrogate a hypothesis in real time — ask "why is this bearish?", "what would change your mind?", "how does this relate to what I read about the Fed today?" — without having to context-switch to a separate tool. The card already contains all the data; the chatbot just needs to know it.
+
+**User story:** Owner opens a card, taps 💬 icon → small modal opens with a chat input. They type a question in plain English. Claude answers with full awareness of that hypothesis's thesis, confidence, evidence log, confirms/kills, and market actuals. Each follow-up stays in the same context. Owner closes modal and continues browsing.
+
+**Architecture:**
+- **Trigger:** 💬 icon button in each card footer (next to 👍/👎 rating buttons)
+- **Modal:** Bottom sheet on mobile, floating panel on desktop. Input box at bottom. Scrollable message history above.
+- **Context injected into every request:**
+  - Hypothesis title, one-liner, direction, magnitude, timeframe, confidence
+  - Last 3 evidence log entries
+  - Confirms + kills watch-items
+  - Latest market actuals row
+  - Current TX (TL;DR) lines
+- **API:** New `POST /api/chat/:id` endpoint — receives `{ message, history[] }`, calls claude-sonnet-4-6 (fast, smart enough for conversational Q&A) with hypothesis context as system prompt, returns streaming response
+- **Conversation memory:** Chat history stored in-memory per card per session (JS array). Not persisted — each new card open starts fresh. Acceptable for v1.
+- **Insight capture:** Every chat session is appended to `web/chat-log.json` (keyed by hypothesis ID + timestamp). Reviewed by product-manager agent to surface new backlog items, recurring user questions, and feature signals.
+
+**Key design decisions to lock before build:**
+1. Model: claude-sonnet-4-6 (recommended — fast, cheap ~$0.15/run, conversational) vs Haiku (cheaper but shallower reasoning on complex finance questions)
+2. Streaming vs single response — streaming strongly recommended for perceived speed on mobile
+3. Max context per message: cap evidence log at last 5 entries to keep token cost low (~600 input tokens per turn)
+4. Chat log privacy: `chat-log.json` added to `.gitignore` (may contain owner's questions about positions)
+5. System prompt tone: same "plain English, no jargon" tone as TX section — not a Bloomberg terminal, a smart friend who knows the thesis
+
+**Insight loop (the second-order value):**
+The chat logs are the most valuable output — they reveal what the owner actually wants to know that the current UI doesn't show. The product-manager agent reviews `chat-log.json` weekly and:
+- Surfaces recurring questions → new card fields or UI sections
+- Flags requests for data not currently tracked → new hypothesis fields or API integrations
+- Identifies hypotheses the owner engages with most → confidence calibration signal
+
+**What's NOT in scope for v1:** Persistent chat history across sessions, multi-card comparisons ("compare H-0003 and H-0005"), chat-driven hypothesis editing, sharing chat transcripts
+
+**Dependencies:** ANTHROPIC_API_KEY (✅ set), streaming support in Express (✅ native), hypothesis file format stable (✅)
+
+**RICE:** Reach 2 × Impact 5 × Confidence 0.8 / Effort 3 = **2.67**
+(Low reach — single user; very high impact — transforms passive reading into active interrogation; medium effort — streaming endpoint + modal UI)
+
+**Proof of value:** Owner opens H-0007 (Micron HBM) and asks "what's the bear case here?" — gets a direct answer grounded in the hypothesis's red-team notes and kill conditions, not a generic AI response. Observable: chat-log.json shows 5+ questions per week that weren't answerable from the card UI alone → each one is a backlog signal.
+
+---
+
 ## Done
 
 | ID | Feature | Shipped | Theme |
