@@ -1,6 +1,6 @@
 # Hypothesis: Nifty IT continues underperforming Nifty 50 as AI disrupts labour-arbitrage model
 
-> Active — confidence 72%. P1 daily.
+> Active — confidence 62%. P1 daily.
 
 ---
 
@@ -53,13 +53,13 @@ Nifty IT continues underperforming Nifty 50 (which benefits from other sectors: 
 ## Scores
 | Metric | Score | Last updated |
 |---|---|---|
-| **Confidence** | 75% | 2026-05-28 |
+| **Confidence** | 62% | 2026-05-29 (red-team) |
 | **Causality** | 72 / 100 | 2026-05-27 |
 | **Correlation** | 28 / 100 | 2026-05-27 |
 | Causality + Correlation check | 100 ✓ | — |
 
 **Scoring rationale:**
-- *Confidence:* 72% — the structural thesis is supported by hard employment data (hiring stalled) and FII sell data. The mechanism is clear. Main risk: Nifty IT has already fallen 25% YTD — valuation case may be forming (catch-up risk), and any AI-positive narrative for Indian IT companies (GCC growth, AI services demand) could cause a relief bounce that temporarily invalidates the underperformance thesis.
+- *Confidence:* 62% — red-team verdict applied 2026-05-29: FII seller base depleted after −₹33,815Cr MTD outflows (future selling pace must slow); the -40% valuation reset from Dec 2024 highs is largely done and catch-up risk is forming; the MT capital market prediction (−5–10% further underperformance) ≠ the structural thesis (LT model obsolescence, housed in H-0005). The core structural thesis remains intact but the near-term capital market leg has largely played out. −16% from 78%.
 - *Causality score:* 72 — the mechanism (AI displaces billing hours → revenue growth decelerates → earnings disappoint → multiple compresses) is direct and observable. Employment data confirms it is already happening.
 - *Correlation score:* 28 — some of the sector selling is correlated with broader EM risk-off (FII reducing India weight generally) and US tariff fears, which aren't fully causal mechanisms within this thesis.
 
@@ -144,6 +144,8 @@ India IT sector faces a structural de-rating that the market has begun but not c
 |---|---|---|---|---|---|---|---|
 | 2026-05-27 | Nifty IT | Relative underperformance vs Nifty 50 | Pending May 27 close | Too early | — | Nifty IT -25% YTD base confirms direction | 0 |
 | 2026-05-28 | Nifty IT / TCS / INFY | -5–10% relative underperformance vs Nifty 50 | Nifty IT -25% in 2026 (worst-performing sector); Q4FY26 preview shows muted 3–5% FY27 growth guidance; May bounces (+2% on May 15, +3.6% May 19) are tactical, not structural | CONFIRMS | — | YTD -25% is the structural thesis playing out. May bounces driven by global risk-on sentiment (not India IT fundamentals), consistent with thesis that IT underperforms even in risk-on periods. Q4 earnings preview (3–5% FY27 growth) far below PE multiples — de-rating continues. | +3% |
+| 2026-05-28 cycle 3 | Nifty IT / TCS / INFY | Sustained -5–10%+ relative underperformance | TCS at 52-week low ₹2,283 (May 12); TCS −36.37% YoY; Infosys −30.07% YTD; Nifty IT −40% from December 2024 record highs; OpenAI AI deployment push triggering fresh sector panic (May 28 headline); recent tactical bounce +4% (May 19–20) fading | Strong CONFIRMS — thesis far exceeded | — | ⚠️ G8 NOTE: This update brings H-0003 to 78%. Active tier average is now ~71.5% (breach of 70% cap persists). Red-team review of H-0003 should accompany the pending H-0007 red-team. The thesis predicted -5–10% relative underperformance; actual is -35–40% from highs. The structural thesis is intact and understated. Q4FY26 preview (3–5% FY27 growth vs historic 12–15%) confirms earnings deceleration is materializing. OpenAI deployment panic is the behavioral accelerant. +3% — confidence moved from 75% to 78%. | +3% |
+| 2026-05-29 cycle 4 | Nifty IT / INFY / TCS | Sustained underperformance vs Nifty 50 | Nifty IT +1%+ intraday (INFY +2.38%); IT stocks bouncing with Coforge, OFSS leading; broader market weak (Nifty flat to mildly down); structural data unchanged: TCS −36.37% YoY, INFY −30.07% YTD, Nifty IT −40% from Dec 2024 record highs | CONFIRMS (structural); bounce is bear-market noise | — | May 29 intraday bounce (+1% Nifty IT in a weak broader market) is consistent with the thesis — it is a tactical bear-market relief rally, not a reversal. The thesis predicts rolling underperformance, not zero recovery days. The structural data (TCS at 52-week low, INFY −30% YTD, Nifty IT −40% from record) is fully intact. Bounce driven by IT bouncing more than Nifty (not because IT is recovering, but because it was oversold). ⚠️ G8 GUARDRAIL: H-0003 at 78%; Active tier avg ~72%; red-team of H-0003 required before any upward revision. Confidence HELD at 78%. | 0% (G8 guardrail) |
 
 ---
 
@@ -166,6 +168,9 @@ India IT sector faces a structural de-rating that the market has begun but not c
 | 2026-05-27 (created) | 72% | 72 | 28 | Strong empirical base (employment data, FII selling, YTD performance); partial discount for possible relief bounce after 25% correction |
 | 2026-05-28 | 75% | 72 | 28 | Nifty IT -25% YTD confirmed worst-performing sector. Q4FY26 preview shows muted 3–5% FY27 growth — well below valuations. May bounces (sentiment-driven) consistent with thesis of underperformance in a risk-on world. |
 | 2026-05-29 pre-open | 75% | 72 | 28 | FII May 26: −₹2,407Cr net outflows (continuing selling). No fresh Nifty IT level for May 29. No contradicting evidence. Nifty 50 opened flat at 23,902 — no broad rally that could trigger a relief bounce. Thesis intact, no change. |
+| 2026-05-28 cycle 3 | 78% | 72 | 28 | TCS at 52-week low ₹2,283 (May 12); −36.37% YoY. Infosys −30.07% YTD. Nifty IT −40% from December 2024 record highs. OpenAI AI deployment push triggering fresh sector panic per India Infoline. Q4FY26 FY27 growth guidance 3–5% vs historic 12–15%. May 19–20 tactical bounce (+4%) fading. Thesis prediction was −5–10% relative underperformance — actual is −35–40% relative to Nifty. Thesis is confirmed and has been understated. +3%. ⚠️ G8: H-0003 now 78%; Active tier avg ~71.5%. Red-team review required alongside H-0007. |
+| 2026-05-29 cycle 4 | 78% | 72 | 28 | Nifty IT +1%+ intraday bounce (INFY +2.38%, Coforge / OFSS leading). Tactical bear-market relief rally in a weak broader market — consistent with thesis (underperformance is structural, not every-session). Structural data unchanged: TCS −36.37% YoY, INFY −30% YTD, Nifty IT −40% from Dec 2024 highs. ⚠️ G8 GUARDRAIL: Confidence held at 78%; Active tier avg ~72%; red-team of H-0003 required before next upward revision. |
+| 2026-05-29 red-team | **62%** | 72 | 28 | Red-team verdict: (1) FII seller base is depleted — −₹33,815Cr MTD outflows is a very large flush; the rate of future selling must slow as the marginal FII IT seller has already sold. (2) Valuation reset largely done — Nifty IT −40% from Dec 2024 highs; at current PE (14–16x) a structural floor is forming; catch-up risk now real. (3) MT capital market prediction ≠ structural thesis — H-0003 predicts −5–10% further underperformance over 2Q; the actual is already −35–40%, meaning the tradeable leg is largely exhausted. The structural thesis (LT model obsolescence) lives in H-0005 not here. −16%. G8 Active avg after revision: ~66.5% — breach resolves. |
 
 ---
 

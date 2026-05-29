@@ -53,7 +53,7 @@ ZS itself bounces within 4 weeks
 ## Scores
 | Metric | Score | Last updated |
 |---|---|---|
-| **Confidence** | 70% | 2026-05-28 |
+| **Confidence** | 63% | 2026-05-29 (cycle 4) |
 | **Causality** | 60 / 100 | 2026-05-27 |
 | **Correlation** | 40 / 100 | 2026-05-27 |
 | Causality + Correlation check | 100 ✓ | — |
@@ -127,6 +127,8 @@ The ZS -29% is noise in the context of the structural cybersecurity thesis, not 
 | 2026-05-27 | CRWD, PANW | Bullish +5–10% over 2 weeks | Pending today's close | Too early | — | Rotation thesis just set up today | 0 |
 | 2026-05-28 | CRWD / PANW / ZS | CRWD +5–10%; ZS bounce +15–20% | CRWD: 8 consecutive intraday records; PANW: hitting records; CIBR ETF +25% in May; ZS bouncing but "far below old highs"; ZS acquired Symmetry Systems for $175M | Strong CONFIRMS | — | CRWD and PANW outperformance is dramatically confirmed — 8 straight records is beyond the prediction. ZS bounce happening but below old highs = rotation divergence playing out as predicted. ZS acquisition adds new catalyst for ZS recovery. | +8% |
 | 2026-05-29 pre-mkt | CRWD / ZS | CRWD continues outperformance; ZS bounce leg | CRWD at $642.70 (near 52-week high $671.55, up 41.7% YTD); ZS Q3 FY26: revenue +25% to $850.5M, EPS beat 7%, BUT FY27 guidance cut to 16–17% | Mixed | — | CRWD leg: strongly CONFIRMED. ZS leg: guidance cut to 16–17% materially weakens the "ZS structural intact" argument. If FY27 organic growth decelerates to 16–17% (from ~21–25%), the ZS bounce is a tactical oversold trade only, not a fundamental recovery. Primary thesis (CRWD rotation) confirmed; ZS bounce thesis downgraded. Net: no change to overall confidence — positive and negative legs roughly offset. | 0% |
+| 2026-05-28 cycle 3 | CRWD / ZS | CRWD +5–10%; ZS bounce +15–20% within 4 wks | CRWD: $642.70 (+41.7% YTD), near 52-week high of $671.55. ZS: FELL ANOTHER −31.5% on Q3 FY2026 earnings print; FY27 guidance cut to 16–17% organic growth (was ~21–25%); organic Net New ARR slowing to single digits | CRWD: CONFIRMED; ZS: FAILED | — | CRWD leg fully confirmed — up 41.7% YTD and near 52-week high exceeds the +5–10% prediction substantially. The rotation trade worked. ZS bounce leg: FAILED. A second sequential guidance cut (16–17% FY27) means ZS is not a "one bad quarter" story — it reflects structural go-to-market deterioration. Organic NNARR falling to single digits is a warning sign that land-and-expand motion is breaking down. The ZS bounce prediction was premised on "structural business intact" which is now in question. Net: −8% (CRWD fully confirmed, ZS bounce failed). H-0008 stays Active at 62% but the ZS bounce leg should be removed or revised in the thesis. | −8% |
+| 2026-05-29 cycle 4 | CRWD / ZS | CRWD outperformance continues; ZS bounce leg retired | CRWD: $642.70 (+41.7% YTD, near 52-week high $671.55) — sustained outperformance well above the +5–10% prediction. ZS: ~$130.40 (−46.6% over past 6 months) — structural deterioration confirmed; 2nd consecutive guidance cut (Q3 FY26); FY27 16–17% organic growth = land-and-expand motion breaking down | CRWD: CONFIRMS; ZS bounce: permanently FAILED | — | CRWD rotation thesis has been the clean winner — +41.7% YTD substantially exceeds the +5–10% original prediction. ZS bounce leg is permanently retired: two sequential guidance cuts + organic NNARR slowing to single digits = structural go-to-market breakdown, not a one-bad-quarter. The hypothesis now functions as a CRWD-only thesis (rotation from ZS has occurred and holds). Net: +1% on continued CRWD validation. | +1% |
 
 ---
 
@@ -149,6 +151,8 @@ The ZS -29% is noise in the context of the structural cybersecurity thesis, not 
 | 2026-05-27 (created) | 62% | 60 | 40 | Fresh setup; ZS drop just happened; rotation thesis unproven but plausible |
 | 2026-05-28 | 70% | 65 | 35 | CRWD 8 straight records, PANW at records, CIBR +25% in May — outperformance dramatically confirmed. ZS bouncing but below old highs = divergence confirmed. ZS $175M acquisition of Symmetry Systems adds new catalyst for ZS recovery leg. |
 | 2026-05-29 pre-mkt | 70% | 65 | 35 | CRWD at $642.70 near 52-week high — rotation confirmed. ZS FY27 guidance cut 16–17% weakens the ZS bounce leg (structural story worse than expected). Primary thesis intact; no net change. |
+| 2026-05-28 cycle 3 | 62% | 65 | 35 | CRWD: $642.70 (+41.7% YTD, near 52-week high $671.55) — CRWD leg fully and dramatically confirmed. ZS: fell another −31.5% on Q3 FY2026 earnings; FY27 guidance cut to 16–17%; organic NNARR decelerating to single digits. ZS bounce thesis is FAILED — this is structural deterioration, not a one-quarter blip. ZS land-and-expand motion breaking down. CRWD confirmed (+), ZS bounce failed (−). Net: −8%. H-0008 stays Active at 62%; ZS bounce prediction should be retired from the active thesis going forward. |
+| 2026-05-29 cycle 4 | 63% | 65 | 35 | CRWD: $642.70 (+41.7% YTD, near 52-week high $671.55) — rotation thesis holds. ZS: ~$130.40 (−46.6% past 6 months) — structural go-to-market deterioration confirmed; ZS bounce leg permanently retired from thesis. Hypothesis now functions as CRWD-outperformance thesis only. Net +1%: CRWD sustained outperformance continues to validate. |
 
 ---
 *Not investment advice. Analytical output for research and training purposes only.*

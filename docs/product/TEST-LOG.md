@@ -18,11 +18,44 @@
 | **G5** Causality floor | 2026-05-27 | ✅ PASS | Lowest Causality in portfolio: 45 (H-0001). All ≥45. |
 | **G6** Watch-item specificity | 2026-05-27 | ✅ PASS | Spot-checked H-0007, H-0008, H-0003. Watch items are event-specific and checkable. |
 | **G7** Chart data freshness | 2026-05-27 | ✅ PASS | All 10 hypotheses returning real data. Last bar 2026-05-27 (today). |
-| **G8** Overconfidence cap | 2026-05-28 | ❌ **BREACH** | Active-tier avg = **72.4%** (cap: 70%). Top 3: H-0007 82%, H-0003 75%, H-0005/H-0008 70%. Red-team review required. |
+| **G8** Overconfidence cap | 2026-05-29 | ✅ PASS | Active-tier avg = **66.5%** (cap: 70%). Red-team applied: H-0007 82%→65%, H-0003 78%→62%. All 6 Active: 65/62/70/65/63/74. |
 
 ---
 
 ## Daily test cycle log
+
+### DT — 2026-05-29 (evening cycle — post red-team)
+
+**D-01 G4 Staleness:** ✅ PASS
+All 6 Active hypotheses within cadence. P1s (H-0003/0007/0008/0014/0002/0011) last validated 2026-05-29 (0 days, limit 3d ✅). P2s (H-0004/0005/0012–0020) last validated 2026-05-28 (1 day, limit 6d ✅). No hypothesis overdue.
+
+**D-02 G8 Overconfidence:** ❌ **BREACH — Active avg = 72%** (cap: 70%)
+| ID | Confidence |
+|---|---|
+| H-0007 | 82% ⚠️ |
+| H-0003 | 78% ⚠️ |
+| H-0014 | 74% |
+| H-0004 | 65% |
+| H-0005 | 70% |
+| H-0008 | 63% |
+| **Average** | **72%** ❌ |
+
+Red-team of H-0007 + H-0003 completed this session. Verdicts:
+- H-0007: 82% → **65%** recommended (crowded trade; cyclical risk unmodeled; 46-analyst BUY consensus = "unpriced" argument has closed; Samsung HBM yield fix unmodeled)
+- H-0003: 78% → **62%** recommended (FII seller base depleted after -₹33,815Cr outflows; valuation reset -40% largely done; MT capital market prediction ≠ structural thesis)
+- If applied: (65+65+70+62+63+74)/6 = **66.5%** → G8 resolves ✅
+- **Status: revisions pending application**
+
+**D-03 ST Momentum:** ✅ PASS
+One ST hypothesis — H-0008 (CRWD Bullish rotation). Last validated 2026-05-29 (today). CRWD at $642.70 +41.7% YTD aligned with prediction direction. No ≥5% adverse move since filing. ZS bounce leg retired and already reflected in confidence (62%→63%). ✅
+
+**Actions required:**
+1. Apply red-team revisions: H-0007 82%→65%, H-0003 78%→62% (owner to confirm)
+2. Update PORTFOLIO.md Active avg and G8 status after revisions applied
+
+**Overall:** ❌ **1 BREACH — G8.** G4 PASS. ST PASS. PushNotification sent.
+
+---
 
 ### DT — 2026-05-29 (pre-US-open cycle)
 

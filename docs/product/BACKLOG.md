@@ -328,11 +328,11 @@ Add this to RUNBOOK.md as the canonical "manual refresh" command with a clear he
 
 **Designed approach (Option B — review-then-apply):**
 - **Trigger:** "▶ Run Cycle" button in web app header
-- **Flow:** Phone → POST `/api/run-cycle` → server calls claude-opus-4-7 via Anthropic API (with web_search tool) → Claude runs SKILL.md cycle instructions → server stores daily summary + proposed confidence deltas → phone shows results with "Apply updates" button → user taps Apply → files written
+- **Flow:** Phone → POST `/api/run-cycle` → server calls claude-opus-4-8 via Anthropic API (with web_search tool) → Claude runs SKILL.md cycle instructions → server stores daily summary + proposed confidence deltas → phone shows results with "Apply updates" button → user taps Apply → files written
 - **Why Option B over full-auto:** Auto-write risks file corruption if Claude misformats structured output. Review step keeps owner in control and matches the current human-in-the-loop validation philosophy.
 
 **Key design decisions to lock before build:**
-1. Model: claude-opus-4-7 (most capable) or claude-sonnet-4-6 (cheaper, faster — ~$0.30/run vs $1–3). Recommend Sonnet with Opus fallback.
+1. Model: claude-opus-4-8 (most capable) or claude-sonnet-4-6 (cheaper, faster — ~$0.30/run vs $1–3). Recommend Sonnet with Opus fallback.
 2. Show cost estimate before run (e.g. "~$0.80 estimated"). User confirms.
 3. Streaming progress shown on mobile ("Searching for Iran signals… ✓", "Validating H-0007… ✓")
 4. Structured output schema: Claude returns JSON with `{ summary, hypotheses: [{id, newConfidence, evidenceNote}], newHypotheses: [...] }` — server parses and applies
@@ -457,6 +457,28 @@ The chat logs are the most valuable output — they reveal what the owner actual
 
 ---
 
+### [BL-019] BL-015 retroactive gate completion — close outstanding SOP obligations
+**Priority:** P1
+**Status:** Proposed
+**Filed:** 2026-05-28
+**Theme:** 🔧 Engineering Quality
+
+**True need:** BL-015 (chatbot) shipped before the Implementation Gate SOP existed. Three gates are outstanding and must be closed to bring the feature into compliance and reduce future regression risk.
+
+**What's owed:**
+
+| Gate | What to produce | Owner |
+|---|---|---|
+| Gate 2 — PRD review | Product Staff (PM + UX + Data) review of `product-staff/prds/marketpulse/BL-015-chat-interface.md`. Flag any scope issues, missing guardrails, or instrumentation gaps. | product-manager |
+| Gate 3 — Full test plan | 8 items in the original test plan are unchecked. Complete and run the full test suite: streaming behavior on mobile, context injection correctness, chat-log.json format, error handling (API timeout, empty response), rate-limit behavior, modal open/close state. | tech-lead |
+| Gate 5 — Tech proposal review | Product Staff review of the architecture: streaming SSE, in-memory history, /api/chat/:id endpoint design, security of hypothesis content in request body. | tech-lead + devops-engineer |
+
+**RICE:** Not applicable — this is a compliance item, not a feature. P1 because open SOP obligations create a trust ledger risk with the owner.
+
+**Proof of value:** All three gates closed, documented, and filed. Observable: no outstanding ⚠️ flags on BL-015 in this backlog.
+
+---
+
 ### [BL-017] News source integration — live signal feed from financial media
 **Priority:** P2
 **Status:** Proposed
@@ -495,6 +517,67 @@ The chat logs are the most valuable output — they reveal what the owner actual
 **Proof of value:** The next time a major India market story breaks (RBI rate decision, budget announcement, earnings surprise), the desk surfaces it as a signal against the relevant hypothesis within 4 hours — without the owner needing to prompt Claude Code. Observable: signal-scout cites a news feed URL (not just a Yahoo Finance price) in at least 2 validation runs per week within 30 days of launch.
 
 **Dependency:** None blocking. ANTHROPIC_API_KEY (✅ set) needed if signals are processed by Claude. RSS/NewsAPI access is server-side.
+
+---
+
+### [BL-018] Real-time push notification feed — reverse-engineer IndMoney/Groww signal sources
+**Priority:** P2
+**Status:** Proposed
+**Filed:** 2026-05-28
+**Theme:** ⚡ Validation Velocity / 🎯 Prediction Accuracy
+
+**True need:** IndMoney, Groww, and Zerodha Kite push breaking financial news as in-app notifications within minutes of events — RBI decisions, earnings surprises, FII flow alerts, crude moves, macro announcements. These apps have clearly solved the real-time signal sourcing problem. Marketpulse needs the same underlying sources to move from daily-cycle validation to event-triggered validation.
+
+**What this is NOT:** BL-017 covers integrating known financial media APIs (FT, NYT, ET Markets RSS). This item is specifically about identifying the *actual data infrastructure* these consumer apps use — which may be different from and faster than public APIs — and integrating with those same sources.
+
+**Investigation required before any build work:**
+
+| Question | How to investigate |
+|---|---|
+| Where does IndMoney's "breaking news" notification data come from? | Network intercept on Android (Charles Proxy / mitmproxy) — capture the API calls when a notification arrives |
+| Is it a licensed B2B feed (Bloomberg B-PIPE, Refinitiv Elektron, Dow Jones DNA)? | Check IndMoney/Groww's data partnerships (usually disclosed in privacy policy or press releases) |
+| Is it an aggregator like NewsAPI, Benzinga, or Intrinio? | Same network intercept — look for the API domain |
+| Do they scrape + re-serve (e.g., ET Markets, MoneyControl, NSE/BSE announcements)? | Compare notification timestamps against source publication timestamps |
+| Does NSE/BSE themselves push a data feed for corporate announcements? | NSE has a free corporate filings API; BSE has a bulk download — check if these are the source for earnings/filings notifications |
+
+**Known candidate sources (to validate through investigation):**
+
+| Source | Type | Likely used by | Access |
+|---|---|---|---|
+| **NSE corporate announcements API** | Exchange filings | All Indian apps — board meetings, results, dividends | Free, undocumented but accessible |
+| **BSE corporate filings** | Exchange filings | Same | Free |
+| **Intrinio** | Aggregated financial data | Mid-tier fintechs | Paid (~$50–200/mo) |
+| **Refinitiv/LSEG Elektron** | Institutional-grade wire | Large fintechs (Zerodha likely) | Very expensive |
+| **Benzinga Pro API** | US-focused news wire | US apps; unlikely for India | Paid |
+| **Tickertape API (internal)** | IndMoney subsidiary | IndMoney | Proprietary — would need partnership |
+| **MoneyControl RSS / scrape** | India news | Many apps | Fragile; ToS risk |
+| **RBI / SEBI press release feeds** | Regulatory | All — for policy events | Free RSS |
+
+**Build plan (after investigation confirms sources):**
+
+*Phase 1 — Source identification (no build, pure research):*
+- Network intercept on IndMoney and Groww Android apps using mitmproxy
+- Identify API domains, authentication patterns, and data schemas
+- Map sources to event types: earnings, filings, macro, price alerts
+- Deliverable: a confirmed source list with access method per event type
+
+*Phase 2 — Ingestion layer:*
+- Ingest confirmed sources on a polling or webhook basis (server-side, Node.js)
+- Filter by instruments relevant to active hypotheses in `hypotheses/PORTFOLIO.md`
+- Store raw signals in `signals/YYYY-MM-DD.jsonl`
+
+*Phase 3 — Hypothesis matching:*
+- For each incoming signal, run a lightweight match against active hypothesis watch-items
+- If match score > threshold: auto-append to hypothesis evidence log + flag for validation
+- This closes the loop with BL-017's signal detection use case
+
+*Phase 4 — Push to owner:*
+- Surface matched signals as notifications (macOS notification via `osascript`, or a Slack webhook, or a banner in the web view at port 3737)
+- The owner sees: "H-0002 CONFIRMS trigger: Brent crude dropped to $93 — Iran deal headline (ET Markets, 14:32)"
+
+**Dependency:** Phase 1 (source identification) is a prerequisite for all other phases and can be done without any code. Phase 2+ depends on source access terms — some B2B feeds require licensing. Phase 3 depends on BL-017 signal-matching logic (can be built in parallel). Phase 4 depends on Phase 3.
+
+**Proof of value:** Within 30 days of Phase 4 launch, at least one hypothesis receives an auto-flagged CONFIRMS or KILLS event that the owner did not manually trigger — sourced from the same feed that IndMoney/Groww use for their push notifications.
 
 ---
 
@@ -539,14 +622,21 @@ The review found the Marketpulse backlog to be the most mature across all three 
 
 ## PM notes
 
-**Current product state (as of 2026-05-27):**
-Web view live at port 3737 with real price charts. 10 active hypotheses. NSM (CPA) not yet measurable — insufficient resolved hypotheses. Leading proxy (Validation Freshness) depends on daily cycle running, which is currently manual.
+**Current product state (as of 2026-05-28):**
+Web view live at port 3737. Chat model upgraded to claude-opus-4-8. 20 live hypotheses (India 11, US 7, Global 2). BL-003 (portfolio mode), BL-007 (ratings), BL-008 (TX), BL-009–012 all shipped. BL-015 (chatbot) live with retroactive gates open. NSM (CPA) not yet measurable — zero hypotheses resolved. Leading proxy (Validation Freshness) at 100% after Session 10 cycle 3 validation. Daily cycle is currently manual.
 
-**Immediate priority sequence:**
-1. **BL-003** — portfolio-aware prioritization (owner shares holdings; this personalizes the entire web view)
-2. **BL-004** — scheduled cron (unblocks BL-005 and long-term NSM measurement)
-3. **BL-005** — watch-item scanner (first real-time capability)
-4. **BL-006** — calibration dashboard (NSM visibility, requires resolved hypotheses first)
+**⚠️ Open issues requiring immediate action:**
+1. **G8 breach** — Active-tier average confidence = ~71.5% (cap = 70%). Red-team H-0007 (82%) and H-0003 (78%) before any further upward revisions.
+2. **H-0001 retirement check** — Confidence at 35%, ST horizon, near expiry. Retire if Nifty closes below 23,800.
+3. **BL-015 retroactive gates** (BL-019) — Gate 2, Gate 3, Gate 5 all outstanding.
+
+**Immediate priority sequence (updated 2026-05-28):**
+1. **TB-001** — Mobile smoke test (30-min effort; prevents regression class that already hit once)
+2. **BL-019** — BL-015 retroactive gates (compliance; closes SOP trust ledger risk)
+3. **BL-013** — Gmail holdings sync (data source for portfolio mode already built; unlock time)
+4. **BL-004** — Scheduled cron (unblocks BL-005 and long-term NSM measurement)
+5. **BL-019 + BL-017** — News integration (signal feed unlocks real-time validation triggers)
+6. **BL-016** — Decision support (gated on 4 weeks of BL-015 chat logs; do not start early)
 
 **Quality guardrail:** Any UI that makes it easier to file low-quality hypotheses is a regression. The proof-of-value gate applies to the desk's output features (hypotheses) as much as to the software features.
 

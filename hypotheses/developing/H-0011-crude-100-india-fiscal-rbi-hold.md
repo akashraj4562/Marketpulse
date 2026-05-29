@@ -50,7 +50,7 @@ India rate-sensitive sectors underperform broad Nifty 50 by 8–15% over MT hori
 ## Scores
 | Metric | Score | Last updated |
 |---|---|---|
-| **Confidence** | 53% | 2026-05-29 (pre-open) |
+| **Confidence** | 49% | 2026-05-29 (cycle 4) |
 | **Causality** | 78 / 100 | 2026-05-28 |
 | **Correlation** | 22 / 100 | 2026-05-28 |
 | Causality + Correlation check | 100 ✓ | — |
@@ -102,6 +102,8 @@ India rate-sensitive sectors underperform broad Nifty 50 by 8–15% over MT hori
 | 2026-05-28 AM | USD/INR | Bearish INR (rising) | Pending | Too early | — | Thesis filed today; INR direction not yet tracked | 0 |
 | 2026-05-28 PM | Brent crude | $95–105 sustained range | WTI briefly below $90; Brent $97.94 — falling on Iran deal progress | Partial KILL | — | Primary catalyst weakening — crude falling as deal appears closer. If deal closes, thesis loses its near-term driver. Existing India inflation still real (fuel hike Rs 5/litre), but RBI rate-hold becomes less certain. Moving to Developing. | -6% |
 | 2026-05-29 pre-open | Brent crude | Sustained $95–105 range | Brent ~$94–96; oil down 16%+ in May; Trump: deal "largely negotiated, to be announced soon." India INR: data not yet pulled. | Weakening KILL approach | — | Crude continuing to fall toward the $85 kill zone. The primary catalyst ($100+ crude) has not been sustained — crude is now $94–96 and falling. If deal is announced imminently (Trump: "soon"), thesis KILLS. India inflation/RBI hold secondary argument remains real but insufficient alone to sustain confidence at 56%. -3%. | -3% |
+| 2026-05-28 cycle 3 | Brent / USD-INR | Brent sustained $95–105; INR weakness | Brent recovering toward ~$97 (slight reversal from $94–96 lows); Iran deal stalled — Trump: "will not accept bad deal"; Iran insisting on nuclear enrichment + Hormuz sovereignty; US oil on track for 2nd consecutive weekly decline on deal expectations; India fuel hike Rs 5/litre still in effect | Approaching KILL zone | — | The primary trigger ($100+ crude sustained) is not materializing. Brent at $97 is a slight recovery but still structurally below the threshold. The Iran deal stalling is actually a mild positive for H-0011 (deal not imminent = crude may stay elevated), but "not bad deal" language from Trump suggests a deal IS coming — just on US terms. India's existing fuel hike (Rs 5/litre) = secondary RBI hold signal intact. But insufficient to offset the primary catalyst failure. −6%. Kill trigger: $85 Brent (Iran deal) would end hypothesis. | −6% |
+| 2026-05-29 cycle 4 | Brent crude / USD-INR / Nifty Auto | Brent $95–105 sustained; INR weakening; rate-sensitive sectors underperform | US airstrikes on Iran (May 25 and ongoing) pushed Brent up 3% toward ~$97–99 — re-approaching the $100 threshold; military escalation active; Strait of Hormuz disruption risk elevated; Iran escalation raises probability of sustained $100+ crude; India fuel hike Rs 5/litre secondary RBI-hold signal intact | Partial CONFIRMS — catalyst re-activating | — | New US military strikes pushed Brent up 3%, reversing the sub-$96 lows and bringing the primary catalyst back toward the $100 threshold. The Iran-deal stalling (from cycle 3) is now confirmed: escalation is the operative dynamic, not de-escalation. If Brent crosses $100, the thesis re-activates in full. Kill trigger ($85 Brent) is now further away. India's structural oil dependence + existing fuel hike provide the secondary RBI-hold signal. Net: +2% on re-activation of primary catalyst. | +2% |
 
 ---
 
@@ -122,6 +124,8 @@ India rate-sensitive sectors underperform broad Nifty 50 by 8–15% over MT hori
 | 2026-05-28 AM (created) | 62% | 78 | 22 | New hypothesis — activated by crude $100 + Iran escalation. Strong causal chain; uncertainty on resolution timeline. |
 | 2026-05-28 PM | 56% | 78 | 22 | Iran deal progressing (Trump "orderly and constructive") — WTI briefly below $90, Brent $97.94. Primary catalyst (crude $100+) weakening. Existing India inflation still real but thesis loses urgency. Moved to Developing. |
 | 2026-05-29 pre-open | 53% | 78 | 22 | Crude $94–96 and falling. Trump "largely negotiated, to be announced soon." Primary catalyst eroding further. Approaching kill zone ($85). -3%. |
+| 2026-05-28 cycle 3 | 47% | 78 | 22 | Brent recovering ~$97 (from $94–96 lows) — slight positive for thesis but still sub-$100. Iran deal stalled: nuclear enrichment demands + Hormuz sovereignty unresolved; Trump: "will not accept bad deal"; no sanctions relief. Crude on track for 2nd consecutive weekly decline (deal expectations alive). India fuel hike Rs 5/litre (secondary RBI hold signal) still real. Primary trigger ($100+ crude sustained) not materializing. Kill trigger: $85 Brent if/when deal closes. −6%. If Brent stays $95–100 without deal closure, thesis could stabilize. |
+| 2026-05-29 cycle 4 | 49% | 78 | 22 | US airstrikes on Iran (May 25 onward) pushed Brent up 3% toward $97–99 — primary catalyst re-activating. Military escalation reduces deal probability in near term; Hormuz disruption risk elevated. India fuel hike Rs 5/litre secondary RBI-hold signal intact. Kill trigger ($85 Brent) further away. +2%: escalation re-activates thesis after the deal-hope softening of cycle 3. |
 
 ---
 *Not investment advice. Analytical output for research and training purposes only.*

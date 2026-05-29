@@ -12,7 +12,7 @@
 | **Status** | `Active` |
 | **Created** | 2026-05-28 |
 | **Created by** | hypothesis-generator |
-| **Last validated** | 2026-05-28 |
+| **Last validated** | 2026-05-29 |
 | **Next validation due** | 2026-05-30 |
 | **Priority tier** | `P1` (daily — deals being signed weekly; fast-moving) |
 | **Time horizon** | `MT` (2–4 quarters for near-term; LT structural) |
@@ -44,7 +44,7 @@ CEG +50–80% / VST +40–60% over next 2–4 quarters — deal announcement cad
 ## Scores
 | Metric | Score | Last updated |
 |---|---|---|
-| **Confidence** | 72% | 2026-05-28 |
+| **Confidence** | 74% | 2026-05-29 (cycle 4) |
 | **Causality** | 88 / 100 | 2026-05-28 |
 | **Correlation** | 12 / 100 | 2026-05-28 |
 | Causality + Correlation check | 100 ✓ | — |
@@ -124,6 +124,8 @@ Nuclear power is undergoing a secular repricing event that the utility sector ha
 | Date | Instrument | Predicted | Actual (close) | Match | Override type | Explanation | Confidence delta |
 |---|---|---|---|---|---|---|---|
 | 2026-05-28 | CEG | Bullish MT | ~$310 (approx) | Too early | None | Hypothesis initiated | 0 |
+| 2026-05-28 cycle 3 | CEG / VST | Bullish +40–70% over 2–4 quarters | CEG: −20% YTD in 2026 (at depressed level vs prior year run). Confirmed: (a) CyrusOne 380 MW long-term PPA signed, (b) Microsoft/Meta/US gov PPAs active, (c) Calpine acquisition adds 23 GW capacity, (d) NRC approved nuclear capacity upgrades. Stock DOWN despite these catalysts. | Mixed — fundamental CONFIRMS, price CONTRADICTS | Type 4 (Valuation / rate compression) | Fundamental thesis is strongly confirming — 3 new catalysts (CyrusOne PPA, Calpine, NRC approvals) all corroborate the nuclear PPA supercycle thesis. The stock being −20% YTD is a Type 4 rate/valuation override: post-180% run in 2025, the market is repricing CEG at higher discount rates as interest rates stay elevated; utility-adjacent names suffering WACC expansion. The hypothesis was filed at current depressed levels (~$310), so +40–70% from here requires fundamentals to override rate headwinds. No confidence change: fundamentals confirm the thesis; market is giving a better entry. Monitor for rate environment shift or next hyperscaler deal. | 0% |
+| 2026-05-29 cycle 4 | CEG / VST / NLR | Bullish +40–70% over 2–4 quarters | New PPA confirmation: Meta signed 20-year deal for 1,121 MW from Clinton Clean Energy Center (Constellation IR press release, Tier 1). Calpine acquisition (23 GW added) closed Jan 7 — confirmed. Institutional narrative shifting from "utility" to "tech infrastructure" (247wallst: "CEG is the only nuclear utility that looks like a tech stock"). CEG −20% YTD = Type 4 rate headwind persists but fundamentals compound. | Strong CONFIRMS | — | Meta 1,121 MW PPA is a hard new data point — the deal announcement cadence that drives the thesis is accelerating. The Constellation IR source is Tier 1. Cumulative confirmed deals: Microsoft/TMI + Meta/Clinton + CyrusOne 380 MW + Calpine 23 GW + NRC capacity upgrades = the entire causal chain is operating faster than the EPS upgrade cycle has reflected. CEG −20% YTD remains a Type 4 headwind; but each new deal compresses the rate-discount gap. +2%. | +2% |
 
 ---
 
@@ -141,6 +143,8 @@ Nuclear power is undergoing a secular repricing event that the utility sector ha
 | Date | Confidence | Causality | Correlation | Key reason for change |
 |---|---|---|---|---|
 | 2026-05-28 (created) | 72% | 88 | 12 | Initial — deal data is hard evidence; Active from day one |
+| 2026-05-28 cycle 3 | 72% | 88 | 12 | Fundamentals strongly confirming: CyrusOne 380 MW PPA signed; Microsoft/Meta/US gov PPAs active; Calpine acquisition (23 GW) cleared; NRC capacity upgrade approvals. However CEG −20% YTD = Type 4 rate/valuation override. The stock selldown is a rate environment headwind (utility-adjacent → WACC expansion after 180%+ 2025 run). No confidence change — fundamentals intact; hypothesis filed at current depressed levels ($310); price realization timeline may extend. Rate environment is the watch variable. |
+| 2026-05-29 cycle 4 | 74% | 88 | 12 | Meta 20-year PPA confirmed: 1,121 MW from Clinton Clean Energy Center (Constellation IR, Tier 1). Deal announcement cadence accelerating — Microsoft + Meta + CyrusOne + US gov + Calpine (23 GW). Institutional narrative shifting from "utility" to "tech infrastructure." CEG −20% YTD = Type 4 rate headwind persists but fundamentals compounding faster than discount rate. +2%. |
 
 ---
 

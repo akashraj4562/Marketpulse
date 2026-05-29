@@ -8,20 +8,20 @@
 
 | Component | Status | Notes |
 |---|---|---|
-| **Web view** | ⚠️ Needs restart | Fix applied to disk; run `node server.js` from `web/` |
-| **Chat interface (BL-015)** | ✅ Fixed (pending restart) | Syntax bug resolved; `POST /api/chat/:id` SSE intact |
-| **Hypothesis portfolio** | ✅ 20 live hypotheses — 6 Active, 14 Developing | India (11), US (7), Global (2). Next ID: H-0021 |
+| **Web view** | ✅ Live on port 3737 | Started this session; syntax bug fixed and confirmed working |
+| **Chat interface (BL-015)** | ✅ Live | Syntax bug fixed; `POST /api/chat/:id` SSE streaming intact |
+| **Hypothesis portfolio** | ✅ 19 live hypotheses — 6 Active, 13 Developing, 1 Retired | India (10), US (7), Global (2). Next ID: H-0021 |
 | **Price charts** | ✅ Live via Yahoo Finance (yahoo-finance2 v3) | Real data + forecast band |
 | **TX (Plain English)** | ✅ Live — AI enabled | `web/.env` set; Haiku generates on card open; cached in `tx-cache.json` |
 | **AI TX generation** | ✅ Enabled | ANTHROPIC_API_KEY loaded via dotenv from `web/.env` |
 | **Company selector** | ✅ Live — P0 fixed | Ticker label updates on every company switch |
 | **HPCL chart** | ✅ Fixed | `?ticker=HPCL.NS` routes through TICKER_MAP → `HINDPETRO.NS` |
-| **Daily hypothesis cycle** | ✅ Run twice 2026-05-28 | AM + PM runs; H-0001 kill condition triggered, H-0011 → developing, H-0002 reversed up |
+| **Daily hypothesis cycle** | ✅ Cycle 4 complete; G8 resolved | H-0001 retired; H-0007 82%→65%, H-0003 78%→62% (red-team applied); Active avg = 66.5% — G8 PASS |
 | **Auto-test crons** | ✅ Active (session-only) | Daily 9:17am, Weekly Mon 9:23am, Monthly 1st 9:41am |
 | **Memory auto-save** | ✅ Active (every 45 min) | PROJECT-STATE.md + SESSIONS.md checkpoint |
 | **Market switcher** | ✅ All/India/US/Global tabs | Auto-detected from instrument field |
 | **Agent crew** | ✅ 17 agents configured | 14 Marketpulse + PM agents added to ClearCart & MicroManga |
-| **Git** | ✅ Clean — pushed | Latest commit: 6c04b6c (memory checkpoint 6) |
+| **Git** | ✅ Clean — pushed | Latest commit: 9a39a69 (H-0012–H-0020 + BL-015 fix + TB-001) |
 | **Security hardening** | ✅ Done | .gitignore, history scrubbed, security-privacy-guardian agent |
 | **Mobile fix** | ✅ Done | Chart.js `defer` + `catch(err){}` + apostrophe bug fixed |
 | **BL-013 Gmail sync** | 📋 Backlog | Full spec in BACKLOG.md; server side already built |
@@ -30,6 +30,74 @@
 ---
 
 ## What was built (most recent first)
+
+### 2026-05-29 — Session 13 (red-team applied + Product Staff Learnings Engine)
+- **Red-team revisions applied.** H-0007: 82%→65%; H-0003: 78%→62%. PORTFOLIO.md + TEST-LOG.md updated. G8 Active avg = 66.5% — breach resolved, G8 now PASS.
+- **Product Staff upgraded (Cara integration).** Opus 4.7 integrated Cara Workshop insights: Learnings Engine (`docs/learnings/` — POSITIVE-PATTERNS.md + ANTI-PATTERNS.md + README), test-plan-template.md, PRD template upgraded (4-section floor, counter-metric rule, Defer-PRD variant), SOP Gates 0+8 added, PM + Tech Lead ⚡ Critical Rules blocks, CLAUDE.md self-learning protocol section.
+
+### 2026-05-29 — Session 12 (Cara Workshop review)
+- **Cara Workshop review complete.** Opus 4.7 did full read of all key files. Produced structured findings: 5 categories, 30+ learnings, top-5 priority list. Owner decided to integrate.
+
+### 2026-05-29 — Session 11 (cycle 4 complete)
+- **Hypothesis cycle 4 complete.** 7 P1s validated. H-0001 retired (kill condition triggered + ST horizon expired). H-0002: 52%→50%. H-0003: 78% held (G8). H-0007: 82% held (G8). H-0008: 62%→63%. H-0011: 47%→49%. H-0014: 72%→74%. PORTFOLIO.md updated: Active=6, Developing=13, Retired=1, Total=19. G8 Active avg = 72% — breach persists; red-team of H-0007 + H-0003 still required.
+
+### 2026-05-29 — Session 10 (checkpoint 38)
+- **No changes.** Memory checkpoint only. State identical to CP37.
+
+### 2026-05-29 — Session 10 (checkpoint 37)
+- **No changes.** Memory checkpoint only. State identical to CP36.
+
+### 2026-05-29 — Session 10 (checkpoint 36)
+- **No changes.** Memory checkpoint only. State identical to CP35.
+
+### 2026-05-29 — Session 10 (checkpoint 35)
+- **No changes.** Memory checkpoint only. State identical to CP34.
+
+### 2026-05-29 — Session 10 (checkpoint 34)
+- **No changes.** Memory checkpoint only. State identical to CP33.
+
+### 2026-05-29 — Session 10 (checkpoint 33)
+- **No changes.** Memory checkpoint only. State identical to CP32.
+
+### 2026-05-29 — Session 10 (checkpoint 32)
+- **No changes.** Memory checkpoint only. State identical to CP31.
+
+### 2026-05-29 — Session 10 (checkpoint 31)
+- **No changes.** Memory checkpoint only. State identical to CP30.
+
+### 2026-05-29 — Session 10 (checkpoint 30)
+- **No changes.** Memory checkpoint only. State identical to CP29.
+
+### 2026-05-29 — Session 10 (checkpoint 29)
+- **No Marketpulse code changes.** Cross-project session: Instagram teardown generated (claude-opus-4-8, $0.41, committed 6df0726 to product-staff). WizCommerce mock interview run — 5 founder-style questions with model answers and trainer verdicts. Server state unchanged; last confirmed live at CP28.
+
+### 2026-05-28 — Session 10 (checkpoint 28)
+- **Hypothesis cycle 3 completed**: all 7 P1 hypotheses validated with live web search data. H-0001 → 35% (near retirement; GIFT Nifty -246 pts, FII MTD -₹33,815Cr), H-0002 → 52% (held; Iran deal stalling, Brent ~$97), H-0003 → 78% ⚠️G8 (TCS 52-wk low, Nifty IT -40% from highs), H-0007 → 82% held (G8 guardrail), H-0008 → 62% (ZS bounce leg failed -31.5%), H-0011 → 47% (crude sub-$100, near kill), H-0014 → 72% held (Type 4 override; fundamentals intact). PORTFOLIO.md updated.
+- **Chat model upgraded**: `server.js` line 960 → `claude-opus-4-8`. Committed c37d594, pushed.
+- **Product Staff profile deep dive**: product-manager.md (session start protocol), devops-engineer.md (projects table), interview-trainer.md (ArisInfra/Flipkart differentiator, story bank), interview-raw-thoughts.md (3 new sections). All profiles assessed; 4 updated.
+- **MicroManga tools-specialist**: new agent profile created at `micromanga/.claude/agents/tools-specialist.md`. Zero-budget Phase A stack ($0/mo) + minimum-spend Phase B upgrade ($7–10/mo post-greenlight).
+- **Backlogs enhanced**: Marketpulse (BL-019 added, PM notes updated, opus-4-8 fixed), ClearCart (CC-007 demo script + critical path added), Product Staff (BACKLOG.md created from scratch — 18 items), MicroManga (already current).
+- **G8 breach**: Active avg ~71.5% (cap 70%). Red-team of H-0007 + H-0003 still required before any upward revisions.
+
+### 2026-05-28 — Session 9 (checkpoint 27)
+- **Session end checkpoint. No Marketpulse changes.** All memory current. Web view live port 3737. 20 hypotheses, H-0021 next. G8 red-team still open.
+
+### 2026-05-28 — Session 9 (checkpoint 26)
+- **No Marketpulse changes.** WizCommerce ICP + 6 hero flows mapped (WizOrder/WizShop/Ella/Quote/WizStudio/Copilot). All memory updated across all projects.
+
+### 2026-05-28 — Session 9 (checkpoint 25)
+- **No Marketpulse changes.** Cross-project: WizCommerce 8-dimension teardown + Lead PM interview prep produced. product-staff pushed to GitHub (private). Job-applications move completed and server restarted cleanly on port 5001.
+
+### 2026-05-28 — Session 9 (checkpoint 24)
+- **No Marketpulse changes.** BL-018 added to backlog (IndMoney/Groww signal source investigation + integration). Job-application download fixed (two buttons, URL encoding). Marketpulse server unchanged — last confirmed live at CP22.
+
+### 2026-05-28 — Session 9 (checkpoint 23)
+- **No Marketpulse changes.** Cross-project session: PS-001 Daily Teardown shipped to product-staff (Gates 4–7 complete; first teardown `2026-05-28-spotify.md` generated). Job-applications sub-project merged into product-staff. Server last confirmed live at checkpoint 22; state unchanged.
+
+### 2026-05-28 — Session 9 (checkpoint 22)
+- **9 new hypotheses added** (H-0012 through H-0020): portfolio 11 → 20. Covers India Defense, Banking, Pharma, Real Estate, EV; US Nuclear (Active, 72%), NVIDIA bear, Consumer Staples; Global macro/USD. PORTFOLIO.md and sector index updated. Next ID: H-0021.
+- **Server restarted and confirmed live**: port 3737, 20 cards loading, chat working.
+- **Pushed to GitHub**: commit 9a39a69.
 
 ### 2026-05-28 — Session 9 (checkpoint 21)
 - **BL-015 syntax bug fixed**: `buffer.split('\\n')` inside template literal was rendering as a literal newline → browser SyntaxError → "Loading hypotheses..." indefinitely. Fixed by escaping to `buffer.split('\\\\n')` in source so the template outputs a valid `\n` escape.
@@ -151,11 +219,12 @@
 
 | Priority | Item | Description |
 |---|---|---|
-| **P1** | BL-003 Portfolio-aware prioritization | User shares holdings in `docs/portfolio/HOLDINGS.md`; web view cross-references hypotheses with holdings; Impact Score = confidence × magnitude × exposure |
-| **P1** | Daily validation run | Run hypothesis-validator + market-signal-reader against today's closing prices |
-| **P2** | Hosting | User wants this accessible publicly; ngrok failed; Vercel/Railway are options |
-| **P2** | H-0011+ | Continue filing new hypotheses as market events unfold |
-| **P3** | BL-004 (unplanned) | Push notifications / alerts when CONFIRMS/KILLS watch items trigger |
+| **⚠️ Open** | G8 red-team | `red-team-skeptic: attack H-0007. No politeness.` and `attack H-0003` — required before any upward confidence revisions |
+| **⚠️ Open** | H-0001 retirement | Confidence 35%, ST thesis near expiry. Retire if Nifty closes below 23,800 |
+| **P1** | BL-019 | Retroactive gates for BL-015: Gate 2 (PRD review), Gate 3 (full test plan), Gate 5 (tech proposal review) |
+| **P1** | BL-013 Gmail holdings sync | Apps Script spec complete; needs 20-min regex tuning on real emails + trigger setup |
+| **P1** | H-0012–H-0020 first validation | All due 2026-05-30/31; first full cycle for 9 hypotheses filed 2026-05-28 |
+| **P2** | BL-004 Scheduled cron | Server-side daily cycle automation; unblocks BL-005 (watch-item scanner) |
 
 ---
 

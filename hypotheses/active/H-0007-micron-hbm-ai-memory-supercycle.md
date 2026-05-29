@@ -51,7 +51,7 @@ MU stock sustains momentum: +20–35% additional upside from current $100+ area 
 ## Scores
 | Metric | Score | Last updated |
 |---|---|---|
-| **Confidence** | 80% | 2026-05-28 |
+| **Confidence** | 65% | 2026-05-29 (red-team) |
 | **Causality** | 82 / 100 | 2026-05-27 |
 | **Correlation** | 18 / 100 | 2026-05-27 |
 | Causality + Correlation check | 100 ✓ | — |
@@ -131,6 +131,8 @@ Micron is the most leveraged listed play on the AI capex supercycle after NVIDIA
 | 2026-05-28 AM | MU | +20–35% from ~$105–110 over 2Q | MU at $915; Q2 revenue +196% YoY; gross margin 74.9%; HBM sold out through 2026; HBM4 in production; FY26 guidance raised to $31.5–33.5B | Strong CONFIRM | — | Thesis playing out dramatically ahead of schedule. 46-analyst BUY consensus. Consider updating magnitude target. | +15% |
 | 2026-05-28 PM | MU | Continued momentum | MU closed $928.41 (+3.63% on May 27); Motley Fool analyst: "MU worth at least $1,500 in 1 year"; SK Hynix hit $1T market cap (confirms Asia semicon leadership) | Strong CONFIRM | — | +3.63% day on May 27 after the +19% surge. Analyst $1,500 target = +62% from current. SK Hynix $1T validates the broader HBM sector thesis. | +2% |
 | 2026-05-29 pre-market | MU | Continued upward momentum | MU pre-market $961.92 (+3.6% from $928 close); UBS raised price target to $1,625 from $535 (previously issued first upgrade); pre-market volume 8.85M shares | Strong CONFIRM | — | ⚠️ G8 GUARDRAIL: Confidence is at 82% (Active avg 72.4% already breaching 70% cap). Upgrade evidence is strong — UBS $1,625 target is +75% from current, massive revision. However red-team review is required before any further confidence increase. Logging evidence only; confidence held at 82% pending G8 red-team. | 0% (guardrail) |
+| 2026-05-28 cycle 3 | MU | Bullish continuation +20–35% over 2Q | MU trading $928–$942 on May 28 (daily range $896–$949); $1T market cap milestone confirmed; UBS PT $1,625; Motley Fool analyst "$1,500 in 1 year"; 46-analyst BUY consensus | Strong CONFIRM | — | ⚠️ G8 GUARDRAIL MAINTAINED: MU has confirmed the $1T milestone and multiple $1,500+ analyst targets are now public. Evidence for further upside remains substantial. However Active tier avg is ~71.5% (G8 cap: 70% — breach). Red-team review of H-0007 is required before ANY confidence increase from 82%. Logging confirming evidence only; confidence HELD at 82%. Stock pulling back slightly from $961 pre-mkt highs to $928–942 intraday — normal digestion after 19% surge. | 0% (G8 guardrail) |
+| 2026-05-29 cycle 4 | MU (NASDAQ) | Bullish continuation +20–35% over 2Q | MU trading ~$907–914 range (slight consolidation from $928–942 prior session); HBM "sold out through 2026" confirmed (TradingKey analysis); Q2 revenue +196% YoY / gross margin 74.9% still active; 46-analyst BUY consensus intact | Strong CONFIRMS | — | ⚠️ G8 GUARDRAIL: HBM sold out through 2026 is additional structural confirmation — supply tightness that underpins the thesis is not a 1-quarter event. MU $907–914 vs $928 prior close = slight consolidation after the +19% surge and $1T milestone; consistent with normal post-run digestion. All fundamental confirms intact. Confidence HELD at 82% pending G8 red-team of H-0007 (and H-0003). Active tier avg ~72%; red-team required before next revision. | 0% (G8 guardrail) |
 
 ---
 
@@ -152,6 +154,9 @@ Micron is the most leveraged listed play on the AI capex supercycle after NVIDIA
 | 2026-05-28 AM | 80% | 85 | 15 | Q2 revenue +196% YoY, gross margin 74.9%, HBM4 in production, HBM sold out through 2026, guidance raised. Threshold crossed — flag for full thesis workup. |
 | 2026-05-28 PM | 82% | 85 | 15 | MU $928.41; Motley Fool $1,500 target; SK Hynix $1T market cap confirming sector thesis. Momentum sustained. |
 | 2026-05-29 pre-mkt | 82% | 85 | 15 | MU pre-market $961.92; UBS raises PT to $1,625 from $535. Evidence extremely strong but G8 guardrail holds — no upward revision until red-team completes. |
+| 2026-05-28 cycle 3 | 82% | 85 | 15 | MU trading $928–$942 on May 28 (daily range $896–$949). $1T market cap milestone confirmed. UBS PT $1,625. Multiple analyst targets $1,500+. 46-analyst BUY consensus. Slight intraday pullback from $961 pre-mkt highs = normal post-surge digestion. ⚠️ G8 GUARDRAIL: Active tier avg ~71.5%; red-team of H-0007 (and H-0003 at 78%) must happen before next confidence revision. Confidence held at 82%. |
+| 2026-05-29 cycle 4 | 82% | 85 | 15 | MU ~$907–914 (slight consolidation from $928–942). HBM "sold out through 2026" confirmed (TradingKey — structural supply constraint, not one-quarter). Q2 +196% YoY / gross margin 74.9% / 46-analyst BUY consensus — all intact. Post-$1T milestone consolidation is normal. ⚠️ G8 GUARDRAIL: Confidence held at 82%; Active tier avg ~72%; red-team of H-0007 required before any upward revision. |
+| 2026-05-29 red-team | **65%** | 85 | 15 | Red-team verdict: (1) Crowded trade — 46-analyst BUY consensus means the "unpriced" argument has closed; conviction crowd = limited institutional buyers left. (2) Samsung HBM yield fix unmodeled — if Samsung resolves its HBM4 yield issues, supply shortage eases and ASP thesis weakens. (3) Cyclical risk: memory is historically the most volatile semiconductor category; AI capex cut of >15% would cause rapid de-stocking. (4) Entry risk: 168% YTD = most positive scenarios already in the price. Thesis is structurally sound but risk-adjusted confidence must be lower. −17%. G8 Active avg after revision: ~66.5% — breach resolves. |
 
 ---
 

@@ -4,6 +4,328 @@
 
 ---
 
+## Session: 2026-05-29 — Session 13 (red-team applied + Learnings Engine)
+
+**Focus:** Apply red-team revisions + integrate Cara Workshop into Product Staff
+
+### Done
+- H-0007 82%→65%, H-0003 78%→62% applied to hypothesis files, PORTFOLIO.md, TEST-LOG.md — G8 breach resolved (66.5%)
+- Product Staff Learnings Engine built (Opus 4.7): `docs/learnings/` with POSITIVE-PATTERNS.md (P-01–P-08), ANTI-PATTERNS.md (AP-01–AP-07), README; test-plan-template.md; PRD template upgraded; SOP Gates 0+8; PM + Tech Lead Critical Rules; CLAUDE.md self-learning protocol
+
+### In-flight
+- H-0012–H-0020 first validation cycle due 2026-05-30
+
+---
+
+## Session: 2026-05-29 — Session 12 (Cara Workshop review)
+
+**Focus:** Cara Workshop review for Product Staff enhancement
+
+### Done
+- Cara Workshop fully reviewed by Opus 4.7 — all key files read (`prd_base_prompts/`, `dev_base_prompts/`, `cara_skills/`, `product_learnings/`)
+- 30+ learnings produced across 5 categories (PRD quality, impl gate, agent profiles, Claude Code workflow, memory architecture)
+- Top 5 by value-to-effort: Recipe+4-floor, "Senior PMs propose" rule, Pattern catalogue, Test Plan sibling, Defer-PRD variant
+- Owner has findings — will decide what to embed
+
+### In-flight
+- Red-team revisions (H-0007 82%→65%, H-0003 78%→62%) still pending application to files
+- Cara learnings pending owner decision on which to embed in Product Staff
+
+---
+
+## Session: 2026-05-29 — Checkpoint (auto-test + red-team)
+
+**Focus:** Auto-test daily cycle + red-team H-0007/H-0003
+
+### Done
+- Auto-test DT (D-01/D-02/D-03/D-04): G4 PASS, G8 BREACH (72%), ST PASS. Results in TEST-LOG.md.
+- Red-team H-0007: 82% → 65% recommended (crowded trade; Samsung unmodeled; "unpriced" argument closed at 46 BUY analysts)
+- Red-team H-0003: 78% → 62% recommended (FII seller base depleted; -40% valuation reset largely done; MT capital market prediction ≠ structural thesis)
+- If both applied: Active avg drops to 66.5% → G8 resolves
+
+### In-flight
+- H-0007 + H-0003 confidence revisions pending confirmation — need to update hypothesis files + PORTFOLIO.md
+- H-0012–H-0020 first validation cycle due 2026-05-30
+
+---
+
+## Session: 2026-05-29 — Session 11 (cycle 4 + prompt-engineer)
+
+**Focus:** Hypothesis validation cycle 4 (all 7 P1s) + H-0001 retirement
+
+### Done
+- Cycle 4 complete: 7 P1s validated (H-0001 retired, H-0002 −2%, H-0003 held, H-0007 held, H-0008 +1%, H-0011 +2%, H-0014 +2%)
+- H-0001 archived to hypotheses/retired/ — key learning: VIX compression insufficient vs FII structural outflow
+- PORTFOLIO.md: counts updated to 6/13/1/19; priority queue updated; calibration tracker updated with first retired hypothesis
+- Product Staff: Prompt Engineer profile created (prompt-engineer.md) — converts implementation plans to minimal-iteration Claude Code sequences
+- Memory files updated (MEMORY.md, product_staff_project.md, PROJECT-STATE.md, SESSIONS.md)
+
+### Still open
+- G8 red-team (H-0007 82%, H-0003 78%) — blocks confidence upward revisions on both
+- H-0012–H-0020 first validation cycle due 2026-05-30/31
+- BL-015 retroactive gates (BL-019)
+
+---
+
+## Session: 2026-05-29 — Checkpoint 38 (session 10 continued)
+
+**Focus:** Cross-project — no Marketpulse changes since CP37
+
+### Done
+- Memory checkpoint only. No new work.
+
+### Still open
+- G8 red-team (H-0007 82%, H-0003 78%)
+- H-0001 retirement decision (35%, near expiry)
+- H-0012–H-0020 first validation cycle due 2026-05-30/31
+- BL-015 retroactive gates (BL-019)
+
+---
+
+## Session: 2026-05-29 — Checkpoint 37 (session 10 continued)
+
+**Focus:** Cross-project — no Marketpulse changes since CP36
+
+### Done
+- Memory checkpoint only. No new work.
+
+### Still open
+- G8 red-team (H-0007 82%, H-0003 78%)
+- H-0001 retirement decision (35%, near expiry)
+- H-0012–H-0020 first validation cycle due 2026-05-30/31
+- BL-015 retroactive gates (BL-019)
+
+---
+
+## Session: 2026-05-29 — Checkpoint 36 (session 10 continued)
+
+**Focus:** Cross-project — no Marketpulse changes since CP35
+
+### Done
+- Memory checkpoint only. No new work.
+
+### Still open
+- G8 red-team (H-0007 82%, H-0003 78%)
+- H-0001 retirement decision (35%, near expiry)
+- H-0012–H-0020 first validation cycle due 2026-05-30/31
+- BL-015 retroactive gates (BL-019)
+
+---
+
+## Session: 2026-05-29 — Checkpoint 35 (session 10 continued)
+
+**Focus:** Cross-project — no Marketpulse changes since CP34
+
+### Done
+- Memory checkpoint only. No new work.
+
+### Still open
+- G8 red-team (H-0007 82%, H-0003 78%)
+- H-0001 retirement decision (35%, near expiry)
+- H-0012–H-0020 first validation cycle due 2026-05-30/31
+- BL-015 retroactive gates (BL-019)
+
+---
+
+## Session: 2026-05-29 — Checkpoint 34 (session 10 continued)
+
+**Focus:** Cross-project — no Marketpulse changes since CP33
+
+### Done
+- Memory checkpoint only. No new work.
+
+### Still open
+- G8 red-team (H-0007 82%, H-0003 78%)
+- H-0001 retirement decision (35%, near expiry)
+- H-0012–H-0020 first validation cycle due 2026-05-30/31
+- BL-015 retroactive gates (BL-019)
+
+---
+
+## Session: 2026-05-29 — Checkpoint 33 (session 10 continued)
+
+**Focus:** Cross-project — no Marketpulse changes since CP32
+
+### Done
+- Memory checkpoint only. No new work.
+
+### Still open
+- G8 red-team (H-0007 82%, H-0003 78%)
+- H-0001 retirement decision (35%, near expiry)
+- H-0012–H-0020 first validation cycle due 2026-05-30/31
+- BL-015 retroactive gates (BL-019)
+
+---
+
+## Session: 2026-05-29 — Checkpoint 32 (session 10 continued)
+
+**Focus:** Cross-project — no Marketpulse changes since CP31
+
+### Done
+- Memory checkpoint only. No new work.
+
+### Still open
+- G8 red-team (H-0007 82%, H-0003 78%)
+- H-0001 retirement decision (35%, near expiry)
+- H-0012–H-0020 first validation cycle due 2026-05-30/31
+- BL-015 retroactive gates (BL-019)
+
+---
+
+## Session: 2026-05-29 — Checkpoint 31 (session 10 continued)
+
+**Focus:** Cross-project — no Marketpulse changes since CP30
+
+### Done
+- Memory checkpoint only. No new work.
+
+### Still open
+- G8 red-team (H-0007 82%, H-0003 78%)
+- H-0001 retirement decision (35%, near expiry)
+- H-0012–H-0020 first validation cycle due 2026-05-30/31
+- BL-015 retroactive gates (BL-019)
+
+---
+
+## Session: 2026-05-29 — Checkpoint 30 (session 10 continued)
+
+**Focus:** Cross-project — no Marketpulse changes since CP29
+
+### Done
+- WizCommerce mock interview completed (5 founder-style Q&A + trainer verdicts). Covered buyer activation, ArisInfra B2B depth, WizOrder diagnosis, roadmap prioritisation, founder pushback.
+- Memory checkpoint only.
+
+### Still open
+- G8 red-team (H-0007 82%, H-0003 78%)
+- H-0001 retirement decision (35%, near expiry)
+- H-0012–H-0020 first validation cycle due 2026-05-30/31
+- BL-015 retroactive gates (BL-019)
+
+---
+
+## Session: 2026-05-29 — Checkpoint 29 (session 10 continued)
+
+**Focus:** Cross-project — no Marketpulse changes
+
+### Done
+- Instagram teardown: generated via generate-teardown.js (claude-opus-4-8, $0.41, 86s). INDEX.md cleaned (removed stale duplicates). Committed + pushed to product-staff (6df0726).
+- WizCommerce mock interview: 5 founder-style Q&A pairs with trainer verdicts. Covered buyer activation diagnosis, ArisInfra B2B depth, WizOrder drop-off, roadmap prioritisation under capacity cut, founder pushback handling.
+
+### Still open
+- G8 red-team (H-0007 82%, H-0003 78%)
+- H-0001 retirement decision (35%, near expiry; check Nifty close)
+- H-0012–H-0020 first validation cycle due 2026-05-30/31
+- BL-015 retroactive gates (BL-019)
+
+---
+
+## Session: 2026-05-28 — Checkpoint 28 (session 10 mid-session)
+
+**Focus:** Hypothesis cycle 3 + model upgrades + Product Staff profile deep dive + backlog enhancement
+
+### Done
+- Hypothesis cycle 3: all 7 P1s validated (H-0001 35%, H-0002 52%, H-0003 78% G8, H-0007 82% G8 held, H-0008 62%, H-0011 47%, H-0014 72%)
+- server.js chat model → claude-opus-4-8; committed + pushed (c37d594)
+- Product Staff profiles: 4 updated (PM, DevOps, interview-trainer, interview-raw-thoughts)
+- New agent: micromanga/tools-specialist — zero-budget + minimum-spend AI content stack
+- Backlogs enhanced: all 4 projects (Marketpulse BL-019, ClearCart CC-007, Product Staff BACKLOG.md created)
+
+### Still open
+- G8 red-team (H-0007 82%, H-0003 78%)
+- H-0001 retirement decision (35%, near expiry)
+- BL-015 retroactive gates (BL-019)
+- H-0012–H-0020 first validation cycle due 2026-05-30/31
+
+---
+
+## Session: 2026-05-28 — Checkpoint 27 (session end checkpoint)
+
+**Focus:** Cross-project — no Marketpulse code changes this checkpoint
+
+### Status
+- No new Marketpulse work since CP26. Web view live on port 3737, 20 hypotheses, H-0021 next.
+- All memory files current as of CP26. GitHub pushed (product-staff commit 07467ec).
+- WizCommerce interview prep complete: ICP, 6 hero flows, Q&A — in `product-staff/interview-prep/WizCommerce-Lead-PM.md`.
+
+### Still open
+- G8 red-team: H-0007 (82%), H-0003 (75%), H-0005 (70%)
+- BL-015 retroactive gates (PRD review, test plan)
+- H-0012–H-0020 first validation cycle due 2026-05-30/31
+
+---
+
+## Session: 2026-05-28 — Checkpoint 26 (WizCommerce ICP + hero flows; all memory updated)
+
+**Focus:** Cross-project — no Marketpulse code changes
+
+### Done
+- **WizCommerce ICP defined**: mid-market wholesaler $5M–$100M, 5–50 reps, 100–2,000 retail accounts, trade show dependent, ERP-anchored, home furnishings/gifts/food/industrial.
+- **6 hero flows mapped**: (1) Trade show order capture — WizOrder; (2) Buyer self-serve reorder — WizShop; (3) Inbound PO processing — Ella; (4) Quote-to-order — AI Quote Automation; (5) Catalog creation & publish — WizStudio→WizShop; (6) Proactive upsell — AI Copilot. Full before/after, magic moment, and metric per flow.
+- **Master sequence**: imagery → storefront → trade show → Ella PO processing → self-serve reorder → WizPay → Copilot re-engagement.
+- **All memory files updated** across Marketpulse, Product Staff, and global Claude memory.
+
+### No Marketpulse changes
+- Web view still live on port 3737; hypothesis portfolio unchanged at 20; H-0021 next
+
+---
+
+## Session: 2026-05-28 — Checkpoint 25 (WizCommerce teardown + interview prep)
+
+**Focus:** Cross-project — no Marketpulse code changes
+
+### Done
+- **WizCommerce full analysis**: 8-dimension product teardown (WizShop/WizOrder/WizStudio/WizPay + AI co-workers), competitive landscape, strategic assessment, Lead PM interview prep with likely questions, questions to ask, and mapping of Akash's background (ArisInfra/Flipkart) to WizCommerce's needs.
+- **product-staff pushed to GitHub**: private repo `akashraj4562/product-staff` via SSH.
+- **Job-applications fully moved**: original `~/Desktop/Job_Applications/` deleted, fresh venv at new location, stale process killed and restarted correctly.
+
+### No Marketpulse changes
+- Web view still live on port 3737; hypothesis portfolio unchanged at 20; H-0021 next
+
+---
+
+## Session: 2026-05-28 — Checkpoint 24 (BL-018 backlog; job-application download fix)
+
+**Focus:** Cross-project work — no Marketpulse code changes
+
+### Done
+- **BL-018 added to backlog**: "Real-time push notification feed — reverse-engineer IndMoney/Groww signal sources." Phased plan: network intercept to identify sources → ingestion layer → hypothesis matching → push to owner. Sits alongside BL-017.
+- **Job-application download fixed**: two buttons (green = specific, blue = generic), both auto-trigger with 800ms delay, URL-encoding added for spaces in filenames. Server restarted on port 5001.
+
+### No Marketpulse changes this checkpoint
+- Web view still live on port 3737; hypothesis portfolio unchanged at 20 (H-0021 next)
+
+---
+
+## Session: 2026-05-28 — Checkpoint 23 (product-staff teardown + job-application merge)
+
+**Focus:** Cross-project work — Product Staff PS-001 teardown shipped; job-applications merged
+
+### Done
+- **PS-001 Daily Teardown shipped** (product-staff, not Marketpulse): Gates 4–7 complete. `scripts/generate-teardown.js` (Node.js, Opus 4.7, 6000 tokens), 60-product seed list, 8-dimension prompt, INDEX.md + _log.jsonl auto-updated, duplicate guard, all 8 tests pass. First teardown generated: `teardowns/2026-05-28-spotify.md` (2,280 words, all 8 sections + reflection question). Cost: ~$0.44/run, ~$13/month.
+- **Job Application merged into Product Staff**: `product-staff/job-applications/` created. `app.py` modified — fixed output dir to `Application CVs/`, fixed CV filename to `Akash Raj_Senior Product Manager_CV.pdf`, JD saved as `.md` alongside PDF.
+
+### No Marketpulse changes this checkpoint
+- Server still live on port 3737 (last confirmed checkpoint 22)
+- G8 red-team still open; H-0021 still next ID
+
+---
+
+## Session: 2026-05-28 — Checkpoint 22 (portfolio 11→20; server live)
+
+**Focus:** Expand hypothesis portfolio; confirm server live after BL-015 fix
+
+### Done
+- **20 hypotheses live**: added H-0012–H-0020 covering India (Defense/Banking/Pharma/RE/EV) and US (Nuclear/NVIDIA bear/Consumer Staples) plus Global macro (USD weakness). H-0014 nuclear filed directly as Active (72% — hard PPA evidence). PORTFOLIO.md sector index updated. Next ID: H-0021.
+- **Server confirmed live** on port 3737; all 20 cards loading; chat streaming intact.
+- **Pushed**: commit 9a39a69 to main.
+
+### Still open
+- Gate 7 BL-015: T-04 through T-11 (8 remaining manual/integration tests)
+- G8 red-team: H-0007 (82%), H-0003 (75%), H-0005 (70%) — no new filings until resolved
+- H-0012–H-0020 all need first validation cycle (all filed 2026-05-28, due 2026-05-30/31)
+
+---
+
 ## Session: 2026-05-28 — Checkpoint 21 (BL-015 syntax bug + TB-001 regression test)
 
 **Focus:** Fix "Loading hypotheses..." regression introduced by BL-015; add regression test
